@@ -43,13 +43,22 @@ function setup() {
     console.log("go")
     createCanvas(900, 400);
 
+   
+
 }
 
 function draw() {
     background("black");
 
     drawSquares();
+// set y variable based on the current framecount
+    let y = frameCount % 100;
 
+    //if square reaches the bottom restart
+
+    if (square.three.y === 400){
+        frameRate(100);
+    } 
 }
 
 function drawSquares() {
