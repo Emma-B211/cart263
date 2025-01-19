@@ -20,7 +20,7 @@ const circle = {
     radius: 30,
     fill: (0, 0, 0, 100)
 }
-let ellipseAlpha = 100;
+let ellipseAlpha = 1;
 
 function setup() {
     console.log("go")
@@ -45,11 +45,13 @@ function displaySquare() {
     rect(square.x, square.y, square.w, square.h);
     pop();
 
-    while (mousePressed) {
-        drawCircle(circleX, circleY, 100, ellipseAlpha);
-        circleX = circleX + 10;
-        ellipseAlpha = ellipseAlpha - 10;
-    }
+    // while (counter < 10 && counter > 1) {
+    //     drawCircle(circleX, circleY, 100, ellipseAlpha);
+    //     circleX = circleX + 10;
+    //     ellipseAlpha = ellipseAlpha - 10;
+
+    // }
+
 }
 
 // function mouseHover() {
