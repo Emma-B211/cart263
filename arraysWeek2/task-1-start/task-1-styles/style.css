@@ -1,0 +1,131 @@
+body{
+    background:black;
+    margin:1%;
+    padding:0;
+    color:white;
+    background:#000000;
+    opacity: .85;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  header{
+    background-color:#80baea;
+    display:flex;
+    min-height:60px;
+    text-transform: uppercase;
+    justify-content:space-between;
+  }
+  header h2{
+   width:50%;
+   margin-left:50px;
+  }
+  .image-header-box{
+    display:flex;
+    width:50%;
+   justify-content:right;
+   margin-right:10px; 
+
+  }
+  
+  .image-header-box img{
+    display: inline-block;
+    height:calc(80% - 10px);
+    margin: 5px;
+  }
+
+  main{
+    background-color:#afd1ed;
+}
+.main-content{
+    padding-left:30px; 
+    padding-right:30px; 
+    padding-top:10px; 
+
+}
+#parent{
+    display: flex;
+    flex-wrap: wrap;
+    padding:20px;
+   justify-content:center
+}
+  .inner-container{
+    background-color: #ffe2db;
+    width:320px;
+    min-height:200px;
+    margin:5px;
+  }
+
+  .content-container{
+    margin:1%;
+    width:98%;
+    height:97%;
+    background:white;
+    display:flex;
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content:center;
+  }
+  .img-container{
+    width:calc(40% - 4px);
+    /* height:100%; */
+    /* background:green; */
+    display: flex;
+    justify-content: center;
+    margin:2px;
+
+}
+ 
+  .img-descript{
+    color:black;
+    background:#ffe2db;
+    width:calc(60% - (4px + 20px));
+    margin:2px;
+    padding:10px;
+    font-size: 14px;
+   
+  }
+
+  .newStyle{
+    border: 5px solid;
+    border-radius: 2px;
+    border-color: rgb(237, 193, 252);
+    background-color: rgb(223, 127, 255);
+    padding:0;
+  }
+
+  .testDiv{
+    border: 1px solid;
+    border-radius: 1px;
+    border-color: aquamarine;
+    width:40px;
+    height:40px;
+    background:red;
+    position:absolute;
+    font-size:10px;
+    color:black;
+}
+
+.grids{
+  display:flex;
+  width:100vw;
+  min-width:1000px;
+}
+.grid-container{
+  width:48%;
+  background:rgb(219, 127, 127);
+  margin:2%;
+  text-align: center;
+  position:relative;
+
+}
+
+#new-grid{
+  position:relative;
+  background:white;
+
+
+}
+#new-grid-three{
+  position:relative;
+  background:white;
+}
