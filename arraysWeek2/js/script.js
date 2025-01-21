@@ -48,10 +48,10 @@ function draw() {
   fill(255);
 
   //2: output
-  //text(`items in array : ${multipleXPositions}`,100,height/2)
+ // text(`items in array : ${multipleXPositions}`,100,height/2)
 
   //2: length
-  // text(`length of array: ${multipleXPositions.length}`,100,height/2+100)
+  //text(`length of array: ${multipleXPositions.length}`,100,height/2+100)
 
   //2: use for loop to access::
   // for(let i=0; i< multipleXPositions.length;i++){
@@ -78,7 +78,7 @@ function draw() {
   //  text(`length of ellipses array: ${ellipses.length}`,100,height/2+100)
 
   //for 7
-  //fill(255);
+  // fill(255);
   //   text(`ORIG ARRAY::`,100,height/2-200)
   //   for(let i=0; i< tempArray.length;i++){
   //         text(`${tempArray[i]}`,100+i*100,height/2-100)
@@ -90,12 +90,12 @@ function draw() {
   //       }
 
 //   //for 8
-//   fill(180, 180, 180);
-//   text(`TEMP SPLICED ARRAY::`, 100, height / 2);
-//   fill(180, 0, 180);
-//   for (let i = 0; i < tempSPLICEArray.length; i++) {
-//     text(`${tempSPLICEArray[i]}`, 100 + i * 25, height / 2 + 50);
-//   }
+  // fill(180, 180, 180);
+  // text(`TEMP SPLICED ARRAY::`, 100, height / 2);
+  // fill(180, 0, 180);
+  // for (let i = 0; i < tempSPLICEArray.length; i++) {
+  //   text(`${tempSPLICEArray[i]}`, 100 + i * 25, height / 2 + 50);
+  // }
 
 //   fill(255, 255, 255);
 //   text(`REMOVED ARRAY::`, 100, height / 2 + 100);
@@ -109,30 +109,30 @@ function draw() {
 function mousePressed() {
   // add to the array everytime you click FIRST ONLY x
   //3A: output
-  //console.log(mousePositions);
+  console.log(mousePositions);
 
   //3B: add
   //mousePositions.push(mouseX);
 
   //4:: add an obj
-  // let newObj = {x:mouseX, y:mouseY};
+   //let newObj = {x:mouseX, y:mouseY};
   // //add again:
-  // mousePositions.push(newObj);
+   //mousePositions.push(newObj);
 
   //5:: make that obj more complex by assigning also a random color
 
 //   console.log(ellipses);
 
-//   let newObj = {
-//     x: mouseX,
-//     y: mouseY,
-//     color: { r: random(255), g: random(255), b: random(255) },
-//   };
+  // let newObj = {
+  //   x: mouseX,
+  //   y: mouseY,
+  //   color: { r: random(255), g: random(255), b: random(255) },
+  // };
 //   //add again: (at back)
-//   ellipses.push(newObj);
+// ellipses.push(newObj);
 
   //add at front
-  //ellipses.unshift(newObj)
+ // ellipses.unshift(newObj)
 }
 
 //for 6:: to remove from an array  - POP
@@ -154,19 +154,19 @@ function keyPressed() {
   // }
 
   //for 7 :: slice
-  if (key == "w") {
-    //subArray = tempArray.slice(0, 4);
-  }
+  // if (key == "w") {
+  //   subArray = tempArray.slice(0, 4);
+  // }
 
   //for 8 :: splice
   if (key == "q") {
     //add A new item (H) at index 2 - remove nothing
     //tempSPLICEArray.splice(2,0,"H");
     //removedSPLICED = tempSPLICEArray.splice(0,2); // remove first two items in list (index 0 and number is 2)
-    // removedSPLICED = tempSPLICEArray.splice(1,1); // remove second item in list (index 1 and 1)
-    // removedSPLICED = tempSPLICEArray.splice(1,3); // remove three items from second  item in list (index 1 and 3)
+     //removedSPLICED = tempSPLICEArray.splice(1,1); // remove second item in list (index 1 and 1)
+     //removedSPLICED = tempSPLICEArray.splice(1,3); // remove three items from second  item in list (index 1 and 3)
 
     /** REMOVE AND REPLACE 2 ITEMS **/
-   // removedSPLICED = tempSPLICEArray.splice(0, 2, "H", "I"); // remove(2) and replace from index 0
+    //removedSPLICED = tempSPLICEArray.splice(0, 2, "H", "I"); // remove(2) and replace from index 0
   }
 }
