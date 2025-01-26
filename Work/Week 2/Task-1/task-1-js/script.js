@@ -80,7 +80,7 @@ function setup() {
     /*************************************** */
     /* 1: Select the first paragraph and replace the text within the paragraph... */
     /***CODE */
-    document.querySelectorAll("p")[0].innerText = "Bianca Gauthier and Emma Beldick, 2025-01-21"
+    // document.querySelectorAll("p")[0].innerText = "Bianca Gauthier and Emma Beldick, 2025-01-21"
     /*************************************** */
     /* 2: Select all elements in the HTML that have the class name content-container
      and change the background color ... of first and second ...*/
