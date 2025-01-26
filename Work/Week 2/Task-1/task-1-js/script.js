@@ -163,13 +163,11 @@ function setup() {
         parent.appendChild(newParagraph);
     }
     let allPTagsThree = document.getElementsByTagName('p');
-    if (allPTagsThree.length < 10) {
-        for (let i = 0; i < allPTagsThree.length; i++) {
-            customCreateElement(allPTagsThree[i]);
-        }
-    } else {
-        stop();
-    }
+    // if (allPTagsThree.length < 10) {
+    //     for (let i = 0; i < allPTagsThree.length; i++) {
+    //         customCreateElement(allPTagsThree[i]);
+    //     }
+    // }
 
     /***EXPLANATION::
      * after adding each step of the code, it is being run however it is continously been read without any limit
@@ -202,7 +200,7 @@ function setup() {
     script.js:153 Creating new elementfor: 
      * 
      */
-<img src="Screenshot 2025-01-26 160211.png"></img>
+    // <img src="Screenshot 2025-01-26 160211.png"></img>
     /*************************************** */
     /* 2: GRID OF BOXES */
     /* 2A: Create another new function: function customNewBoxCreate(parent){ //body }*/
@@ -224,10 +222,49 @@ function setup() {
         otherwise lat it have the content `ODD`.*/
 
     /***CODE */
+    function customNewBoxCreate(parent) {
+        let newDiv = document.createElement("div");
+        newDiv.className = 'testDiv'
+        parent.appendChild(newDiv);
+        return newDiv;
+        // newDiv.innerHTML="<p> </p>";
+        // newDiv.style.backgroundColor="";
+        // //access parent element
+        // let parentElement = document.querySelector()
+        // parentElement.appendChild(newDiv);
 
+    }
+    let newGridParent = document.getElementById('new-grid');
+
+    for (let row = 0; row < 10; row++) {
+        for (let col = 0; col < 10; col++) {
+            let returnedDiv = customNewBoxCreate(newGridParent);
+            returnedDiv.style.position = 'absolute';
+
+            returnedDiv.style.left = `${col * 50}px`;
+            returnedDiv.style.top = `${row * 50}px`;
+
+            if (row % 2 === 0) {
+                returnedDiv.style.backgroundColor = 'white';
+            } else {
+                returnedDiv.style.backgroundColor = 'cornflowerblue';
+            }
+
+
+
+            if (row % 2 === 0) {
+                returnedDiv.textContent = 'EVEN';
+            } else {
+                returnedDiv.textContent = 'ODD';
+            }
+        }
+        let allTestDivs = document.getElementsByClassName('testDiv');
+        console.log("Number of .testDiv elements:", allTestDivs.length);
+    }
 
     /***EXPLANATION::
-     * 
+     * after creating the function and adding new div to add the rows and columns underneath the grid
+     * we used a for loop and arrays
      * 
      */
 
@@ -246,11 +283,48 @@ function setup() {
         when dividing by three. */
 
     /***CODE */
+    function customNewBoxCreate(parent) {
+        let newDiv = document.createElement('div');
+        newDiv.className = 'testDiv';
+        parent.appendChild(newDiv);
+        return newDiv;
+    }
+    let newGridThreeParent = document.getElementById('new-grid-three');
 
+    for (let row = 0; row < 10; row++) {
+        for (let col = 0; col < 10; col++) {
+            let returnedDiv = customNewBoxCreate(newGridThreeParent);
+            returnedDiv.style.position = 'absolute';
 
+            returnedDiv.style.left = `${col * 50}px`;
+            returnedDiv.style.top = `${row * 50}px`;
+
+            if (col % 3 === 0) {
+                returnedDiv.style.backgroundColor = 'red';
+                returnedDiv.textContent = '0';
+            } else if (col % 3 === 1) {
+                returnedDiv.style.backgroundColor = 'orange';
+                returnedDiv.style.textContent = '1';
+            } else if (col % 3 === 2) {
+                returnedDiv.style.backgroundColor = 'yellow';
+                returnedDiv.textContent = '2'
+
+            }
+        }
+
+    }
     /***EXPLANATION::
      * 
-     * 
+     * Number of .testDiv elements: 10
+    script.js:262 Number of .testDiv elements: 20
+    script.js:262 Number of .testDiv elements: 30
+    script.js:262 Number of .testDiv elements: 40
+    script.js:262 Number of .testDiv elements: 50
+    script.js:262 Number of .testDiv elements: 60
+    script.js:262 Number of .testDiv elements: 70
+    script.js:262 Number of .testDiv elements: 80
+    script.js:262 Number of .testDiv elements: 90
+    script.js:262 Number of .testDiv elements: 100
      */
 
     /*************************************** */
