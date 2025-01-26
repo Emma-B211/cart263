@@ -1,0 +1,82 @@
+body {
+    background: black;
+    margin: 1%;
+    padding: 0;
+    color: white;
+    background: #000000;
+    opacity: .85;
+    font-family: 'Roboto', sans-serif;
+}
+
+#parent {
+    /* width:1000px;
+    height:600px; */
+    background: rgba(255, 255, 255, 0.25);
+    /* margin:0 auto;*/
+    margin-top: 0px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    min-height: 600px;
+    position: relative;
+}
+
+.wrapper_flex_box {
+    display: flex;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.square_shape {
+    width: 120px;
+    height: 120px;
+    border-width: 5px;
+    border-style: solid;
+    margin: 2px;
+}
+
+.square_shape p {
+    padding: 2px;
+}
+
+p span {
+    font-weight: bold;
+    color: white;
+    background-color: black;
+}
+
+.change_span {
+    background-color: rgb(139, 139, 229);
+    color: orange;
+}
+
+#one {
+    background-color: rgb(255, 145, 0);
+    border-color: rgb(255, 190, 0);
+}
+
+#two {
+    background-color: rgb(0, 190, 255);
+    border-color: rgb(0, 157, 255);
+}
+
+#three {
+    background-color: rgb(193, 75, 109);
+    border-color: rgb(255, 75, 109);
+}
+
+#four {
+    background-color: rgb(75, 193, 111);
+    border-color: rgb(75, 255, 111);
+}
+
+#five {
+    background-color: rgb(164, 75, 193);
+    border-color: rgb(190, 75, 193);
+}
+
+#six {
+    background-color: rgb(255, 233, 45);
+    border-color: rgb(227, 206, 22);
+}
