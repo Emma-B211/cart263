@@ -150,7 +150,7 @@ function setup() {
 
     // function to create 
     function customCreateElement(parent) {
-        console.log("Creating new elementfor:", parent);
+        console.log("Creating new element for:", parent);
 
         let newParagraph = document.createElement('p');
 
@@ -163,21 +163,46 @@ function setup() {
         parent.appendChild(newParagraph);
     }
     let allPTagsThree = document.getElementsByTagName('p');
-    if (allPTagsThree.length > 0) {
+    if (allPTagsThree.length < 10) {
         for (let i = 0; i < allPTagsThree.length; i++) {
             customCreateElement(allPTagsThree[i]);
         }
     } else {
-        console.warn("no <p> tags found in the document");
+        stop();
     }
 
     /***EXPLANATION::
-     * 1A: created a let variable for array called allPTagsThree
-     * 1B:created a function that would call what would be put into the body of the function
-     * 1C:
+     * after adding each step of the code, it is being run however it is continously been read without any limit
+     *  Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
+    script.js:153 Creating new elementfor: 
      * 
      */
-
+<img src="Screenshot 2025-01-26 160211.png"></img>
     /*************************************** */
     /* 2: GRID OF BOXES */
     /* 2A: Create another new function: function customNewBoxCreate(parent){ //body }*/
