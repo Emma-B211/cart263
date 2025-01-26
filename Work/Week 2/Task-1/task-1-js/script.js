@@ -119,14 +119,14 @@ function setup() {
     /***CODE */
 
 
-    // let colors = ['red', 'blue', 'green', 'orange'];
-    // let innerContainers = document.getElementsByClassName('inner-container');
+    let colors = ['red', 'blue', 'green', 'orange'];
+    let innerContainers = document.getElementsByClassName('inner-container');
 
-    // for (let i = 0; i < colors.length; i++) {
-    //     if (innerContainers[i]) {
-    //         innerContainers[i].style.backgroundColor = colors[i];
-    //     }
-    // }
+    for (let i = 0; i < colors.length; i++) {
+        if (innerContainers[i]) {
+            innerContainers[i].style.backgroundColor = colors[i];
+        }
+    }
 
     /*************************************** */
     /*** END PART TWO MODIFY */
@@ -149,20 +149,20 @@ function setup() {
     // access all paragraphs
 
     // function to create 
-    function customCreateElement(parent) {
-        console.log("Creating new element for:", parent);
+    // function customCreateElement(parent) {
+    //     console.log("Creating new element for:", parent);
 
-        let newParagraph = document.createElement('p');
+    //     let newParagraph = document.createElement('p');
 
-        newParagraph.textContent = "Using ceateElement";
+    //     newParagraph.textContent = "Using ceateElement";
 
-        newParagraph.style.backgroundColor = "green";
+    //     newParagraph.style.backgroundColor = "green";
 
-        newParagraph.style.color = "white";
+    //     newParagraph.style.color = "white";
 
-        parent.appendChild(newParagraph);
-    }
-    let allPTagsThree = document.getElementsByTagName('p');
+    //     parent.appendChild(newParagraph);
+    // }
+    // let allPTagsThree = document.getElementsByTagName('p');
     // if (allPTagsThree.length < 10) {
     //     for (let i = 0; i < allPTagsThree.length; i++) {
     //         customCreateElement(allPTagsThree[i]);
@@ -171,33 +171,7 @@ function setup() {
 
     /***EXPLANATION::
      * after adding each step of the code, it is being run however it is continously been read without any limit
-     *  Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
-    script.js:153 Creating new elementfor: 
+     *  
      * 
      */
     // <img src="Screenshot 2025-01-26 160211.png"></img>
@@ -222,45 +196,45 @@ function setup() {
         otherwise lat it have the content `ODD`.*/
 
     /***CODE */
-    function customNewBoxCreate(parent) {
-        let newDiv = document.createElement("div");
-        newDiv.className = 'testDiv'
-        parent.appendChild(newDiv);
-        return newDiv;
-        // newDiv.innerHTML="<p> </p>";
-        // newDiv.style.backgroundColor="";
-        // //access parent element
-        // let parentElement = document.querySelector()
-        // parentElement.appendChild(newDiv);
+    // function customNewBoxCreate(parent) {
+    //     let newDiv = document.createElement("div");
+    //     newDiv.className = 'testDiv'
+    //     parent.appendChild(newDiv);
+    //     return newDiv;
+    //     // newDiv.innerHTML="<p> </p>";
+    //     // newDiv.style.backgroundColor="";
+    //     // //access parent element
+    //     // let parentElement = document.querySelector()
+    //     // parentElement.appendChild(newDiv);
 
-    }
-    let newGridParent = document.getElementById('new-grid');
+    // }
+    // let newGridParent = document.getElementById('new-grid');
 
-    for (let row = 0; row < 10; row++) {
-        for (let col = 0; col < 10; col++) {
-            let returnedDiv = customNewBoxCreate(newGridParent);
-            returnedDiv.style.position = 'absolute';
+    // for (let row = 0; row < 10; row++) {
+    //     for (let col = 0; col < 10; col++) {
+    //         let returnedDiv = customNewBoxCreate(newGridParent);
+    //         returnedDiv.style.position = 'absolute';
 
-            returnedDiv.style.left = `${col * 50}px`;
-            returnedDiv.style.top = `${row * 50}px`;
+    //         returnedDiv.style.left = `${col * 50}px`;
+    //         returnedDiv.style.top = `${row * 50}px`;
 
-            if (row % 2 === 0) {
-                returnedDiv.style.backgroundColor = 'white';
-            } else {
-                returnedDiv.style.backgroundColor = 'cornflowerblue';
-            }
+    //         if (row % 2 === 0) {
+    //             returnedDiv.style.backgroundColor = 'white';
+    //         } else {
+    //             returnedDiv.style.backgroundColor = 'cornflowerblue';
+    //         }
 
 
 
-            if (row % 2 === 0) {
-                returnedDiv.textContent = 'EVEN';
-            } else {
-                returnedDiv.textContent = 'ODD';
-            }
-        }
-        let allTestDivs = document.getElementsByClassName('testDiv');
-        console.log("Number of .testDiv elements:", allTestDivs.length);
-    }
+    //         if (row % 2 === 0) {
+    //             returnedDiv.textContent = 'EVEN';
+    //         } else {
+    //             returnedDiv.textContent = 'ODD';
+    //         }
+    //     }
+    //     let allTestDivs = document.getElementsByClassName('testDiv');
+    //     console.log("Number of .testDiv elements:", allTestDivs.length);
+    // }
 
     /***EXPLANATION::
      * after creating the function and adding new div to add the rows and columns underneath the grid
@@ -283,36 +257,36 @@ function setup() {
         when dividing by three. */
 
     /***CODE */
-    function customNewBoxCreate(parent) {
-        let newDiv = document.createElement('div');
-        newDiv.className = 'testDiv';
-        parent.appendChild(newDiv);
-        return newDiv;
-    }
-    let newGridThreeParent = document.getElementById('new-grid-three');
+    // function customNewBoxCreate(parent) {
+    //     let newDiv = document.createElement('div');
+    //     newDiv.className = 'testDiv';
+    //     parent.appendChild(newDiv);
+    //     return newDiv;
+    // }
+    // let newGridThreeParent = document.getElementById('new-grid-three');
 
-    for (let row = 0; row < 10; row++) {
-        for (let col = 0; col < 10; col++) {
-            let returnedDiv = customNewBoxCreate(newGridThreeParent);
-            returnedDiv.style.position = 'absolute';
+    // for (let row = 0; row < 10; row++) {
+    //     for (let col = 0; col < 10; col++) {
+    //         let returnedDiv = customNewBoxCreate(newGridThreeParent);
+    //         returnedDiv.style.position = 'absolute';
 
-            returnedDiv.style.left = `${col * 50}px`;
-            returnedDiv.style.top = `${row * 50}px`;
+    //         returnedDiv.style.left = `${col * 50}px`;
+    //         returnedDiv.style.top = `${row * 50}px`;
 
-            if (col % 3 === 0) {
-                returnedDiv.style.backgroundColor = 'red';
-                returnedDiv.textContent = '0';
-            } else if (col % 3 === 1) {
-                returnedDiv.style.backgroundColor = 'orange';
-                returnedDiv.style.textContent = '1';
-            } else if (col % 3 === 2) {
-                returnedDiv.style.backgroundColor = 'yellow';
-                returnedDiv.textContent = '2'
+    //         if (col % 3 === 0) {
+    //             returnedDiv.style.backgroundColor = 'red';
+    //             returnedDiv.textContent = '0';
+    //         } else if (col % 3 === 1) {
+    //             returnedDiv.style.backgroundColor = 'orange';
+    //             returnedDiv.style.textContent = '1';
+    //         } else if (col % 3 === 2) {
+    //             returnedDiv.style.backgroundColor = 'yellow';
+    //             returnedDiv.textContent = '2'
 
-            }
-        }
+    //         }
+    //     }
 
-    }
+    // }
     /***EXPLANATION::
      * 
      * Number of .testDiv elements: 10
