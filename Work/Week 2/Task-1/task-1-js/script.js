@@ -80,34 +80,34 @@ function setup() {
     /*************************************** */
     /* 1: Select the first paragraph and replace the text within the paragraph... */
     /***CODE */
-    document.querySelectorAll("p")[0].innerText = "Bianca Gauthier and Emma Beldick, 2025-01-21"
+    // document.querySelectorAll("p")[0].innerText = "Bianca Gauthier and Emma Beldick, 2025-01-21"
     /*************************************** */
     /* 2: Select all elements in the HTML that have the class name content-container
      and change the background color ... of first and second ...*/
     /***CODE */
-    document.querySelectorAll(".content-container")[0].style.background = "orange";
-    document.querySelectorAll(".content-container")[1].style.background = "purple";
+    // document.querySelectorAll(".content-container")[0].style.background = "orange";
+    // document.querySelectorAll(".content-container")[1].style.background = "purple";
     /*************************************** */
     /* 3: Change the src element of the first image element on the page to be ...
     /***CODE */
-    document.querySelectorAll(".img-image")[0].src = "task-1-images/seven.png"
+    // document.querySelectorAll(".img-image")[0].src = "task-1-images/seven.png"
     /*************************************** */
     /* 4: Select the third paragraph element on the page and 
     replace the content (within the paragraph) to be an h2 element which contains the text `TEST 123`
     /***CODE */
-    document.querySelectorAll("p")[2].innerHTML = "<h2> TEST 123 </h2>"
+    // document.querySelectorAll("p")[2].innerHTML = "<h2> TEST 123 </h2>"
 
     /*************************************** */
     /* 5: Select the fourth paragraph element on the page and 
     add to the existing content an h2 element containing the text `TEST 123`
     /***CODE */
-    document.querySelectorAll("p")[3].innerHTML += "<h2> TEST 123 </h2>"
+    // document.querySelectorAll("p")[3].innerHTML += "<h2> TEST 123 </h2>"
     /*************************************** */
     /* 6: Select the fifth paragraph element on the page and add to the existing content 
     an img element that holds `one.png`, and add the class newStyle to said paragraph element.
     /***CODE */
-    document.querySelectorAll("p")[4].classList.add(".newStyle")
-    document.querySelectorAll("p")[4].innerHTML += "<img src= 'task-1-images/one.png'/>"
+    // document.querySelectorAll("p")[4].classList.add(".newStyle")
+    // document.querySelectorAll("p")[4].innerHTML += "<img src= 'task-1-images/one.png'/>"
 
     /*************************************** */
     /* 7: Add the following array variable: let colors = ['red','blue','green','orange'];, 
@@ -117,6 +117,16 @@ function setup() {
     (i.e. colors[0] should be allocated to the first innerContainers element, colors[1] to the second, etc ...) 
     a background using that color.
     /***CODE */
+
+
+    // let colors = ['red', 'blue', 'green', 'orange'];
+    // let innerContainers = document.getElementsByClassName('inner-container');
+
+    // for (let i = 0; i < colors.length; i++) {
+    //     if (innerContainers[i]) {
+    //         innerContainers[i].style.backgroundColor = colors[i];
+    //     }
+    // }
 
     /*************************************** */
     /*** END PART TWO MODIFY */
@@ -128,7 +138,7 @@ function setup() {
     /* 1: NEW PARAGRAPHS */
     /* 1A: Access all paragraph elements, and store the result in a variable called: allPTagsThree */
     /* 1B: Create a function:function customCreateElement(parent){ //body } */
-    /* 1C:  In the body of customCreateElement create a new parargraph element*/
+    /* 1C:  In the body of customCreateElement create a new paragraph element*/
     /* 1D:  Set the text of this element to be : `using create Element`*/
     /* 1E:  Set the background of this paragraph element to be green */
     /* 1F:  Set the color of the text in this paragraph element to be white */
@@ -136,10 +146,35 @@ function setup() {
     /* 1H: Iterate through the allPTagsThree array and call customCreateElement(), 
     passing the current allPTagsThree element as the parent with each iteration.*/
     /***CODE */
+    // access all paragraphs
 
+    // function to create 
+    function customCreateElement(parent) {
+        console.log("Creating new elementfor:", parent);
+
+        let newParagraph = document.createElement('p');
+
+        newParagraph.textContent = "Using ceateElement";
+
+        newParagraph.style.backgroundColor = "green";
+
+        newParagraph.style.color = "white";
+
+        parent.appendChild(newParagraph);
+    }
+    let allPTagsThree = document.getElementsByTagName('p');
+    if (allPTagsThree.length > 0) {
+        for (let i = 0; i < allPTagsThree.length; i++) {
+            customCreateElement(allPTagsThree[i]);
+        }
+    } else {
+        console.warn("no <p> tags found in the document");
+    }
 
     /***EXPLANATION::
-     * 
+     * 1A: created a let variable for array called allPTagsThree
+     * 1B:created a function that would call what would be put into the body of the function
+     * 1C:
      * 
      */
 
