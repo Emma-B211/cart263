@@ -119,14 +119,14 @@ function setup() {
     /***CODE */
 
 
-    let colors = ['red', 'blue', 'green', 'orange'];
-    let innerContainers = document.getElementsByClassName('inner-container');
+    // let colors = ['red', 'blue', 'green', 'orange'];
+    // let innerContainers = document.getElementsByClassName('inner-container');
 
-    for (let i = 0; i < colors.length; i++) {
-        if (innerContainers[i]) {
-            innerContainers[i].style.backgroundColor = colors[i];
-        }
-    }
+    // for (let i = 0; i < colors.length; i++) {
+    //     if (innerContainers[i]) {
+    //         innerContainers[i].style.backgroundColor = colors[i];
+    //     }
+    // }
 
     /*************************************** */
     /*** END PART TWO MODIFY */
@@ -149,32 +149,40 @@ function setup() {
     // access all paragraphs
 
     // function to create 
-    // function customCreateElement(parent) {
-    //     console.log("Creating new element for:", parent);
+    let allPTagsThree = document.querySelectorAll('p');
 
-    //     let newParagraph = document.createElement('p');
+    function customCreateElement(parent) {
+        console.log("Creating new element for:", parent);
 
-    //     newParagraph.textContent = "Using ceateElement";
+        let newParagraph = document.createElement('p');
 
-    //     newParagraph.style.backgroundColor = "green";
+        newParagraph.textContent = "Using ceateElement";
 
-    //     newParagraph.style.color = "white";
+        newParagraph.style.backgroundColor = "green";
 
-    //     parent.appendChild(newParagraph);
-    // }
+        newParagraph.style.color = "white";
+
+        parent.appendChild(newParagraph);
+    }
     // let allPTagsThree = document.getElementsByTagName('p');
-    // if (allPTagsThree.length < 10) {
-    //     for (let i = 0; i < allPTagsThree.length; i++) {
-    //         customCreateElement(allPTagsThree[i]);
-    //     }
-    // }
+    allPTagsThree.forEach((pTag) => {
+        customCreateElement(pTag);
+    });
 
     /***EXPLANATION::
      * after adding each step of the code, it is being run however it is continously been read without any limit
-     *  
+     *  Creating new element for: <p id=​"1">​" Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis blanditiis, et laborum praesentium earum. Enim facere, quia commodi voluptate, quis asperiores, pariatur ducimus officiis non quasi officia sit veniam! "<p style=​"background-color:​ green;​ color:​ white;​">​Using ceateElement​</p>​</p>​
+    script.js:155 Creating new element for: <p id=​"2" class=​"img-descript">​…​</p>​
+    cript.js:155 Creating new element for: <p id=​"3" class=​"img-descript">​…​</p>​
+    script.js:155 Creating new element for: <p id=​"4" class=​"img-descript">​…​</p>​
+    script.js:155 Creating new element for: <p id=​"5" class=​"img-descript">​…​</p>​
+    script.js:155 Creating new element for: <p id=​"6" class=​"img-descript">​…​</p>​
+    script.js:155 Creating new element for: <p id=​"7" class=​"img-descript">​…​</p>​
+    script.js:155 Creating new element for: <p id=​"8" class=​"img-descript">​…​</p>​
+    script.js:155 Creating new element for: <p id=​"9" class=​"img-descript">​…​</p>​
      * 
      */
-    // <img src="Screenshot 2025-01-26 160211.png"></img>
+
     /*************************************** */
     /* 2: GRID OF BOXES */
     /* 2A: Create another new function: function customNewBoxCreate(parent){ //body }*/
