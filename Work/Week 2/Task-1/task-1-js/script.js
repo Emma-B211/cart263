@@ -247,7 +247,16 @@ function setup() {
     /***EXPLANATION::
      * after creating the function and adding new div to add the rows and columns underneath the grid
      * we used a for loop and arrays
-     * 
+     * Number of .testDiv elements: 10
+    script.js:244 Number of .testDiv elements: 20
+    script.js:244 Number of .testDiv elements: 30
+    script.js:244 Number of .testDiv elements: 40
+    script.js:244 Number of .testDiv elements: 50
+    script.js:244 Number of .testDiv elements: 60
+    script.js:244 Number of .testDiv elements: 70
+    script.js:244 Number of .testDiv elements: 80
+    script.js:244 Number of .testDiv elements: 90
+    script.js:244 Number of .testDiv elements: 100
      */
 
     /*************************************** */
@@ -296,17 +305,18 @@ function setup() {
 
     // }
     /***EXPLANATION::
-     * 
+     * similar to the second part of part 3, in thirds, the array would call each div to create each row and collumn with different colours attached
+     * having it used in the function
      * Number of .testDiv elements: 10
-    script.js:262 Number of .testDiv elements: 20
-    script.js:262 Number of .testDiv elements: 30
-    script.js:262 Number of .testDiv elements: 40
-    script.js:262 Number of .testDiv elements: 50
-    script.js:262 Number of .testDiv elements: 60
-    script.js:262 Number of .testDiv elements: 70
-    script.js:262 Number of .testDiv elements: 80
-    script.js:262 Number of .testDiv elements: 90
-    script.js:262 Number of .testDiv elements: 100
+        script.js:262 Number of .testDiv elements: 20
+        script.js:262 Number of .testDiv elements: 30
+        script.js:262 Number of .testDiv elements: 40
+        script.js:262 Number of .testDiv elements: 50
+        script.js:262 Number of .testDiv elements: 60
+        script.js:262 Number of .testDiv elements: 70
+        script.js:262 Number of .testDiv elements: 80
+        script.js:262 Number of .testDiv elements: 90
+        script.js:262 Number of .testDiv elements: 100
      */
 
     /*************************************** */
