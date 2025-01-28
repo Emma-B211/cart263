@@ -1,0 +1,122 @@
+body{
+    background:rgb(52, 52, 52);
+    margin:0;
+    padding:0;
+    color:white;
+    opacity: .85;
+    font-family: 'Roboto', sans-serif;
+    
+  }
+
+  main{
+    margin:0;
+    margin-left:200px;
+    border-color:#555555;
+    border-width: 2px;
+    border-style: solid;
+    width:max-content;
+    border-top:0px;
+  }
+
+  header{
+    margin-top:20px;
+    color:rgba(246, 15, 142,1.0);
+    /* color:#cdcaca; */
+    text-align: center;
+    width:502px;
+    padding:10px;
+    background:rgb(52, 52, 52);
+    margin-left:200px;
+    border-color:#555555;
+    border-width: 2px;
+    border-style: solid;
+    border-bottom: 0px;
+    font-size:18px;
+ 
+  }
+  #gui-canvas{
+    display:flex;
+    width:max-content;
+    position:relative;
+    
+  }
+
+  .buttonContainer{
+    padding-top:30px;
+    background:rgb(52, 52, 52);
+}
+
+.colorContainer{
+    margin-left:122px;
+    display:flex;
+    width:380px;
+    background:rgb(52, 52, 52);
+    flex-wrap:wrap;
+    padding:10px;
+}
+
+.button{
+    width:32px;
+    height:24px;
+    margin:0 auto;
+    margin-top:10px;
+    border: #eeeeee 1px;
+    border-style: solid;
+}
+
+.color-button:hover{
+    opacity: .6;
+    cursor: pointer;
+}
+
+
+#mouseCanvas{
+    background:rgb(0,0,0);
+    width:400px;
+    height:350px;
+    position:relative;
+  
+ 
+}
+
+.point{
+    width:5px;
+    height:5px;
+    background:red;
+    position:absolute;
+}
+
+.stroke-button,.shape-button, .mode-button, .opacity-button, .erase-button{
+    background:rgba(246, 15, 142,0.8);
+    border: #eeeeee 1px;
+    border-style: solid;
+    min-width:110px;
+    margin:5px;
+
+}
+
+.stroke-button p, .shape-button p, .mode-button p, .opacity-button p, .erase-button p {
+    line-height: 2px; 
+    text-align: center; 
+    color:#eeeeee;
+    font-size:12px;
+
+}
+
+
+.stroke-button:hover,.shape-button:hover, .opacity-button:hover, .mode-button:hover, .erase-button:hover{
+    background:#eeeeee;
+    cursor:pointer;
+
+}
+.stroke-button:hover > p,.shape-button:hover > p , .opacity-button:hover > p, .mode-button:hover > p, .erase-button:hover >p{ 
+    color: rgb(246, 15, 142);
+
+}
+.label-button{
+    margin:0 auto;
+    text-align:center;
+    color:#eeeeee;
+    font-size:14px;
+    line-height: 22px;
+}
