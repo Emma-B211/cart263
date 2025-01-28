@@ -43,6 +43,26 @@ function introMouseClickCallback(e){
 
     document.querySelector(`#${this.id} p`).style.background =""
 };
+}
+
+document.querySelector("#bubbleButton").addEventListener("click",createBubble)
+
+ 
+function createBubble(e){
+    console.log("button clicked")
+ let bubble =  document.createElement("div");
+  bubble.classList.add("bubble");
+  bubble.style.left = `${Math.random()*(window.innerWidth-200) }px`;
+  bubble.style.top = `${Math.random()* (window.innerHeight-200) }px`;
+
+  let r = Math.ceil(Math.random()*255); //new Math.ceil
+  let g =Math.ceil(Math.random()*255);
+  let b = Math.ceil(Math.random()*255);
+
+  bubble.style.background = `rgba(${r},${g},${b})`;
+  document.getElementById("top-layer").appendChild(bubble)
+
+}
  function getColorObj(inColor) {
     let substringColor = inColor.substring(
       inColor.indexOf("(") + 1,
@@ -52,25 +72,8 @@ function introMouseClickCallback(e){
     rgbArray = substringColor.split(",");
     return rgbArray;
   }
-  document.querySelector("#bubbleButton").addEventListener("click",function(){
-    console.log("button clicked");
-})
-//<< CREATE A NEW ELEMENT ON THE FLY >>>
-let bubble =  document.createElement("div");
-bubble.classList.add("bubble");
-bubble.style.left = `${Math.random()*(window.innerWidth-200) }px`;
-bubble.style.top = `${Math.random()* (window.innerHeight-200) }px`;
-
-let r = Math.ceil(Math.random()*255); //new Math.ceil
-let g =Math.ceil(Math.random()*255);
-let b = Math.ceil(Math.random()*255);
-
-bubble.style.background = `rgba(${r},${g},${b})`;
-document.getElementById("top-layer").appendChild(bubble)
-
+  
 }
 
-
-}
 
 
