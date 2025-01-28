@@ -1,0 +1,40 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    background:rgb(49, 49, 49);
+    color:white;
+    font-family: 'Roboto', sans-serif;
+    position:relative;
+ 
+  }
+ 
+  #parent{
+    background:rgba(255,255,255,.25);
+    width:98vw;
+    margin:0 auto;
+    /* Add oveflow auto to container */
+    overflow: auto;
+    margin-top:10px;
+    min-height:500px;
+}
+#parent h2{
+    margin:10px;
+}
+ 
+.box{
+    margin:10px;
+    width:500px;
+    height:500px;
+    background:black;
+    color:white;
+    position:relative;
+}
+ 
+.point{
+    width:5px;
+    height:5px;
+    background:rgb(221, 71, 71);
+    position:absolute;
+}
