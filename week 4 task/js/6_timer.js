@@ -26,7 +26,7 @@ window.onload = function () {
       
        p.style.left = parseInt(p.style.left) + speedX+ "px";
        p.style.top = parseInt(p.style.top) + speedY + "px";
-       window.requestAnimationFrame(animate);
+       aniRef= window.requestAnimationFrame(animate);
        checkBounds(document.getElementById("parent"), p);
       
      }
