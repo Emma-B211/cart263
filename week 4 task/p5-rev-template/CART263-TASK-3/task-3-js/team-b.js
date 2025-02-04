@@ -91,6 +91,85 @@ function setup_B() {
 
   function aniA(parentCanvas) {
     console.log("in A");
+    let button=document.createElement("div");
+//button.classList.add("#TEAM_A_BOX");
+//button.textContent="GO";
+parentCanvas.apprendChild(button);
+let isPlaying=false;
+let aniRef=null;
+let circle=[];
+let aniSpeed=1;
+
+AnimationFrame();
+
+  function AnimationFrame(){
+   
+for (let i =0; i < 20; i++){
+  for (let j=0; j< 20;j++){
+    let circle=document.createElement("div")
+    //let p= circle[i][j]
+    let offset=20;
+      circle.classList.add("#TEAM_A_circle")
+      circle.style.width="20px";
+      circle.style.height="20px";
+
+
+      circle.style.left=offset+i*20+"px";
+      circle.style.right=offset+i*20+"px";
+      parent.apprendChild(circle);
+      circle.push(circle);
+    
+
+  }
+}
+button.addEventListener("click",animationHandler);
+
+function animationHandler(){
+ 
+ if (isPlaying===false){
+  isPlaying=true;
+this.textContent="STOP"
+  aniRef=window.requestAnimationFrame(animate);
+  
+  } else if (isPlaying===true){
+    windows.cancelAnimationFrame(aniRef)
+    this.textContent="START"
+   isPlaying=false;
+
+  }
+}
+  
+
+  window.requestAnimationFrame(animate);
+ 
+  function animate(){
+   // let p=document.getElementById("particle");
+    if (parseInt(circle[j].style.width) >20 ||
+    parseInt(circle[j].style.width)<1){
+      aniSpeed*=1; 
+      
+    }
+for(let j = 0; j <20;j +=3){
+  circle[j].style.width=
+  parseInt(circle[j].style.width)+aniSpeed+"px"
+  circle[j].style.height=
+  parseInt(circle[j].style.height)+aniSpeed+"px"
+
+ 
+
+}
+
+aniRef=windows.requestAnimationFrame(animate);
+ 
+  }
+
+
+window.addEventListener("keydown", function(e){
+  if (e.code==='Space')
+    console.log("space");
+  this.cancelAnimationFrame(aniRef);
+})
+  }
   }
   /**************** ANI B ************************************ */
   /** PUT ALL YOUR CODE FOR ANIMATION B INSIDE  HERE */
