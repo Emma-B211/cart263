@@ -102,25 +102,20 @@ body{
     background:rgba(246, 15, 142,1.0);
   }
 /* CSS TEAM A**/
-.TEAM_A_Box{
-  width:40px;
-  height:32px;
-  background-color: rgb(34,29,41);
-position:absolute;
-text-align:center;
-padding-top:8px;
-font-size:14px;
-margin:1px;
-}
+
 .TEAM_A_circle{
 border-radius: 20px;
 background-color:blueviolet;
 position:absolute;
-transform: translate(-40%,-40%);
+transform: translate(-50%,-50%);
 
 }
-.particle{
-  
+#particle{
+width:10px;
+height:10px;
+border-radius:5px;
+background-color:white;
+position:absolute;  
 
 }
 /*CSS TEAM H**/
