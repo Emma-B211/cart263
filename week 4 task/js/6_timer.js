@@ -1,5 +1,58 @@
 window.onload = function () {
 
+
+    window.addEventListener("keydown", function(e){
+        if(e.code ==='Space'){
+          console.log("space");
+          this.cancelAnimationFrame(aniRef)
+                        
+        }  
+      })
+
+     let aniRef=window.requestAnimationFrame(animate);
+       
+        function animate() {
+        let p = document.getElementById("particle");
+        p.style.left = parseInt(p.style.left) + 2+ "px";
+        p.style.top = parseInt(p.style.top) + 3 + "px";
+       }
+       aniRef= window.requestAnimationFrame(animate);
+ 
+       let speedX = 2;
+       let speedY =3;
+      
+       function animate() {
+       let p = document.getElementById("particle");
+      
+       p.style.left = parseInt(p.style.left) + speedX+ "px";
+       p.style.top = parseInt(p.style.top) + speedY + "px";
+       window.requestAnimationFrame(animate);
+       checkBounds(document.getElementById("parent"), p);
+      
+     }
+      
+     function checkBounds(parent, p) {
+       let bounds = parent.getBoundingClientRect();
+      
+       if (parseInt(p.style.left) > bounds.right) {
+         speedX*=-1;
+      
+      
+       } else if (parseInt(p.style.left) < bounds.left) {
+         speedX*=-1;
+      
+       }
+      
+       if (parseInt(p.style.top) > bounds.bottom) {
+         speedY*=-1;
+      
+       } else if (parseInt(p.style.top) < bounds.top) {
+         speedY*=-1;
+      
+       }
+
+
+
 //     let gridArray = [];
 //     let shades = [
 //         "#7fb3d5", //grey blue first
@@ -72,24 +125,25 @@ window.onload = function () {
 //     }
 // }
 
-window.setInterval(addOtherText, 500);
+//window.setInterval(addOtherText, 500);
 //   function addOtherText() {
 //       let sp = document.createElement("span");
 //       sp.textContent = " ***-*** ";
 //       sp.classList.add("appearInStarText");
 //       document.getElementById("parent").appendChild(sp);
 //     }
-let counter =0;
-  function addOtherText() {
-      let sp = document.createElement("span");
-      sp.textContent = " ***-*** ";
-      sp.classList.add("appearInStarText");
-      document.getElementById("parent").appendChild(sp);
-      counter++;
-      if(counter ===10){
-        clearInterval(ref);
-      }
-    }
+// let ref = window.setInterval(addOtherText, 500);
+// let counter =0;
+//   function addOtherText() {
+//       let sp = document.createElement("span");
+//       sp.textContent = " ***-*** ";
+//       sp.classList.add("appearInStarText");
+//       document.getElementById("parent").appendChild(sp);
+//       counter++;
+//       if(counter ===10){
+//         clearInterval(ref);
+//       }
+//     }
   }
-  
+}
 
