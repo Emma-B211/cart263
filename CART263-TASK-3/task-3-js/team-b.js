@@ -91,7 +91,46 @@ function setup_B() {
 
   function aniA(parentCanvas) {
     console.log("in A");
+let button=document.createElement("div");
+button.classList.add("#TEAM_A_BOX");
+button.textContent="GO";
+parentCanvas.apprendChild(button);
+let isPlaying=false;
+let aniRef=null;
+let circle=[];
+let aniSpeed=1;
+let offset=0;
+requestAnimationFrame();
+
+  function requestAnimationFrame(){
+   
+for (let i =0; i < 20; i++){
+  for (let j=0; j<20;j++){
+    let circle=document.createElement("div")
+    //let p= circle[i][j]
+    if(j % num===1){
+      circle.classList.add("#TEAM_A_circle")
+      circle.style.width="20px";
+      circle.style.height="20px";
+
+
+      circle.style.left=offset.i*20+"px"
+      circle.style.right=offset.i*20+"px"
+    }
+
   }
+
+}
+
+  }
+    
+    
+    }
+  
+}
+
+
+  
   /**************** ANI B ************************************ */
   /** PUT ALL YOUR CODE FOR ANIMATION B INSIDE  HERE */
   /**************** ANI B ************************************ */
@@ -158,4 +197,5 @@ function setup_B() {
     window.addEventListener("keydown", windowKeyDownRef);
     window.addEventListener("keyup", windowKeyUpRef);
   }
-}
+
+
