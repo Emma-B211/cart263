@@ -88,6 +88,10 @@ function setup_B() {
    * remember you can define other functions inside....
    * Do not change any code above or the HTML markup.
    * **/
+  <style>
+    <canvas id="teamCanvas" width="400px" height="500px"></canvas>
+    <button onclick="aniA(document.getElementById('.teamCanvas'))">Start Animation</button>
+  </style>
 
   function aniA(parentCanvas) {
     console.log("in A");
@@ -100,7 +104,7 @@ function setup_B() {
 
     let x = 0;
     let y = 100;
-    let color = blue;
+    let color = 'blue';
 
     //function animated shape
     function animate() {
@@ -110,7 +114,7 @@ function setup_B() {
       ctx.fillRect(x, y, 50, 50); // draws the square
 
       x += 2;
-      if (x > parentsCanvas.width) {
+      if (x > parentCanvas.width) {
         x = -50;
       }
       //change color periodically
@@ -121,9 +125,10 @@ function setup_B() {
     }
 
     function generateRandomColor() {
-      const r = Math.floor(Math.random() * 255);
-      const g = Math.floor(Math.random() * 255);
-      const b = Math.floor(Math.random() * 255);
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return `rgb(${r},${g},${b})` // return the rgb color
     }
 
     // start animation
