@@ -106,12 +106,14 @@ h5 {
 
 /* TEAM A **/
 .TEAM_A_box {
-  margin-top: 10px;
-  padding: 20px;
+  width: 45px;
+  height: 30px;
   background-color: #4CAF50;
   color: white;
   cursor: pointer;
   text-align: center;
+  padding-top: 8px;
+  margin: 1px;
 }
 
 .TEAM_A_square {
@@ -128,19 +130,6 @@ h5 {
 
 }
 
-#parentCanvas {
-  position: relative;
-  width: 600px;
-  height: 600px;
-  background-color: lightgrey;
-}
-
-/* .TEAM_A_square {
-  
-  background-color: rgb(130, 85, 75);
-  position: absolute;
-  
-} */
 
 /*CSS TEAM H**/
 

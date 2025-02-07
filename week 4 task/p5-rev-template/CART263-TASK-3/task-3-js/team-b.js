@@ -101,74 +101,82 @@ function setup_B() {
     let isAnimating = false;
     let squares = [];
     let aniRef = null;
-    let aniSpeed = 1;
+    let moveX = 1, moveY = 1;
+    let boundaryWidth = 375;
+    let boundaryHeight = 375;
 
-    // Function to create and center squares
-    function createSquare() {
-      let offset = 30;
-      for (let i = 0; i < 15; i++) {
-        for (let j = 0; j < 15; j++) {
-          let square = document.createElement("div");
-          square.classList.add("TEAM_A_square");
-          square.style.width = '20px';
-          square.style.height = '20px';
-          square.style.position = 'absolute'; // Position squares absolutely
-
-          // Calculate position for each square in the grid
-          square.style.left = (offset * i) + "px";
-          square.style.top = (offset * j) + "px";
-
-          parentCanvas.appendChild(square);
-          squares.push(square); // Add square to the array
-        }
-      }
-    }
-
-    // Create the grid of squares
     createSquare();
 
-    // Handle the start/stop functionality for the animation
+    function createSquare() {
+        let offset = 45;
+        for (let i = 0; i < 15; i++) {
+            for (let j = 0; j < 15; j++) {
+                let square = document.createElement("div");
+                square.classList.add("TEAM_A_square");
+                square.style.width = '20px';
+                square.style.height = '20px';
+                square.style.position = 'absolute';
+                square.style.left = offset + i * 15 + "px";
+                square.style.top = offset + j * 15 + "px";
+                parentCanvas.appendChild(square);
+                squares.push(square);
+            }
+        }
+    }
+
     button.addEventListener("click", animationHandler);
 
     function animationHandler() {
-      if (!isAnimating) {
-        // Start animation: show squares and begin animation
-        squares.forEach(square => square.style.display = "block");
-        isAnimating = true;
-        this.textContent = 'STOP';
-        aniRef = window.requestAnimationFrame(animate);
-      } else {
-        // Stop animation: cancel the animation frame
-        cancelAnimationFrame(aniRef);
-        isAnimating = false;
-        this.textContent = 'GO';
-      }
+        if (!isAnimating) {
+            squares.forEach(square => square.style.display = "block");
+            isAnimating = true;
+            button.textContent = 'STOP';
+            aniRef = window.requestAnimationFrame(animate);
+        } else {
+            cancelAnimationFrame(aniRef);
+            isAnimating = false;
+            button.textContent = 'GO';
+        }
     }
 
-    // The animation loop for resizing the squares
     function animate() {
-      console.log('Animating');
+        console.log('Animating');
 
-      // Reverse direction when square reaches a certain size
-      if (parseInt(squares[0].style.width) > 30 || parseInt(squares[0].style.width) < 10) {
-        aniSpeed *= -1;
-      }
+        for (let i = squares.length - 1; i >= 0; i--) {
+            let square = squares[i];
 
-      // Loop through every square and change its size
-      for (let j = 0; j < squares.length; j++) {
-        let currentWidth = parseInt(squares[j].style.width);
-        let currentHeight = parseInt(squares[j].style.height);
+if (!square) continue;
 
-        // Adjust width and height based on animation speed
-        squares[j].style.width = (currentWidth + aniSpeed) + "px";
-        squares[j].style.height = (currentHeight + aniSpeed) + "px";
-      }
+            let left = parseInt(square.style.left) + moveX;
+            let top = parseInt(square.style.top) + moveY;
 
-      // Keep the animation running by requesting the next frame
-      aniRef = window.requestAnimationFrame(animate);
+            if (left <= 0 || left >= boundaryWidth - 20) {
+                moveX *= -1;
+                detachSquare(i);
+            }
+            if (top <= 0 || top >= boundaryHeight - 20) {
+                moveY *= -1;
+                detachSquare(i);
+            }
+
+            square.style.left = left + "px";
+            square.style.top = top + "px";
+        }
+
+        aniRef = window.requestAnimationFrame(animate);
     }
-  }
 
+    function detachSquare(index) {
+        if (index >= 0 && index < squares.length) { 
+       let detachedSquare = squares.splice(index, 1)[0];
+       if (!detachedSquare) return;
+             detachedSquare.style.transition = "opacity 0.5s ease-out";
+             detachedSquare.style.opacity = "0";
+            setTimeout(() => { if (parentCanvas.contains(detachedSquare)){
+                parentCanvas.removeChild(detachedSquare); }
+            }, 500);
+        }
+    }
 }
 
 
@@ -239,4 +247,4 @@ function aniC(parentCanvas) {
   window.addEventListener("keydown", windowKeyDownRef);
   window.addEventListener("keyup", windowKeyUpRef);
 }
-
+}
