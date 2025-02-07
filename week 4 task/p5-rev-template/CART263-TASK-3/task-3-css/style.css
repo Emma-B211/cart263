@@ -106,15 +106,20 @@ h5 {
 
 /* TEAM A **/
 .TEAM_A_box {
-  width: 40px;
-  height: 32px;
-  background-color: rgb(34, 29, 41);
-  position: absolute;
+  margin-top: 10px;
+  padding: 20px;
+  background-color: #4CAF50;
   color: white;
+  cursor: pointer;
   text-align: center;
-  padding-top: 8px;
-  font-size: 14px;
-  margin: 1px;
+}
+
+.TEAM_A_square {
+  height: 20px;
+  width: 20px;
+  background-color: blue;
+  display:none;
+  translate: (-50%, -50%);
 }
 
 .TEAM_A_box:hover {
@@ -123,12 +128,19 @@ h5 {
 
 }
 
-.TEAM_A_square {
-  height: 20px;
-  width: 20px;
-  background-color: rgb(130, 85, 75);
-position:absolute;
+#parentCanvas {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  background-color: lightgrey;
 }
+
+/* .TEAM_A_square {
+  
+  background-color: rgb(130, 85, 75);
+  position: absolute;
+  
+} */
 
 /*CSS TEAM H**/
 

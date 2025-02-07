@@ -91,71 +91,85 @@ function setup_B() {
 
   function aniA(parentCanvas) {
     console.log("in A");
+
+    // Create the GO button
     let button = document.createElement("div");
     button.classList.add("TEAM_A_box");
     button.textContent = "GO";
     parentCanvas.appendChild(button);
+
     let isAnimating = false;
     let squares = [];
     let aniRef = null;
     let aniSpeed = 1;
 
-    animationSquare();
-
-    function animationSquare() {
+    // Function to create and center squares
+    function createSquare() {
       let offset = 30;
-
       for (let i = 0; i < 15; i++) {
         for (let j = 0; j < 15; j++) {
           let square = document.createElement("div");
-          square.classList.add("TEAM_A_square")
+          square.classList.add("TEAM_A_square");
           square.style.width = '20px';
           square.style.height = '20px';
-          square.style.position = 'absolute'
+          square.style.position = 'absolute'; // Position squares absolutely
 
+          // Calculate position for each square in the grid
           square.style.left = (offset * i) + "px";
           square.style.top = (offset * j) + "px";
 
           parentCanvas.appendChild(square);
-          squares.push(square);
+          squares.push(square); // Add square to the array
         }
-
       }
     }
 
+    // Create the grid of squares
+    createSquare();
+
+    // Handle the start/stop functionality for the animation
     button.addEventListener("click", animationHandler);
 
     function animationHandler() {
-      if (isAnimating) {
+      if (!isAnimating) {
+        // Start animation: show squares and begin animation
+        squares.forEach(square => square.style.display = "block");
         isAnimating = true;
-        this.textContent = 'STOP'
+        this.textContent = 'STOP';
         aniRef = window.requestAnimationFrame(animate);
       } else {
-        aniRef = cancelAnimationFrame(aniRef);
+        // Stop animation: cancel the animation frame
+        cancelAnimationFrame(aniRef);
         isAnimating = false;
-        this.textContent = 'GO'
+        this.textContent = 'GO';
       }
     }
 
+    // The animation loop for resizing the squares
     function animate() {
-      console.log('go')
+      console.log('Animating');
 
-      if (parseInt(squares[0].style.width) > 15 ||
-        parseInt(squares[0].style.height) < 2
-      ) {
+      // Reverse direction when square reaches a certain size
+      if (parseInt(squares[0].style.width) > 30 || parseInt(squares[0].style.width) < 10) {
         aniSpeed *= -1;
       }
-      for (let j = 0; j < squares.length; j += 2) {
-        squares[j].style.width =
-          (parseInt(parseInt(squares[j].style.width)) + aniSpeed) + "px";
-        squares[j].style.height =
-          (parseInt(squares[j].style.height) + aniSpeed) + "px";
+
+      // Loop through every square and change its size
+      for (let j = 0; j < squares.length; j++) {
+        let currentWidth = parseInt(squares[j].style.width);
+        let currentHeight = parseInt(squares[j].style.height);
+
+        // Adjust width and height based on animation speed
+        squares[j].style.width = (currentWidth + aniSpeed) + "px";
+        squares[j].style.height = (currentHeight + aniSpeed) + "px";
       }
+
+      // Keep the animation running by requesting the next frame
       aniRef = window.requestAnimationFrame(animate);
     }
   }
-}
 
+}
 
 
 
