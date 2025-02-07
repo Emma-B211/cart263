@@ -88,79 +88,73 @@ function setup_B() {
    * remember you can define other functions inside....
    * Do not change any code above or the HTML markup.
    * **/
-  <style>
-    <canvas id="teamCanvas" width="400px" height="500px"></canvas>
-    <button id="teamStartStopButton">Start Animation</button>
-    <script src="js/team-b.js">
-
-    </script>
-  </style>
 
   function aniA(parentCanvas) {
     console.log("in A");
-
-    const ctx = parentCanvas.getContext('2d');
-    if (!ctx) {
-      console.error('failed to get 2d context from canvas');
-      return;
-    }
-
-    let x = 0;
-    let y = 100;
-    let color = 'blue';
-    let animationFrameId = null;
+    let button = document.createElement("div");
+    button.classList.add("TEAM_A_box");
+    button.textContent = "GO";
+    parentCanvas.appendChild(button);
     let isAnimating = false;
+    let squares = [];
+    let aniRef = null;
+    let aniSpeed = 1;
 
-    //function animated shape
+    animationSquare();
+
+    function animationSquare() {
+      let offset = 30;
+
+      for (let i = 0; i < 15; i++) {
+        for (let j = 0; j < 15; j++) {
+          let square = document.createElement("div");
+          square.classList.add("TEAM_A_square")
+          square.style.width = '20px';
+          square.style.height = '20px';
+          square.style.position = 'absolute'
+
+          square.style.left = (offset * i) + "px";
+          square.style.top = (offset * j) + "px";
+
+          parentCanvas.appendChild(square);
+          squares.push(square);
+        }
+
+      }
+    }
+
+    button.addEventListener("click", animationHandler);
+
+    function animationHandler() {
+      if (isAnimating) {
+        isAnimating = true;
+        this.textContent = 'STOP'
+        aniRef = window.requestAnimationFrame(animate);
+      } else {
+        aniRef = cancelAnimationFrame(aniRef);
+        isAnimating = false;
+        this.textContent = 'GO'
+      }
+    }
+
     function animate() {
-      ctx.clearRect(0, 0, parentCanvas.width, parentCanvas.height);// clear canvas
-      ctx.fillStyle = color; // set color
-      ctx.fillRect(x, y, 50, 50); // draws the square
-      //move square
-      x += 2;
-      if (x > parentCanvas.width) {
-        x = -50;
-      }
-      //change color periodically
-      if (Math.floor(x / 2) % 60 === 0) {
-        color = generateRandomColor();
-      }
-      requestAnimationFrame(animate);
-    }
-    // request the next frame if the animation is running
-    if (isAnimating) {
-      animationFrameId = requestAnimationFrame(animate);
-    }
-  }
-  // function to generate a random rgb color
-  function generateRandomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgb(${r},${g},${b})` // return the rgb color
-  }
-  // start or stop animation based on the button click
+      console.log('go')
 
-  function toggleAnimation() {
-    if (isAnimating) {
-      cancelAnimationFrame(animationFrameId); // start animation
-      isAnimatin = false;
-      document.getElementById('teamStartStopButton').textContent = 'Start Animation'; //update button text
-    } else {
-      isAnimating = true;
-      document.getElementById('teamStartStopButton').textContent = 'Stop Animation' // update button text
+      if (parseInt(squares[0].style.width) > 15 ||
+        parseInt(squares[0].style.height) < 2
+      ) {
+        aniSpeed *= -1;
+      }
+      for (let j = 0; j < squares.length; j += 2) {
+        squares[j].style.width =
+          (parseInt(parseInt(squares[j].style.width)) + aniSpeed) + "px";
+        squares[j].style.height =
+          (parseInt(squares[j].style.height) + aniSpeed) + "px";
+      }
+      aniRef = window.requestAnimationFrame(animate);
     }
   }
-
-  // add event listener to the button
-  document.getElementById('teamStartStopButton').addEventListener('click', toggleAnimation);
 }
-
-
-
-
-
-
 
 
 
@@ -174,7 +168,7 @@ function setup_B() {
  * i.e. fading out/ in, growing bigger/smaller, appear/disappear, add, remove...
  *  - you can use simple shapes and colors, images etc...
  * 2: add in a / some mouse click event listener(s) somewhere to make the sketch interactive
-
+ 
  *
  * NOTE::: PLEASE::: if you add any custom css PLEASE use the style.css and prefix any class names with your team label
  * i.e. you want to create a custom div class and you are in "Team_A" then call your class TEAM_A_ANI_A_Div -
