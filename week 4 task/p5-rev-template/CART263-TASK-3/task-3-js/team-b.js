@@ -90,7 +90,10 @@ function setup_B() {
    * **/
   <style>
     <canvas id="teamCanvas" width="400px" height="500px"></canvas>
-    <button onclick="aniA(document.getElementById('.teamCanvas'))">Start Animation</button>
+    <button id="teamStartStopButton">Start Animation</button>
+    <script src="js/team-b.js">
+
+    </script>
   </style>
 
   function aniA(parentCanvas) {
@@ -105,14 +108,15 @@ function setup_B() {
     let x = 0;
     let y = 100;
     let color = 'blue';
+    let animationFrameId = null;
+    let isAnimating = false;
 
     //function animated shape
     function animate() {
-      ctx.clearRect(0, 0, parentCanvas.width, parentCanvas.height);
-
-      ctx.fillStyle = color;
+      ctx.clearRect(0, 0, parentCanvas.width, parentCanvas.height);// clear canvas
+      ctx.fillStyle = color; // set color
       ctx.fillRect(x, y, 50, 50); // draws the square
-
+      //move square
       x += 2;
       if (x > parentCanvas.width) {
         x = -50;
@@ -123,22 +127,37 @@ function setup_B() {
       }
       requestAnimationFrame(animate);
     }
-
-    function generateRandomColor() {
-      const r = Math.floor(Math.random() * 256);
-      const g = Math.floor(Math.random() * 256);
-      const b = Math.floor(Math.random() * 256);
-      return `rgb(${r},${g},${b})` // return the rgb color
+    // request the next frame if the animation is running
+    if (isAnimating) {
+      animationFrameId = requestAnimationFrame(animate);
     }
+  }
+  // function to generate a random rgb color
+  function generateRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r},${g},${b})` // return the rgb color
+  }
+  // start or stop animation based on the button click
 
-    // start animation
-    animate();
-
-
+  function toggleAnimation() {
+    if (isAnimating) {
+      cancelAnimationFrame(animationFrameId); // start animation
+      isAnimatin = false;
+      document.getElementById('teamStartStopButton').textContent = 'Start Animation'; //update button text
+    } else {
+      isAnimating = true;
+      document.getElementById('teamStartStopButton').textContent = 'Stop Animation' // update button text
+    }
   }
 
-
+  // add event listener to the button
+  document.getElementById('teamStartStopButton').addEventListener('click', toggleAnimation);
 }
+
+
+
 
 
 

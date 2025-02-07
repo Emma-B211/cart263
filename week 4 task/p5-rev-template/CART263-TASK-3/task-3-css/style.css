@@ -102,6 +102,26 @@ body{
     background:rgba(246, 15, 142,1.0);
   }
 
+  /* CSS TEAM A*/
+  .TEAM_ANI_A_Div{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+
+  }
+
+  .TEAM_A_ANI_A_BUTTON{
+position:absolute;
+top:20px;
+padding:10px 20px;
+font-size:16px;
+cursor:pointer;
+  }
+  .TEAM_A_ANI_A_Canvas{
+    border:1px solid black
+  }
+
 /*CSS TEAM H**/
 
 .TEAM_H_box{
