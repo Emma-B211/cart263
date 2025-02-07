@@ -71,7 +71,7 @@ function setup_B() {
       }
     } //for
   }
-   /**************** ANI A ************************************ */
+  /**************** ANI A ************************************ */
   /** PUT ALL YOUR CODE FOR ANIMATION A INSIDE  HERE */
   /**************** ANI A ************************************ */
   /**************** TASK *******************************************
@@ -91,150 +91,120 @@ function setup_B() {
 
   function aniA(parentCanvas) {
     console.log("in A");
-    let button=document.createElement("div");
-//button.classList.add("#TEAM_A_BOX");
-//button.textContent="GO";
-parentCanvas.apprendChild(button);
-let isPlaying=false;
-let aniRef=null;
-let circle=[];
-let aniSpeed=1;
 
-AnimationFrame();
-
-  function AnimationFrame(){
-   
-for (let i =0; i < 20; i++){
-  for (let j=0; j< 20;j++){
-    let circle=document.createElement("div")
-    //let p= circle[i][j]
-    let offset=20;
-      circle.classList.add("#TEAM_A_circle")
-      circle.style.width="20px";
-      circle.style.height="20px";
-
-
-      circle.style.left=offset+i*20+"px";
-      circle.style.right=offset+i*20+"px";
-      parent.apprendChild(circle);
-      circle.push(circle);
-    
-
-  }
-}
-button.addEventListener("click",animationHandler);
-
-function animationHandler(){
- 
- if (isPlaying===false){
-  isPlaying=true;
-this.textContent="STOP"
-  aniRef=window.requestAnimationFrame(animate);
-  
-  } else if (isPlaying===true){
-    windows.cancelAnimationFrame(aniRef)
-    this.textContent="START"
-   isPlaying=false;
-
-  }
-}
-  
-
-  window.requestAnimationFrame(animate);
- 
-  function animate(){
-   // let p=document.getElementById("particle");
-    if (parseInt(circle[j].style.width) >20 ||
-    parseInt(circle[j].style.width)<1){
-      aniSpeed*=1; 
-      
+    const ctx = parentCanvas.getContext('2d');
+    if (!ctx) {
+      console.error('failed to get 2d context from canvas');
+      return;
     }
-for(let j = 0; j <20;j +=3){
-  circle[j].style.width=
-  parseInt(circle[j].style.width)+aniSpeed+"px"
-  circle[j].style.height=
-  parseInt(circle[j].style.height)+aniSpeed+"px"
 
- 
+    let x = 0;
+    let y = 100;
+    let color = blue;
+
+    //function animated shape
+    function animate() {
+      ctx.clearRect(0, 0, parentCanvas.width, parentCanvas.height);
+
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, 50, 50); // draws the square
+
+      x += 2;
+      if (x > parentsCanvas.width) {
+        x = -50;
+      }
+      //change color periodically
+      if (Math.floor(x / 2) % 60 === 0) {
+        color = generateRandomColor();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function generateRandomColor() {
+      const r = Math.floor(Math.random() * 255);
+      const g = Math.floor(Math.random() * 255);
+      const b = Math.floor(Math.random() * 255);
+    }
+
+    // start animation
+    animate();
+
+
+  }
+
 
 }
 
-aniRef=windows.requestAnimationFrame(animate);
- 
-  }
 
 
-window.addEventListener("keydown", function(e){
-  if (e.code==='Space')
-    console.log("space");
-  this.cancelAnimationFrame(aniRef);
-})
-  }
-  }
-  /**************** ANI B ************************************ */
-  /** PUT ALL YOUR CODE FOR ANIMATION B INSIDE  HERE */
-  /**************** ANI B ************************************ */
-  /**************** TASK *******************************************
-   * YOU CAN USE ALL NOTES --- and see my examples in team-h.js for inspiration and possibly help:)
-   * 1: use the function window.setInterval() to create a pattern that changes over time
-   * i.e. fading out/ in, growing bigger/smaller, appear/disappear, add, remove...
-   *  - you can use simple shapes and colors, images etc...
-   * 2: add in a / some mouse click event listener(s) somewhere to make the sketch interactive
-
-   *
-   * NOTE::: PLEASE::: if you add any custom css PLEASE use the style.css and prefix any class names with your team label
-   * i.e. you want to create a custom div class and you are in "Team_A" then call your class TEAM_A_ANI_A_Div -
-   * this is so that your styles are not overriden by other teams.
-   * NOTE::: All your code is to be added here inside this function -
-   * remember you can define other functions inside....
-   * Do not change any code above or the HTML markup.
-   * **/
-  function aniB(parentCanvas) {
-    console.log("in B");
-  }
-  /**************** ANI C ************************************ */
-  /** PUT ALL YOUR CODE FOR INTERACTIVE PATTERN C INSIDE  HERE */
-  /**************** ANI C ************************************ */
- /**************** TASK *******************************************
-   * YOU CAN USE ALL NOTES --- and see my examples in team-h.js for inspiration and possibly help:)
-   * 1: use the PROVIDED keyup/down callbacks `windowKeyDownRef` and/or `windowKeyUpnRef` to handle keyboard events
-   * 2: create an interactive pattern/sketch based on keyboard input. Anything goes.
-   * do not use  requestAnimationFrame(), setInterval() nor setTimeout() -> meaning keep it simple ;)
-   * 
-   * NOTE::: PLEASE::: if you add any custom css PLEASE use the style.css and prefix any class names with your team label
-   * i.e. you want to create a custom div class and you are in "Team_A" then call your class TEAM_A_ANI_A_Div -
-   * this is so that your styles are not overriden by other teams.
-   * NOTE::: All your code is to be added here inside this function -
-   * remember you can define other functions inside....
-   * Do not change any code above or the HTML markup.
-   * **/
 
 
-  function aniC(parentCanvas) {
 
-    console.log("in C");
-    /*** THIS IS THE CALLBACK FOR KEY DOWN ( DO NOT CHANGE THE NAME..) */
-    windowKeyDownRef = function (e) {
-      //code for key down in here
-      console.log(e)
-      //SAMPLE KEY CHECK (you do not have to use)
-      if (e.code === "Space") {
-        console.log("team-space down")
-      }
-    };
 
-    /*** THIS IS THE CALLBACK FOR KEY UP ( DO NOT CHANGE THE NAME..) */
-    windowKeyUpRef = function (e) {
+/**************** ANI B ************************************ */
+/** PUT ALL YOUR CODE FOR ANIMATION B INSIDE  HERE */
+/**************** ANI B ************************************ */
+/**************** TASK *******************************************
+ * YOU CAN USE ALL NOTES --- and see my examples in team-h.js for inspiration and possibly help:)
+ * 1: use the function window.setInterval() to create a pattern that changes over time
+ * i.e. fading out/ in, growing bigger/smaller, appear/disappear, add, remove...
+ *  - you can use simple shapes and colors, images etc...
+ * 2: add in a / some mouse click event listener(s) somewhere to make the sketch interactive
+
+ *
+ * NOTE::: PLEASE::: if you add any custom css PLEASE use the style.css and prefix any class names with your team label
+ * i.e. you want to create a custom div class and you are in "Team_A" then call your class TEAM_A_ANI_A_Div -
+ * this is so that your styles are not overriden by other teams.
+ * NOTE::: All your code is to be added here inside this function -
+ * remember you can define other functions inside....
+ * Do not change any code above or the HTML markup.
+ * **/
+function aniB(parentCanvas) {
+  console.log("in B");
+}
+/**************** ANI C ************************************ */
+/** PUT ALL YOUR CODE FOR INTERACTIVE PATTERN C INSIDE  HERE */
+/**************** ANI C ************************************ */
+/**************** TASK *******************************************
+  * YOU CAN USE ALL NOTES --- and see my examples in team-h.js for inspiration and possibly help:)
+  * 1: use the PROVIDED keyup/down callbacks `windowKeyDownRef` and/or `windowKeyUpnRef` to handle keyboard events
+  * 2: create an interactive pattern/sketch based on keyboard input. Anything goes.
+  * do not use  requestAnimationFrame(), setInterval() nor setTimeout() -> meaning keep it simple ;)
+  * 
+  * NOTE::: PLEASE::: if you add any custom css PLEASE use the style.css and prefix any class names with your team label
+  * i.e. you want to create a custom div class and you are in "Team_A" then call your class TEAM_A_ANI_A_Div -
+  * this is so that your styles are not overriden by other teams.
+  * NOTE::: All your code is to be added here inside this function -
+  * remember you can define other functions inside....
+  * Do not change any code above or the HTML markup.
+  * **/
+
+
+function aniC(parentCanvas) {
+
+  console.log("in C");
+  /*** THIS IS THE CALLBACK FOR KEY DOWN ( DO NOT CHANGE THE NAME..) */
+  windowKeyDownRef = function (e) {
+    //code for key down in here
+    console.log(e)
     //SAMPLE KEY CHECK (you do not have to use)
-      if (e.code === "Space") {
-        console.log("space up");
-        console.log("team-space up")
-      }
+    if (e.code === "Space") {
+      console.log("team-space down")
+    }
+  };
 
-    };
+  /*** THIS IS THE CALLBACK FOR KEY UP ( DO NOT CHANGE THE NAME..) */
+  windowKeyUpRef = function (e) {
+    //SAMPLE KEY CHECK (you do not have to use)
+    if (e.code === "Space") {
+      console.log("space up");
+      console.log("team-space up")
+    }
 
-    //DO NOT REMOVE
-    window.addEventListener("keydown", windowKeyDownRef);
-    window.addEventListener("keyup", windowKeyUpRef);
-  }
+  };
+
+  //DO NOT REMOVE
+  window.addEventListener("keydown", windowKeyDownRef);
+  window.addEventListener("keyup", windowKeyUpRef);
 }
+
