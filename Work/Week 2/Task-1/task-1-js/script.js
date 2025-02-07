@@ -149,25 +149,25 @@ function setup() {
     // access all paragraphs
 
     // function to create 
-    // let allPTagsThree = document.querySelectorAll('p');
+    let allPTagsThree = document.querySelectorAll('p');
 
-    // function customCreateElement(parent) {
-    //     console.log("Creating new element for:", parent);
+    function customCreateElement(parent) {
+        console.log("Creating new element for:", parent);
 
-    //     let newParagraph = document.createElement('p');
+        let newParagraph = document.createElement('p');
 
-    //     newParagraph.textContent = "Using ceateElement";
+        newParagraph.textContent = "Using ceateElement";
 
-    //     newParagraph.style.backgroundColor = "green";
+        newParagraph.style.backgroundColor = "green";
 
-    //     newParagraph.style.color = "white";
+        newParagraph.style.color = "white";
 
-    //     parent.appendChild(newParagraph);
-    // }
-    // // let allPTagsThree = document.getElementsByTagName('p');
-    // allPTagsThree.forEach((pTag) => {
-    //     customCreateElement(pTag);
-    // });
+        parent.appendChild(newParagraph);
+    }
+    //let allPTagsThree = document.getElementsByTagName('p');
+    allPTagsThree.forEach((pTag) => {
+        customCreateElement(pTag);
+    });
 
     /***EXPLANATION::
      * after adding each step of the code, it is being run however it is continously been read without any limit
