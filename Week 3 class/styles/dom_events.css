@@ -1,0 +1,100 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    background:rgb(49, 49, 49);
+    color:white;
+    font-family: 'Roboto', sans-serif;
+    position:relative;
+ 
+  }
+  #top-layer{
+    top:0;
+    left:1vw;
+    position:absolute;
+    z-index:2;
+}
+ 
+  #parent{
+    position:relative;
+    z-index:1;
+    background:rgba(255,255,255,.25);
+    width:98vw;
+    margin:0 auto;
+    padding-bottom:10px;
+    /* Add oveflow auto to container */
+    overflow: auto;
+}
+ 
+div:hover{
+    cursor: pointer;
+}
+  .intro-section{
+    background-color: rgba(214, 110, 239,1.0);
+    padding:10px;
+    width:calc(98% - 20px);
+    margin: 0 auto;
+    margin-top:10px;
+  }
+  .intro-section h2{
+    text-align: center;
+  }
+  .s1-section{
+    background-color: rgba(239, 166, 110,1.0);
+    padding:10px;
+    width:calc(98% - 20px);
+    margin: 0 auto;
+    margin-top:10px;
+  }
+  .s1-section h2{
+    text-align: center;
+  }
+ 
+  .s2-section{
+    background-color: rgba(110, 170, 239,1.0);
+    padding:10px;
+    width:calc(98% - 20px);
+    margin: 0 auto;
+    margin-top:10px;
+  }
+  .s2-section h2{
+    text-align: center;
+  }
+ 
+  .s3-section{
+    background-color: rgba(239, 110, 129,1.0);
+    padding:10px;
+    width:calc(98% - 20px);
+    margin: 0 auto;
+    margin-top:10px;
+  }
+  .s3-section h2{
+    text-align: center;
+  }
+ 
+  /*** BUBBLE BUTTOn ****/
+  #bubbleButton{
+    padding: 5px;
+    background-color:rgb(158, 153, 163);
+    width:max-content;
+    margin-left:1vw;
+    margin-top: 10px;
+    border-radius: 2px;
+    box-shadow: 2px 2px;
+ 
+  }
+  #bubbleButton:hover{
+    color:rgb(158, 153, 163);
+    background: white;
+ 
+  }
+ 
+  .bubble{
+    width:15px;
+    height:15px;
+    background-color: blue;
+    border-radius: 7px;
+    position:absolute;
+ 
+  }
