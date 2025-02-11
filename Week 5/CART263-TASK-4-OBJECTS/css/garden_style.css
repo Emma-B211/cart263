@@ -1,0 +1,41 @@
+body{
+    padding:0;
+    margin:0;
+
+  }
+.sky{
+    width: 100vw;
+    height:280px;
+    position:relative;
+    padding:0;
+    margin:0;
+}
+.grass{
+    width: 100vw;
+    height:calc(100vh - 280px);
+    position:relative;
+    padding:0;
+    margin:0;
+}
+
+.sun{
+    width: 100px;
+    height: 100px;
+    border-radius:50px;
+    position:absolute;
+    left:10px;
+    top:10px;
+}
+
+/* flower style */
+.flower{
+    padding:0;
+    margin:0;
+    position:absolute;
+}
+.petal{
+    padding:0;
+    margin:0;
+    position:absolute;
+    border-style:solid;
+}

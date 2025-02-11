@@ -6,8 +6,9 @@ class Flower {
         this.y = y;
         this.size = size;
         this.stemLength = stemLength;
-        this.stemThickness = 10;
-        this.petalThickness = 8;
+    
+        this.stemThickness = 5;
+        this.petalThickness = 4;
         this.flowerStemDiv = document.createElement("div");
         this.flowerPetalDiv = document.createElement("div");
      
@@ -23,32 +24,28 @@ class Flower {
           g: 0,
           b: 0,
         };
-       
 
-        let flowerInstance=this;
-         //add event listener and the call back
-    this.flowerStemDiv.addEventListener("click", growStem);
-    function growStem(e) {
-        console.log(self);
-      console.log(e.target); 
-      console.log(this);
-      console.log(flowerInstance);
-      let self = this;//keep a copy of 'this
-     //this is the div :)
-      //console.log(self);
-      self.stemLength = self.stemLength+10;
- 
-      //update the actual div...
-      self.flowerStemDiv.style.height = self.stemLength + "px";
-      self.flowerStemDiv.style.top = self.y - self.stemLength + "px";
- 
-      // and also the petal element needs to move up
-      self.flowerPetalDiv.style.top =
-      self.y - self.stemLength - self.size / 2 + "px";
-   }
-      }
+        let self = this;//keep a copy of 'this'
+    
+        this.flowerStemDiv.addEventListener("click", growStem);
+        function growStem(e) {
+          console.log(e.target);
+          console.log(this);
+          console.log(self);
+          self.stemLength = self.stemLength+10;
       
-  //render method
+          //update the actual div...
+          self.flowerStemDiv.style.height = self.stemLength + "px";
+          self.flowerStemDiv.style.top = self.y - self.stemLength + "px";
+    
+          // and also the petal element needs to move up
+          self.flowerPetalDiv.style.top =
+          self.y - self.stemLength - self.size / 2 + "px";
+       }
+      }
+
+      
+      //render method
   renderFlower() {
     this.flowerStemDiv.classList.add("flower");
     this.flowerStemDiv.style.width = this.stemThickness+"px";
@@ -71,5 +68,5 @@ class Flower {
       //add to the DOM
       document.getElementsByClassName("grass")[0].appendChild(this.flowerPetalDiv);
    }
-   
- }
+ 
+}
