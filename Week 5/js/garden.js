@@ -29,18 +29,21 @@ window.onload = function (){
           //the sky element
           skyDiv: document.createElement("div"),
         },
-     
+
+    
         /*sun object */
-        sun: {
-          sunColor: {
-            r: 240,
-            g: 206,
-            b: 83,
-          },
-          //the sun element
-          sunDiv: document.createElement("div"),
-        },
-      };
+        // sun: {
+        //   sunColor: {
+        //     r: 240,
+        //     g: 206,
+        //     b: 83,
+        //   },
+        //   //the sun element
+        //   sunDiv: document.createElement("div"),
+        // },
+        
+      }; 
+      let sun =  new Sun(10,10,{r: 240, g: 206,b: 83})
       // Creates a new JavaScript Object describing a flower and returns it
    function createFlower() {
     // Create our object
@@ -107,12 +110,13 @@ window.onload = function (){
         garden.sky.skyDiv.style.background = `rgb(${garden.sky.skyColor.r},${garden.sky.skyColor.g},${garden.sky.skyColor.b})`;
         document.getElementsByTagName("main")[0].appendChild(garden.sky.skyDiv);
      
-        //sun - IN the sky
-        garden.sun.sunDiv.classList.add("sun");
-        garden.sun.sunDiv.style.background = `rgb(${garden.sun.sunColor.r},${garden.sun.sunColor.g},${garden.sun.sunColor.b})`;
-        //append to the SKY div
-        document.getElementsByClassName("sky")[0].appendChild(garden.sun.sunDiv);
+        // //sun - IN the sky
+        // garden.sun.sunDiv.classList.add("sun");
+        // garden.sun.sunDiv.style.background = `rgb(${garden.sun.sunColor.r},${garden.sun.sunColor.g},${garden.sun.sunColor.b})`;
+        // //append to the SKY div
+        // document.getElementsByClassName("sky")[0].appendChild(garden.sun.sunDiv);
      
+        sun.renderSun();
         //grass
         garden.grass.grassDiv.classList.add("grass");
         garden.grass.grassDiv.style.background = `rgb(${garden.grass.grassColor.r},${garden.grass.grassColor.g},${garden.grass.grassColor.b})`;
