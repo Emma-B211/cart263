@@ -69,10 +69,28 @@ let garden = {
         // Add the flower to the array of flowers
         garden.flowers[i].renderFlower();
       }
+       // create Flower E
+    for (let i = 0; i < garden.numFlowerE; i++) {
+      // Create variables for our arguments for clarity
+      let x = Math.random() * window.innerWidth;
+      let y = Math.random() * 120;
+      let size = Math.random() * 30 + 10;
+      let stemLength = Math.random() * 50 + 20;
+      let petalColor = {
+        r: parseInt(Math.random() * 155) + 100,
+        g: parseInt(Math.random() * 155) + 100,
+        b: parseInt(Math.random() * 155) + 100,
+      };
+       // Create a new flower using the arguments
+       let flowerE = new Flower_E(x, y, size, stemLength, petalColor);
+       // Add the flower to the array of flowers
+       garden.flowerE.push(flowerE);
+     }
   }
   createAndRenderTheGarden();
 
 }
+
 /**TEAM A -- BEES
  * 1/ Create a  file to hold a  Bee Class (i.e. Bee.js)
  * 2/ Create the Bee Class : a constructor which takes a position, size and color as parameters
@@ -127,7 +145,43 @@ let garden = {
  * 5 / In garden.js add 25 new FlowerE objects to the garden (in an array) - different colors (make them quite small) -
  * 
 */
+// Creates a new JavaScript Object describing a flower and returns it
+function createFlower() {
+  // Create our object
+  // let flower = {
+  //   // Position and size information
+  //   x: Math.random()* (window.innerWidth),
+  //   y: Math.random()*120,
+  //   size: 20,
+  //   stemLength: 75,
+  //   stemThickness: 10,
+  //   petalThickness: 8,
+  //   flowerStemDiv: document.createElement("div"),
+  //   flowerPetalDiv: document.createElement("div"),
 
+  //   // Color information
+  //   stemColor: {
+  //     r: 50,
+  //     g: 150,
+  //     b: 50,
+  //   },
+  //   petalColor: {
+  //     r: 200,
+  //     g: 50,
+  //     b: 50,
+  //   },
+  //   centreColor: {
+  //     r: 50,
+  //     g: 0,
+  //     b: 0,
+  //   },
+  // };
+  // return flower;
+  let otherFlower= new Flower_E(); 
+  for (let i =0; i < petalColor; i++){
+   otherFlower;
+  }
+}
 /** TEAM F -- Birds
  * 1/ Create a  file to hold a  Bird Class (i.e. Bird.js)
  * 2/ Create the Bird Class : a constructor which takes a position, size and color as parameters
