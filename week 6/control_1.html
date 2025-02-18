@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+ 
+    <style>
+        body {
+            background: rgb(52, 52, 52);
+            margin: 0;
+            padding: 0;
+            color: rgb(42, 38, 38);
+            opacity: .85;
+            font-family: 'Roboto', sans-serif;
+            width: 100vw;
+        }
+ 
+        h1 {
+            color: rgb(226, 43, 141);
+ 
+        }
+ 
+        main {
+            width: 50vw;
+            margin: 0 auto;
+            text-align: center;
+        }
+ 
+ 
+        #nav-box {
+            display: flex;
+            background-color: rgb(226, 43, 141);
+            justify-content: space-around;
+            width: 640px;
+            margin: 0 auto;
+        }
+ 
+        #nav-box>span {
+            margin: 1%;
+            min-width: 20%;
+            display: inline-block;
+            background-color: white;
+            text-align: center;
+            padding-top: 5px;
+            padding-bottom: 2px;
+            border: 1px;
+            border-style: solid;
+            border-color: rgb(42, 38, 38);
+        }
+ 
+        input {
+            display: inline-block;
+            margin: 1%;
+            margin-left: 2%;
+            width: 25%;
+        }
+ 
+        #nav-box>span:hover {
+            background: rgb(42, 38, 38);
+            cursor: pointer;
+            color: rgb(226, 43, 141);
+        }
+    </style>
+    <script type="text/javascript" src="js/controlVideo.js"></script>
+</head>
+ 
+ 
+<body>
+ 
+    <main>
+ 
+        <h1>Control Video Example</h1>
+        <div id="nav-box"> <span id="play"> play</span> <span id="pause"> pause </span>
+            <span id="filter_button_blur">
+                <span> add blur</span>
+                <input id="blurnum" type="number" min="0" max="8" />
+            </span>
+            <span id="filter_button_hue">
+                <span> alter hue</span>
+                <input id="huenum" type="number" min="0" max="360" />
+            </span>
+        </div>
+        <video id="video" src="videos/b1_s.mov"></video>
+    </main>
+ 
+ 
+</body>
+ 
+</html>
