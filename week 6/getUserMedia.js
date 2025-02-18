@@ -1,6 +1,4 @@
-window.onload = getLiveVideo;
- 
-window.onload = getLiveVideo;
+ window.onload = getLiveVideo;
  
 async function getLiveVideo() {
   console.log("loaded");
