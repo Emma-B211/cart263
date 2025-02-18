@@ -65,5 +65,36 @@ function animate(){
        y_t1+=1;
        requestAnimationFrame(animate);
    }
+   //repaint with a black rect..
+context.clearRect(0,0,canvas.width,canvas.height);
+let triangle_2 = {
+    x1: canvas.width / 2,
+    y1: canvas.height / 2,
+    x2: canvas.width / 2 + lineLength,
+    y2: canvas.height / 2,
+    x3: canvas.width / 2 + lineLength / 2,
+    y3: canvas.height / 2 - lineLength,
+    strokeColor: "#FFFFFF",
+    fillColor: "#156cc8",
+    lineWidth: 2,
+  };
+
+  let x_t2=90;
+  let y_t2=50;
+  function animate() {
+    //repaint with a black rect..
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    setPoints(x_t1, y_t1, triangle_1);
+    setPoints(x_t2, y_t2, triangle_2);
+    display(triangle_1); 
+    display(triangle_2);
+    x_t1 += 1;
+    y_t1 += 1;
+
+    x_t2 -= 1;
+    y_t2 += 1;
+ 
+    requestAnimationFrame(animate);
+  }
 }
 
