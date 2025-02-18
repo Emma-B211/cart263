@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>getUserMedia Demo</title>
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+ 
+    <style>
+        body {
+            background: rgb(52, 52, 52);
+            margin: 0;
+            padding: 0;
+            color: rgb(42, 38, 38);
+            opacity: .85;
+            font-family: 'Roboto', sans-serif;
+            width: 100vw;
+        }
+ 
+        h1 {
+            text-align: center;
+            color: rgb(226, 43, 141);
+ 
+        }
+    main{
+      width:50%;
+      margin:0 auto;
+      background:grey;
+    }
+      #video
+      {
+        display: block;
+      }
+ </style>
+ <script type="text/javascript" src="getUserMedia.js"></script>
+ 
+  </head>
+  <body>
+ 
+    <h1>Access Camera Example</h1>
+    <main>
+    <video id="video" autoplay="autoplay" controls="true"></video>
+  </main>
+</body>
+</html>
