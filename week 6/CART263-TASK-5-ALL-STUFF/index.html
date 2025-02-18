@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<htmL>
+
+<head>
+    <title> CART 263: ALL STUFF AND CANVAS</title>
+    <!-- link to css-->
+    <link rel="stylesheet" href="css/all_stuff.css">
+    <!-- link to main script-->
+    <script src="js/VideoObj.js"></script>
+    <script src="js/FreeStyleObj.js"></script>
+    <script src="js/RectangularObj.js"></script>
+    <script src="js/CircularObj.js"></script>
+    <script src="js/DrawingBoard.js"></script>
+    <script src="js/start.js"></script>
+</head>
+
+<body>
+    <h1> CART 263:ALL STUFF INSIDE CANVAS(ES) </h1>
+    <video id="video-birds" src="videos/b1_s.mov" autoplay="autoplay" hidden></video>
+    <main>
+        <div class="container">
+            <div class="button-g">
+                <!-- button-->
+            </div>
+            <canvas class="canvases" width=400 height=300 id="partA"></canvas>
+        </div>
+        <div class="container">
+            <div class="button-g">
+                <!-- button-->
+            </div>
+            <canvas class="canvases" width=400 height=300 id="partB"></canvas>
+        </div>
+        <div class="container">
+            <div class="button-g">
+                <!-- button-->
+            </div>
+            <canvas class="canvases" width=400 height=300 id="partC"></canvas>
+        </div>
+        </div>
+
+        <div class="container">
+            <div class="button-g">
+
+                <span id="filter_button_blur">
+                    <span> blur</span>
+                    <input id="blurnum" type="number" min="0" max="8" />
+                </span>
+
+                <!-- button-->
+                <span id="filter_button_sepia">
+                    <span> sepia</span>
+                    <input id="sepianum" type="number" min="0" max="0" />
+                </span>
+
+                 <!-- button 2-->
+                 <span id="filter_button_hue">
+                    <span> hue-rotate</span>
+                    <input id="huenum" type="number" min="0" max="360" />
+                </span>
+
+                 <!-- button 2-->
+                 <span id="filter_button_invert">
+                    <span> invert</span>
+                    <input id="invertnum" type="number" min="0" max="0" />
+                </span>
+
+            </div>
+            <canvas class="canvases" width=400 height=300 id="partD"></canvas>
+        </div>
+
+
+    </main>
+</body>
+
+</html>
