@@ -61,7 +61,7 @@
             color: rgb(226, 43, 141);
         }
     </style>
-    <script type="text/javascript" src="js/controlVideo.js"></script>
+    <script type="text/javascript" src="controlVideo.js"></script>
 </head>
  
  
@@ -80,7 +80,8 @@
                 <input id="huenum" type="number" min="0" max="360" />
             </span>
         </div>
-        <video id="video" src="videos/b1_s.mov"></video>
+        <video id="video" src="videos/b1_s.mov" hidden="true"></video>
+        <canvas id="videoCanvas" width=640 height=360></canvas>
     </main>
  
  
