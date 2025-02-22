@@ -1,9 +1,9 @@
 
 class VideoObj {
   constructor(x, y, w, h, videoElement, context, canvas) {
-    if(!canvas){
-      console.error("canvas element is missing!");
-    }
+    // if (!canvas || !context || !videoElement) {
+    //   console.error("canvas,context, or video element is missing!");
+    // }
     this.videoElement = videoElement;
     this.context = context;
     this.canvas = canvas;
