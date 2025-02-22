@@ -11,7 +11,7 @@ class RectangularObj {
     this.startAngle = 0;
     this.endAngle = Math.PI * 2; //full rotation
     this.context = context;
-    this.volume = 0;
+    // this.volume = 0;
   }
 
   display() {
@@ -29,10 +29,14 @@ class RectangularObj {
     // Animation: Slight horizontal movement
     this.x += Math.sin(Date.now() * 0.002) * 2;
 
+    // Make color shift **more dramatic**
+    let red = Math.min(this.volume * 800, 255);  // Higher boost for red
+    let green = Math.min(this.volume * 500, 255); // Moderate green boost
+    let blue = Math.min(this.volume * 1000, 255); // Higher boost for blue
+
     // Change rectangle properties based on microphone volume
     this.width = 50 + this.volume * 300; // Width increases with sound
-    this.h = 70 + this.volume * 100;  // Example: adjust height
-    this.fill_color = `rgb(${Math.min(this.volume * 500, 255)}, 50, 150)`; // Color reacts to sound
+    this.fill_color = `rgb(${red}, ${green}, ${blue})`; // Dynamic color change
   }
 
   setVolume(vol) {
