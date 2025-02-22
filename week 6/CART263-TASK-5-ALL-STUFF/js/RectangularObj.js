@@ -11,6 +11,7 @@ class RectangularObj {
     this.startAngle = 0;
     this.endAngle = Math.PI * 2; //full rotation
     this.context = context;
+    this.volume = 0;
   }
 
   display() {
@@ -30,6 +31,7 @@ class RectangularObj {
 
     // Change rectangle properties based on microphone volume
     this.width = 50 + this.volume * 300; // Width increases with sound
+    this.h = 70 + this.volume * 100;  // Example: adjust height
     this.fill_color = `rgb(${Math.min(this.volume * 500, 255)}, 50, 150)`; // Color reacts to sound
   }
 
