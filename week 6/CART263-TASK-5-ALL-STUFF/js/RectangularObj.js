@@ -15,15 +15,26 @@ class RectangularObj {
 
   display() {
     this.context.fillStyle = this.fill_color; // change the color we are using
-    this.context.fillRect(this.x, this.y,this.width, this.height);
+    this.context.fillRect(this.x, this.y, this.width, this.height);
     this.context.strokeStyle = this.stroke_color; // change the color we are using
     this.context.lineWidth = 2; //change stroke
-    this.context.strokeRect(this.x, this.y,this.width, this.height);
+    this.context.strokeRect(this.x, this.y, this.width, this.height);
   }
 
-  update(){
+  update() {
     //update freestyle
-   // this.x+=1;
+    // this.x+=1;
     //console.log("rectangle update")
+    // Animation: Slight horizontal movement
+    this.x += Math.sin(Date.now() * 0.002) * 2;
+
+    // Change rectangle properties based on microphone volume
+    this.width = 50 + this.volume * 300; // Width increases with sound
+    this.fill_color = `rgb(${Math.min(this.volume * 500, 255)}, 50, 150)`; // Color reacts to sound
+  }
+
+  setVolume(vol) {
+    this.volume = vol; // Update volume from microphone
+  }
 }
-}
+

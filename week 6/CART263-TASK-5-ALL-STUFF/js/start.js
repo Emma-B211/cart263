@@ -28,8 +28,11 @@ function go_all_stuff() {
     drawingBoardA.display();
 
     // Canvas B: Rectangular Object
+    //let drawingBoardB = new DrawingBoard(theCanvases[1], theContexts[1], theCanvases[1].id);
     let drawingBoardB = new DrawingBoard(theCanvases[1], theContexts[1], theCanvases[1].id);
-    drawingBoardB.addObj(new RectangularObj(100, 100, 50, 70, "#FF5733", "#E6E6FA", drawingBoardB.context));
+    // drawingBoardB.addObj(new RectangularObj(100, 100, 50, 70, "#FF5733", "#E6E6FA", drawingBoardB.context));
+    let rectObj = new RectangularObj(100, 100, 50, 70, "#FF5733", "#E6E6FA", drawingBoardB.context);
+    drawingBoardB.addObj(rectObj); //added this
     drawingBoardB.display();
 
     // Canvas C: FreeStyle Object
@@ -53,6 +56,48 @@ function go_all_stuff() {
         drawingBoardD.run(videoEl); // Call run once for video
         window.requestAnimationFrame(animationLoop);
     }
+    /* Start Microphone Input */
+    getMicrophoneInput(rectObj);
+}
+
+// 🎤 **Microphone Setup**
+async function getMicrophoneInput(rectObj) {
+    console.log("Starting Microphone Input...");
+
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioContext = new AudioContext();
+
+    try {
+        let audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        let microphoneIn = audioContext.createMediaStreamSource(audioStream);
+        const filter = audioContext.createBiquadFilter();
+        const analyser = audioContext.createAnalyser();
+
+        microphoneIn.connect(filter);
+        filter.connect(analyser);
+
+        analyser.fftSize = 1024;
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        function analyzeAudio() {
+            analyser.getByteFrequencyData(dataArray);
+            let sum = 0;
+            for (let i = 0; i < bufferLength; i++) {
+                sum += dataArray[i];
+            }
+            let averageVolume = sum / bufferLength / 255; // Normalize to 0-1
+
+            rectObj.setVolume(averageVolume); // Pass volume data to rectangle
+
+            requestAnimationFrame(analyzeAudio);
+        }
+
+        analyzeAudio();
+    } catch (err) {
+        console.error("Microphone access denied", err);
+    }
+
 }
 
 

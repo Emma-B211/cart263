@@ -16,18 +16,48 @@ class VideoObj {
     this.shapeY = 100;
     this.shapeCol = "#000000";
     this.newCol = "#FF0000";
+    this.userProvidedSepia = 0;
+    this.userProvidedHue = 0;
+    this.userProvidedBlur = 0;
+    this.userProvidedInvert = 0;
     this.addMouseMoveListener();
     this.addClickListener();
-
-    let filterButton_blur = document.getElementById("filter_button_blur");
-    let blurInput = document.getElementById("blurnum");
-    this.userProvidedBlur = 0;
     let self = this;
 
+    let filterButton_sepia = document.getElementById("filter_button_sepia");
+    let sepiaInput = document.getElementById("sepianum");
+    let filterButton_blur = document.getElementById("filter_button_blur");
+    let blurInput = document.getElementById("blurnum");
+    // this.userProvidedBlur = 0;
+
+
+    let filterButton_hue = document.getElementById("filter_button_hue");
+    let hueInput = document.getElementById("huenum");
+
+    let filterButton_invert = document.getElementById("filter_button_invert");
+    let invertInput = document.getElementById("invertnum");
     filterButton_blur.addEventListener("click", function () {
       //get value from input field
       self.userProvidedBlur = blurInput.value;
       console.log(self.userProvidedBlur);
+    });
+
+    filterButton_sepia.addEventListener("click", function () {
+
+      self.userProvidedSepia = sepiaInput.value;
+      console.log(self.userProvidedSepia)
+    });
+
+    filterButton_hue.addEventListener("click", function () {
+      //get value from input field
+      self.userProvidedHue = hueInput.value;
+      console.log(self.userProvidedHue)
+    });
+
+    filterButton_invert.addEventListener("click", function () {
+      //get value from input field
+      self.userProvidedInvert = invertInput.value;
+      console.log(self.userProvidedInvert)
     });
   }
 
