@@ -1,19 +1,27 @@
+
 class VideoObj {
-  constructor(x, y, w, h, videoElement, context) {
+  constructor(x, y, w, h, videoElement, context, canvas) {
+    if(!canvas){
+      console.error("canvas element is missing!");
+    }
     this.videoElement = videoElement;
     this.context = context;
+    this.canvas = canvas;
+
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
-    this.shapeX = 10;
-    this.shapeY =10;
+    this.shapeX = 100;
+    this.shapeY = 100;
     this.shapeCol = "#000000";
- 
+    this.newCol = "#FF0000";
+    this.addMouseMoveListener();
+    this.addClickListener();
 
     let filterButton_blur = document.getElementById("filter_button_blur");
     let blurInput = document.getElementById("blurnum");
-    this.userProvidedBlur  = 0;
+    this.userProvidedBlur = 0;
     let self = this;
 
     filterButton_blur.addEventListener("click", function () {
@@ -25,21 +33,49 @@ class VideoObj {
 
   display() {
     this.context.save();
-     //this.context.filter = `blur(${this.userProvidedBlur}px)`;
+    //this.context.filter = `blur(${this.userProvidedBlur}px)`;
     this.context.drawImage(this.videoElement, this.x, this.y, this.w, this.h);
     this.context.fillStyle = this.shapeCol;
-    this.context.fillRect(this.shapeX, this.shapeY, 50,50)
+    this.context.fillRect(this.shapeX, this.shapeY, 50, 50)
     this.context.restore();
+    this.context.fillStyle = this.shapeCol;
+    //this.context.fillRect(this.shapeX, this.shapeY, 50, 50);
   }
 
-    //called when rectangle color is to be updated
-  changeColor(newCol){
-   /** FILL IN */
+  //called when rectangle color is to be updated
+  changeColor(newCol) {
+    /** FILL IN */
   }
   //called when rectangle Pos is to be updated
-  updatePositionRect(mx,my){
-     /** FILL IN */
+  updatePositionRect(e) {
+    /** FILL IN */
+    if (!this.canvas) return;
+
+    let mx = e.clientX - this.canvas.getBoundingClientRect().left;
+    let my = e.clientY - this.canvas.getBoundingClientRect().top;
+
+    this.shapeX = mx - 25;
+    this.shapeY = my - 25;
+    this.render();
   }
+  clickCanvas(e) {
+    this.shapeCol = this.shapeCol === "#000000" ? this.newCol : "#000000";
+    console.log("rectangle color change to:", this.shapeCol);
+    this.render();
+  }
+  addMouseMoveListener() {
+    if (!this.canvas) return;
+    this.canvas.addEventListener("mousemove", (e) => this.updatePositionRect(e));
+  }
+  addClickListener() {
+    if (!this.canvas) return;
+    this.canvas.addEventListener("click", (e) => this.clickCanvas(e));
+  }
+  render() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.display();
+  }
+
   update(videoElement) {
     this.videoElement = videoElement;
   }
