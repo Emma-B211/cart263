@@ -1,0 +1,76 @@
+[
+    {
+        "id": "0001",
+        "type": "donut",
+        "name": "Cake",
+        "image": "../images/donuts/donut_b.png",
+        "flavours": [
+            {
+                "id": "1001",
+                "type": "Regular"
+            },
+            {
+                "id": "1002",
+                "type": "Chocolate"
+            },
+            {
+                "id": "1003",
+                "type": "Blueberry"
+            },
+            {
+                "id": "1004",
+                "type": "Devil's Food"
+            }
+        ],
+        "toppings": [
+            "None",
+            "Glazed",
+            "Sugar",
+            "Powdered Sugar",
+            "Chocolate with Sprinkles",
+            "Chocolate",
+            "Maple"
+        ]
+    },
+    {
+        "id": "0002",
+        "type": "donut",
+        "name": "Raised",
+        "image": "../images/donuts/donut_a.png",
+        "flavours": [
+            {
+                "id": "1001",
+                "type": "Regular"
+            }
+        ],
+        "toppings": [
+            "None",
+            "Glazed",
+            "Sugar",
+            "Chocolate",
+            "Maple"
+        ]
+    },
+    {
+        "id": "0003",
+        "type": "donut",
+        "name": "Old Fashioned",
+        "image": "../images/donuts/donut_f.png",
+        "flavours": [
+            {
+                "id": "1001",
+                "type": "Regular"
+            },
+            {
+                "id": "1002",
+                "type": "Chocolate"
+            }
+        ],
+        "toppings": [
+            "None",
+            "Glazed",
+            "Chocolate",
+            "Maple"
+        ]
+    }
+]
