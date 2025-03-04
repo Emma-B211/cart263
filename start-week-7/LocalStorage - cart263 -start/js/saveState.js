@@ -19,5 +19,12 @@ window.onload = function () {
     }
   }
   // the function to save the input INTO LOCAL STORAGE
-  function saveStateOfOption(id, stringToSave) {}
+  function saveStateOfOption(id, stringToSave) {
+    let key = "temp"
+    // let value= "valueToSavetwo_2"
+    // localStorage.setItem(key,value);
+
+    let array=["TEST_a", "TEST_b","TEST_c"];
+localStorage.setItem(key,JSON.stringify(array));
+  }
 };
