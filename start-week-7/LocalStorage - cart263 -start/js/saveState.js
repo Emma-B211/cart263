@@ -20,11 +20,23 @@ window.onload = function () {
   }
   // the function to save the input INTO LOCAL STORAGE
   function saveStateOfOption(id, stringToSave) {
-    let key = "temp"
-    // let value= "valueToSavetwo_2"
-    // localStorage.setItem(key,value);
+     let key = "temp"
+//     // let value= "valueToSavetwo_2"
+//     // localStorage.setItem(key,value);
 
-    let array=["TEST_a", "TEST_b","TEST_c"];
-localStorage.setItem(key,JSON.stringify(array));
+//     let array=["TEST_a", "TEST_b","TEST_c"];
+// localStorage.setItem(key,JSON.stringify(array));
+
+// let s = localStorage.getItem("temp_2")
+// console.log(s)
+let receivedArray= localStorage.getItem(id)
+//console.log(JSON.parse(receivedArray));
+let revArray=JSON.parse(receivedArray);
+revArray.push(stringToSave)
+localStorage.setItem(key,JSON.stringify(revArray))
+
+// let newArr=[];
+// newArr.push(stringToSave);
+// localStorage.setItem(id, JSON.stringify(newArr));
   }
 };
