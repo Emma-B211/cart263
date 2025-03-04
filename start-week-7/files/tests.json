@@ -72,5 +72,29 @@
             "Chocolate",
             "Maple"
         ]
+
+    },
+    {
+        "id": "0004",
+        "type": "donut",
+        "name": "New",
+        "image": "../images/donuts/donut_e.png",
+        "flavours": [
+            {
+                "id": "1001",
+                "type": "Regular"
+            },
+            {
+                "id": "1005",
+                "type": "Coffee"
+            }
+        ],
+        "toppings": [
+            "None",
+            "Glazed",
+            "Chocolate",
+            "Maple"
+        ]
     }
+    
 ]
