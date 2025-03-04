@@ -4,7 +4,7 @@ async function goApp(){
 console.log("hello fetch")
 try{
  
-    let response = await fetch('../files/tests.json'); //response
+    let response = await fetch('../files/test.json'); //response
     let parsedResultJS = await response.json();
     console.log(parsedResultJS)
    }
