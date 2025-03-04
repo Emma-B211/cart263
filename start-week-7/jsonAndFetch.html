@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> JSON </title>
+  <style>
+  body{
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+  }
+  #container{
+    background: #cbdcff;
+    width:70vw;
+    margin-top:50px;
+    margin-left:15vw;
+    min-height:400px;
+    padding:10px;
+}
+h1{
+    padding:5px;
+    text-align: center;
+    background:rgba(255,255,255,.5);
+    color:#3c66b8;
+}
+ #output{
+    padding:5px;
+    background:rgba(255,255,255,.5);
+    color:#3c66b8;
+    font-size: 18px;
+    display:flex;
+    flex-wrap:wrap;
+}
+
+.donutItem{
+    margin:5px;
+    width:200px;
+    min-height:200px;
+    background:rgba(184, 124, 212, 0.75);
+
+}
+.donutItem img {
+ display:inline-block;
+ width:50%;
+ height:auto;
+ margin-left:24%;
+ margin-top:4%;
+}
+
+h3{
+    color:#8c36b4;
+    background:rgba(222, 179, 241, 0.75);
+    margin:0 auto;
+    text-align:center;
+    margin-top:10px;
+    padding:2px;
+    margin-bottom:10px;
+    text-transform: uppercase;
+} 
+
+
+h5{
+    color:#3b2446;
+    text-align:center;
+    margin-top:10px;
+    padding:2px;
+    margin-bottom:0px;
+    text-transform: uppercase;
+} 
+
+ul{
+    margin:0;
+    color:#8c36b4;
+    background:rgba(222, 179, 241, 0.75);
+    margin-bottom:2px;
+
+}
+
+</style>
+<script src = "js/jsonFetch.js"></script>
+
+</head>
+<body>
+
+<div id = "container">
+    <h1>JSON AND FETCH</h1>
+    <div id="output"></div> 
+
+</div>
+
+
+</body>
+</html>
