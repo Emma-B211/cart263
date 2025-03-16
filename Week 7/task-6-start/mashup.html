@@ -26,11 +26,9 @@
             color: #3c66b8;
         }
 
-
         #inputDiv {
             display: block;
             width: 100%;
-
         }
 
         .flex-container {
@@ -45,7 +43,6 @@
         }
 
         #rainbowCol h3 {
-
             margin: 0;
             text-align: center;
             padding: 5px;
@@ -72,7 +69,6 @@
             margin: 0 auto;
             margin-top: 10px;
         }
-
 
         #stepOneButton,
         #resetButton {
@@ -104,7 +100,34 @@
             min-height: 300px;
         }
 
-     
+        #partCContainer {
+            display: none;
+            position: relative;
+            padding: 5px;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, .5);
+            color: #3c66b8;
+            font-size: 18px;
+            min-height: 300px;
+        }
+
+        #partCOutput {
+            font-size: 20px;
+            color: #3c66b8;
+        }
+
+        /* New container for Part D visualization */
+        #visualizedPoemContainer {
+            display: none;
+            background: rgba(255, 255, 255, .5);
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        #visualizedOutput {
+            font-size: 20px;
+            color: #3c66b8;
+        }
     </style>
     <!-- Script files -->
     <script src="js/main.js"></script>
@@ -129,8 +152,18 @@
                 </div>
             </div>
         </div>
-    </div>
+        <!-- Container for Part C output -->
+        <div id="partCContainer">
+            <h3>Processed Poem Sentence (Part C):</h3>
+            <div id="partCOutput"></div>
+        </div>
+        <!-- Container for Part D visualization -->
+        <div id="visualizedPoemContainer">
+            <h3>Visualized Poem:</h3>
+            <div id="visualizedOutput"></div>
+        </div>
 
+    </div>
 
 </body>
 

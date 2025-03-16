@@ -60,13 +60,6 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
     console.log("Seed Phrase Array:", seed_phrase_array);
 
     let poem_sentence = ''; // Initialize the poem sentence
-    const outputDiv = document.getElementById("output"); // Reference to the output div
-
-    // Clear previous content in the output div before generating new visualization
-    outputDiv.innerHTML = '';
-
-    // Unhide the output div (this will make the div visible)
-    outputDiv.style.display = 'block';
 
     // Iterate over each word in the seed phrase array
     for (let i = 0; i < seed_phrase_array.length; i++) {
@@ -108,48 +101,38 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
 
       // After processing all characters of the seed word, join the matched words and add to the poem_sentence
       poem_sentence += matched_words.join(' ') + ' ';
-
-      // Create a visual box for each matched word and append to output
-      matched_words.forEach(word => {
-        let wordBox = document.createElement("span"); // Create a new span for the word box
-        wordBox.textContent = word; // Set the text to the word
-        wordBox.style.display = "inline-block"; // Make it inline-block for styling
-        wordBox.style.padding = "10px";
-        wordBox.style.margin = "5px";
-        wordBox.style.border = "2px solid #000";
-        wordBox.style.borderRadius = "5px";
-        wordBox.style.fontSize = "18px";
-        wordBox.style.fontFamily = "Arial, sans-serif";
-        wordBox.style.backgroundColor = getRandomColor(); // Random background color for each box
-        wordBox.style.color = "#fff"; // Text color
-
-        // Optional: Add interactivity with mouseover and mouseout effects
-        wordBox.addEventListener("mouseover", () => {
-          wordBox.style.transform = "scale(1.2)";
-          wordBox.style.transition = "transform 0.3s ease";
-        });
-
-        wordBox.addEventListener("mouseout", () => {
-          wordBox.style.transform = "scale(1)";
-        });
-
-        // Append the word box to the output div
-        outputDiv.appendChild(wordBox);
-      });
     }
 
     // Trim any extra space at the end and call runPartD with the result
     poem_sentence = poem_sentence.trim();
     console.log("Generated Poem Sentence:", poem_sentence);
+
+    // Display the poem sentence in Part C container
+    const partCContainer = document.getElementById("partCContainer");
+    const partCOutput = document.getElementById("partCOutput");
+
+    // Make the Part C container visible and insert the poem sentence
+    if (partCContainer && partCOutput) {
+      partCContainer.style.display = "block";
+      partCOutput.innerHTML = poem_sentence;
+    }
+
+    // Proceed with Part D
     runPartD(poem_sentence);
   }
 
-
   /****** PART D:: VISUALIZE  */
   function runPartD(new_sentence) {
-    // Unhide the output div
-    const outputDiv = document.getElementById("output");
-    outputDiv.style.display = "block";  // Make the div visible
+    // Unhide the visualized poem container
+    const visualizedPoemContainer = document.getElementById("visualizedPoemContainer");
+    const visualizedOutput = document.getElementById("visualizedOutput");
+
+    // Ensure the container exists before accessing
+    if (visualizedPoemContainer) {
+      visualizedPoemContainer.style.display = "block";  // Make the div visible
+    } else {
+      console.error("The container for the visualized poem was not found.");
+    }
 
     // Initialize an empty string to hold the visualized poem
     let visualized_poem = '';
@@ -187,11 +170,15 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
       }
     }
 
-    // Insert the visualized poem into the output div
-    outputDiv.innerHTML = visualized_poem;
+    // Insert the visualized poem into the visualizedOutput div
+    if (visualizedOutput) {
+      visualizedOutput.innerHTML = visualized_poem;
+    } else {
+      console.error("The output element for the visualized poem was not found.");
+    }
   }
 
-  // Helper function to generate a random color
+  // Helper functions (same as before)
   function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -201,12 +188,10 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
     return color;
   }
 
-  // Helper function to generate a random font size
   function getRandomFontSize() {
     return `${Math.floor(Math.random() * 30) + 16}px`; // Random size between 16px and 45px
   }
 
-  // Helper function to generate a random font family
   function getRandomFontFamily() {
     const fonts = ['Arial', 'Courier New', 'Georgia', 'Verdana', 'Tahoma', 'Comic Sans MS', 'Roboto'];
     return fonts[Math.floor(Math.random() * fonts.length)];
