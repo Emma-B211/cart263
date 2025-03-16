@@ -60,6 +60,13 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
     console.log("Seed Phrase Array:", seed_phrase_array);
 
     let poem_sentence = ''; // Initialize the poem sentence
+    const outputDiv = document.getElementById("output"); // Reference to the output div
+
+    // Clear previous content in the output div before generating new visualization
+    outputDiv.innerHTML = '';
+
+    // Unhide the output div (this will make the div visible)
+    outputDiv.style.display = 'block';
 
     // Iterate over each word in the seed phrase array
     for (let i = 0; i < seed_phrase_array.length; i++) {
@@ -101,6 +108,34 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
 
       // After processing all characters of the seed word, join the matched words and add to the poem_sentence
       poem_sentence += matched_words.join(' ') + ' ';
+
+      // Create a visual box for each matched word and append to output
+      matched_words.forEach(word => {
+        let wordBox = document.createElement("span"); // Create a new span for the word box
+        wordBox.textContent = word; // Set the text to the word
+        wordBox.style.display = "inline-block"; // Make it inline-block for styling
+        wordBox.style.padding = "10px";
+        wordBox.style.margin = "5px";
+        wordBox.style.border = "2px solid #000";
+        wordBox.style.borderRadius = "5px";
+        wordBox.style.fontSize = "18px";
+        wordBox.style.fontFamily = "Arial, sans-serif";
+        wordBox.style.backgroundColor = getRandomColor(); // Random background color for each box
+        wordBox.style.color = "#fff"; // Text color
+
+        // Optional: Add interactivity with mouseover and mouseout effects
+        wordBox.addEventListener("mouseover", () => {
+          wordBox.style.transform = "scale(1.2)";
+          wordBox.style.transition = "transform 0.3s ease";
+        });
+
+        wordBox.addEventListener("mouseout", () => {
+          wordBox.style.transform = "scale(1)";
+        });
+
+        // Append the word box to the output div
+        outputDiv.appendChild(wordBox);
+      });
     }
 
     // Trim any extra space at the end and call runPartD with the result
@@ -108,9 +143,6 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
     console.log("Generated Poem Sentence:", poem_sentence);
     runPartD(poem_sentence);
   }
-
-
-
 
 
   /****** PART D:: VISUALIZE  */
