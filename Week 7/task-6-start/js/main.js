@@ -106,18 +106,33 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
     // Trim any extra space at the end and call runPartD with the result
     poem_sentence = poem_sentence.trim();
     console.log("Generated Poem Sentence:", poem_sentence);
+
+    // Display the poem sentence in Part C container
+    const partCContainer = document.getElementById("partCContainer");
+    const partCOutput = document.getElementById("partCOutput");
+
+    // Make the Part C container visible and insert the poem sentence
+    if (partCContainer && partCOutput) {
+      partCContainer.style.display = "block";
+      partCOutput.innerHTML = poem_sentence;
+    }
+
+    // Proceed with Part D
     runPartD(poem_sentence);
   }
 
-
-
-
-
   /****** PART D:: VISUALIZE  */
   function runPartD(new_sentence) {
-    // Unhide the output div
-    const outputDiv = document.getElementById("output");
-    outputDiv.style.display = "block";  // Make the div visible
+    // Unhide the visualized poem container
+    const visualizedPoemContainer = document.getElementById("visualizedPoemContainer");
+    const visualizedOutput = document.getElementById("visualizedOutput");
+
+    // Ensure the container exists before accessing
+    if (visualizedPoemContainer) {
+      visualizedPoemContainer.style.display = "block";  // Make the div visible
+    } else {
+      console.error("The container for the visualized poem was not found.");
+    }
 
     // Initialize an empty string to hold the visualized poem
     let visualized_poem = '';
@@ -155,11 +170,15 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
       }
     }
 
-    // Insert the visualized poem into the output div
-    outputDiv.innerHTML = visualized_poem;
+    // Insert the visualized poem into the visualizedOutput div
+    if (visualizedOutput) {
+      visualizedOutput.innerHTML = visualized_poem;
+    } else {
+      console.error("The output element for the visualized poem was not found.");
+    }
   }
 
-  // Helper function to generate a random color
+  // Helper functions (same as before)
   function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -169,12 +188,10 @@ In a double rainbow, a second arc is seen outside the primary arc, and has the o
     return color;
   }
 
-  // Helper function to generate a random font size
   function getRandomFontSize() {
     return `${Math.floor(Math.random() * 30) + 16}px`; // Random size between 16px and 45px
   }
 
-  // Helper function to generate a random font family
   function getRandomFontFamily() {
     const fonts = ['Arial', 'Courier New', 'Georgia', 'Verdana', 'Tahoma', 'Comic Sans MS', 'Roboto'];
     return fonts[Math.floor(Math.random() * fonts.length)];
