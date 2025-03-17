@@ -15,6 +15,25 @@ const config = {
 
 const game = new Phaser.Game(config);
 
+
+
+// pick up object 
+
+function pickUpItem(player, item){
+    //hide the item (simulate pick up)
+    item.setVisible(false);
+    item.setActive(false);
+
+    itemsCollected++;
+
+    console.log('item picked up! Total items:'+ itemsCollected);
+
+    //optionally, you can create new items in a random position to pick up
+    item.setPosition(Phaser.Math.Between(50,750), Phaser.Math.Between(50,550));
+    item.setVisible(true);
+    item.setActive(true);
+
+}
 // let character;
 // let room;
 
