@@ -122,6 +122,8 @@ function mapArraysShape(){
 
 }
 function mapArraysColor() {
+ console.log(arrayOfShapes);
+  //MAP TWO
   let arrayOfShapesNew = arrayOfShapes.map(changeColor);
   add_New_Els_ToDOM(arrayOfShapesNew, originalRow);
   console.log(arrayOfShapesNew)
@@ -138,20 +140,84 @@ function mapArraysColor() {
 }
 
 function filterArraysX(){
+  //console.log(arrayOfShapesTwo);
+    // FILTER ONE
+    // let filterArraysX= arrayOfShapesTwo.filter(smaller_posX);
+ 
+    // function smaller_posX(el){
+    //     return(
+    //         (el.x > 200)
+    //     )
+    // }
+ 
+    // console.log(filterArraysX);
+    // //then we can map - to change the y :)
+    // let arrayOfShapesNew = filterArraysX.map(
+    //     function(el){
+    //         return (new ShapeDef(el.x, el.y+100, el.shapeClass,el.customShapeClass,el.color))
+ 
+    // });
+    // add_New_Els_ToDOM(arrayOfShapesNew, secondRow);
 }
 
 function filterArraysByShape(){
+  // FILTER ONE
+  // let filterArraysShape= arrayOfShapesTwo.filter(shape_filter);
+ 
+  // function shape_filter(el){
+  //     return(
+  //         (el.customShapeClass ==='circle')
+  //     )
+  // }
+
+  // //then we can map - to change the y :)
+  // let arrayOfShapesNew = filterArraysShape.map(
+  //     function(el){
+  //         return (new ShapeDef(el.x, el.y+200, el.shapeClass,el.customShapeClass,el.color))
+
+  // });
+  // add_New_Els_ToDOM(arrayOfShapesNew, secondRow);
 }
 
 function forEachCallBackA(){
+  // document.querySelector("#pSpan").innerHTML=""
+  //   arrayOfShapesThree.forEach(addPTags)
+ 
+  //   function addPTags(el){
+  //       document.querySelector("#pSpan").innerHTML+= `<span> x:${el.x} <span>`
+  //   }
 }
 function forEachCallBackB(){
+  // document.querySelector("#pSpan").innerHTML=""
+  // arrayOfShapesThree.forEach(addPTags)
+
+  // function addPTags(el){
+  //     document.querySelector("#pSpan").innerHTML+= `<span> y:${el.y} <span>`
+
+  // }
 
 }
 function findCallBackA(){
+  //get an object back whose x> 200
+  // const foundObj = arrayOfShapesFour.find(
+  //   function(el){
+  //       return(el.x>200)
+  //   })
+  //   console.log(foundObj)
+  //   if(foundObj)
+  //   add_SingleToDOM(foundObj, fourthRow)
 }
 
+
 function findCallBackB(){
+   //get an object back whose y> 40
+   const foundObj = arrayOfShapesFour.find(
+    function(el){
+        return(el.y>40)
+    })
+    console.log(foundObj)
+    if(foundObj)
+    add_SingleToDOM(foundObj, fourthRow)
 }
 /******* HELPERS */
 function add_SingleToDOM(shapeDef, parent) {
@@ -189,13 +255,44 @@ function add_SingleToDOM(shapeDef, parent) {
     rgbArray = substringColor.split(",");
     return rgbArray;
   }
-  const numbers = [1, 2, 3, 4, 5];
-const squaredNumbers = numbers.map(
-    function (num) { 
-        return(
-        num * num
-        )
-    }
-);
+//   const numbers = [1, 2, 3, 4, 5];
+// const squaredNumbers = numbers.map(
+//     function (num) { 
+//         return(
+//         num * num
+//         )
+//     }
+  // );
 };
+// const donuts = [
+//   { name: 'mondays_donut', type: 'sparkly' },
+//   { name: 'tuesdays_donut', type: 'shiny' },
+//   { name: 'wednesdays_donut', type: 'squashy' }
+// ];
+// /** REDUCE */
+// const numbers_n = [11, 2, 32, 4, 5,70];
+
+// const sum = numbers_n.reduce(
+//     function (accum, initval) 
+//     {
+//         return(accum + initval)
+//     },0)
+
+// //console.log(sum);
+// const newObjectFromArray = donuts.reduce((accum, item) => {
+//   /* accumulator is the array building */
+//   console.log(accum)
+// // add object key to our object i.e. mondays_donut: { type: 'sparkly' }
+// accum[item.name] = {type: item.type };
+// return accum;
+// },{});
+// console.log(newObjectFromArray)
+
+const fruits = ["apples", "grapes", "pears"];
+const colors = ["blues", "reds", "oranges", "purples", "yellows"]
+const food= [...fruits, "carrots", "patatoes", "turnips"];
+console.log(food)
+
+const moreFoodAndColorAgain= [...food,...colors]
+console.log(moreFoodAndColorAgain)
 }
