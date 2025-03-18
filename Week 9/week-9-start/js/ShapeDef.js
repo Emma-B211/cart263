@@ -8,11 +8,11 @@ class ShapeDef{
 
     }
 
-    // changeClass(newClass){
-    //     this.el.classList.remove(this.customShapeClass);
-    //     this.customShapeClass = newClass;
-    //     //this.el.classList.add(this.customShapeClass);
+    changeClass(newClass){
+        this.el.classList.remove(this.customShapeClass);
+        this.customShapeClass = newClass;
+        //this.el.classList.add(this.customShapeClass);
 
-    // }
+    }
 
 }

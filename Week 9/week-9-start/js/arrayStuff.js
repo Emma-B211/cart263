@@ -109,9 +109,32 @@ add_New_Els_ToDOM(arrayOfShapesFour, fourthRow);
 
 /***** TO FILL IN */
 function mapArraysShape(){
+  console.log(arrayOfShapes);
+  // MAP ONE
+  let arrayOfShapesNew = arrayOfShapes.map(changeShape);
+  add_New_Els_ToDOM(arrayOfShapesNew, originalRow);
+  function changeShape(el){
+      return (
+      /* need to make a copy */
+      new ShapeDef(el.x, el.y+100, el.shapeClass,"circle",el.color)
+      )
+
 
 }
 function mapArraysColor() {
+  let arrayOfShapesNew = arrayOfShapes.map(changeColor);
+  add_New_Els_ToDOM(arrayOfShapesNew, originalRow);
+  console.log(arrayOfShapesNew)
+
+  function changeColor(el){
+      let temp = getColorObj(el.color);
+      let color = `rgb(${temp [1]},${temp[0]},${temp[2]})`
+      return (
+      /* need to make a copy */
+      new ShapeDef(el.x, el.y+200, el.shapeClass,el.customShapeClass,color)
+      )
+
+    }
 }
 
 function filterArraysX(){
@@ -166,4 +189,13 @@ function add_SingleToDOM(shapeDef, parent) {
     rgbArray = substringColor.split(",");
     return rgbArray;
   }
+  const numbers = [1, 2, 3, 4, 5];
+const squaredNumbers = numbers.map(
+    function (num) { 
+        return(
+        num * num
+        )
+    }
+);
 };
+}
