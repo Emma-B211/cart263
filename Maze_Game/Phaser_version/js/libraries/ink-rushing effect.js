@@ -31,7 +31,19 @@ function create(){
         angle:{min:0,max:360},//random angle of emission
         scale:{start:1,end:0.5},
         blendMode: Phaser.BlendModes.ADD, //use additive blending to make ink feel more liquid
-lifespan:800,
-
-    })
+lifespan:800,// how long particles live (in milliseconds)
+frequency:20,//frequency of particles being emitted
+quantity:10,//number of particles emitted at a tiem
+gravityY:1000,//gravity pull to simulate ink falling down(will change to rushing)
+alpha:{stat:1,end:0},//fade out particle
+on:false //dont emit until triggered
+    });
+    this.input.on('pointerdown', function(pointer){
+        inkEmitter/start();
+        inkEmitter.setPosition(pointer.x,pointer.y);
+    });
+}
+function update(){
+    //will update to when character is facing the oppose it way and when light is shown will retreat back
+    
 }
