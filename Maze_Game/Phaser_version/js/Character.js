@@ -20,7 +20,7 @@ class Character extends Phaser.Physics.Arcade.Sprite {
 
         console.log("Character created:", this.x, this.y);
     }
-
+// code to pick up items
 create(){
     objects=this.physics.add.group({
         key:'item',
