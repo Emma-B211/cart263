@@ -1,6 +1,7 @@
 
 import Room from './Room.js';
 import Character from './Character.js';
+import Room4Scene from './Room4Scene.js';
 
 class GameScene extends Phaser.Scene {
     constructor() {
@@ -49,7 +50,10 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
 
         this.createAnimations();
-
+ 
+        if (this.currentRoom.roomKey==='room4'){
+            this.scene.start('Room4Scene');
+        }
         // const item= this.physics.add.sprite(300,300,'item_key');
         // item.pickable=true;
        // this.physics.add.overlap(character,item);
