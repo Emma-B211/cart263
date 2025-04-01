@@ -69,6 +69,7 @@ class Character extends Phaser.Physics.Arcade.Sprite {
       if (obj.gameObject && obj.gameObject.pickable) {
         console.log("Picked up object:", obj.gameObject.texture.key);
         this.holdingObject = obj.gameObject;
+        destroy();
         return;
       }
     }
