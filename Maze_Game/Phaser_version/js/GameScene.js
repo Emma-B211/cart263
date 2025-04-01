@@ -15,6 +15,13 @@ class GameScene extends Phaser.Scene {
         this.load.image('room4', 'assets/images/room4.png');
         this.load.image('room5', 'assets/images/room5.png');
         this.load.image('room6', 'assets/images/room6.png');
+        this.load.image('room7', 'assets/images/room7.png');
+        this.load.image('room8', 'assets/images/room8.png');
+        this.load.image('room9', 'assets/images/room9.png');
+        this.load.image('room10', 'assets/images/room10.png');
+        this.load.image('room11', 'assets/images/room11.png');
+        this.load.image('room12', 'assets/images/room12.png');
+        this.load.image('room13', 'assets/images/room13.png');
 
         this.load.image('character_front_left', 'assets/images/character_front_left.png');
         this.load.image('character_front_middle', 'assets/images/character_front_middle.png');
@@ -36,14 +43,12 @@ class GameScene extends Phaser.Scene {
     create() {
         this.currentRoom = new Room(this, 'room1');
         this.character = new Character(this, 400, 300);
-
         this.add.existing(this.character);
 
-        //  Ensure collision is set up once in create(), not in update()
         this.physics.add.collider(this.character, this.currentRoom.walls);
+        this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
 
         this.createAnimations();
-
     }
 
     createAnimations() {
@@ -94,7 +99,7 @@ class GameScene extends Phaser.Scene {
     }
 
     update() {
-
+        console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.currentRoom.checkTransition(this.character);
 
         this.character.update();
