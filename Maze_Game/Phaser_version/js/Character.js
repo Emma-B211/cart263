@@ -18,23 +18,7 @@ class Character extends Phaser.Physics.Arcade.Sprite {
         console.log("Character created:", this.x, this.y);
         console.log(this.position, this.x, this.y);
     }
-// code to pick up items
-create(){
-    objects=this.physics.add.group({
-        key:'item',
-        repeat: 2,
-        setXY:{x:200, y:200, stepX:150, StepY:150}// update depending where we want the items to be in once items were created
-    });
 
-    // create collision detection for player and objects
-    this.physics.add.overlap(player,objects.collectItem,null,this);
-}
-
-collectItem(player,item){
-    //destroy the item that was collected
-    item.destroy();
-    console.log('item collected!')
-}
     update() {
         this.setVelocity(0);
 

@@ -9,8 +9,6 @@ class Wall extends Phaser.Physics.Arcade.Sprite { // class Wall extends Phaser.P
         this.setDisplaySize(width, height); // Resize the sprite
 
         this.setAlpha(0.5); //makes the wall invisible
-
-        console.log(`Wall created at X=${this.x}, Y=${this.y}, Width=${this.displayWidth}, Height=${this.displayHeight}`);
     }
 }
 export default Wall;
