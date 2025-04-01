@@ -1,29 +1,33 @@
 class Character extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, inkGlob) {
     super(scene, x, y, 'character_front_left');
-
+  
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-
+  
     this.setCollideWorldBounds(true);
     this.setOrigin(0.5, 1);
     this.setSize(220, 200);
     this.setScale(0.17);
-
+  
     // Handle input keys
     this.keys = scene.input.keyboard.createCursorKeys();
     this.interactKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.speed = 150;
-
+  
     this.holdingObject = null; // Track picked-up object
 
+    // Ink Glob Variables
+    this.inkGlob = inkGlob; 
+    this.lightOn = true; // Track light state
+  
     console.log("Character created:", this.x, this.y);
   }
 
   update() {
     this.setVelocity(0);
-
+  
     // Movement controls
     if (this.keys.left.isDown) {
       this.setVelocityX(-this.speed);
@@ -45,11 +49,18 @@ class Character extends Phaser.Physics.Arcade.Sprite {
       this.stop();
     }
 
+    // Ink glob chase logic when lights are off
+    if (!this.lightOn) {
+      this.scene.physics.moveToObject(this.inkGlob, this, 100); // Ink glob chases the character
+    } else {
+      this.inkGlob.setVelocity(0, 0); // Ink glob stops when lights are on
+    }
+  
     // Pick-up object with spacebar
     if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
       this.pickUpObject();
     }
-
+  
     // Carry the object if one is held
     if (this.holdingObject) {
       this.holdingObject.setPosition(this.x, this.y - 50);
@@ -62,9 +73,9 @@ class Character extends Phaser.Physics.Arcade.Sprite {
       this.holdingObject = null;
       return;
     }
-
+  
     const objects = this.scene.physics.overlapRect(this.x, this.y, 50, 50);
-
+  
     for (let obj of objects) {
       if (obj.gameObject && obj.gameObject.pickable) {
         console.log("Picked up object:", obj.gameObject.texture.key);

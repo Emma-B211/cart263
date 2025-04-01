@@ -27,15 +27,11 @@ function create(){
                 targets: lamp,
                 alpha: flickerAlpha,
                 duration: Phaser.Math.Between(50,150),
-                onComplete:()=>{
-                    this.time.addEvent({
-                        delay: Phaser.Math.Between(50,300),
-                        callback: arguments.callee
-                    });
-                }
+                onComplete:flicker.bind(this)
             });
         }
     });
+    flicker.call(this)
 }
 // add glow effect
 const light= this.lights.addLight(400,300,150).setIntensity(1);

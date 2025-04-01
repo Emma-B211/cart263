@@ -49,6 +49,10 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
 
         this.createAnimations();
+
+        const item= this.physics.add.sprite(300,300,'item_key');
+        item.pickable=true;
+       // this.physics.add.overlap(character,item);
     }
 
     createAnimations() {
