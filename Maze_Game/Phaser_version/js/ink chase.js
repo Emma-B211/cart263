@@ -21,10 +21,13 @@ class Character extends Phaser.Physics.Arcade.Sprite {
     // Ink Glob Variables
     this.inkGlob = inkGlob; 
     this.lightOn = true; // Track light state
-  
+  this.inRoom4=false;
     console.log("Character created:", this.x, this.y);
   }
+preload(){
+    this.load.image('inkGlob', 'assets/images/ink_glob.png');
 
+}
   update() {
     this.setVelocity(0);
   
@@ -49,13 +52,17 @@ class Character extends Phaser.Physics.Arcade.Sprite {
       this.stop();
     }
 
+    // if in room 4 and the ink glob chase hasnt started
+    if (this.inRoom4 && !this.inkGlob.chasing){
+      this.startInkChase();
+    }
     // Ink glob chase logic when lights are off
-    if (!this.lightOn) {
+    if (!this.lightOn && this.inkGlob.chasing) {
       this.scene.physics.moveToObject(this.inkGlob, this, 100); // Ink glob chases the character
     } else {
       this.inkGlob.setVelocity(0, 0); // Ink glob stops when lights are on
     }
-  
+ 
     // Pick-up object with spacebar
     if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
       this.pickUpObject();
@@ -66,7 +73,26 @@ class Character extends Phaser.Physics.Arcade.Sprite {
       this.holdingObject.setPosition(this.x, this.y - 50);
     }
   }
-
+startInkChase(){
+  this.inkGlob.chasing=true;
+  this.scene.time.delayedCall(200,()=>{
+    if(this.inRoom4){
+      console.log("ink glob starts chasing in room 4!");
+      this.inkGlob.setVisible(true);
+    }
+  });
+}
+enterRoom4(){
+  this.inRoom4=true;
+  console.log("entered room 4");
+}
+leaveRoom4(){
+  this.inRoom4=false;
+  console.log("left room 4");
+  this.inkGlob.chasing=false;
+  this.inkGlob.setVelocity(0,0);
+  this.inkGlob.setVisible(false);
+}
   pickUpObject() {
     if (this.holdingObject) {
       console.log("Dropping object:", this.holdingObject.texture.key);
