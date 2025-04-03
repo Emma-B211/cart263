@@ -1,11 +1,12 @@
 
 import Room from './Room.js';
 import Character from './Character.js';
-import Room4Scene from './Room4Scene.js';
 
 class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene');
+        this.lightsOff=false;
+        this.room=null;
     }
 
     preload() {
@@ -50,10 +51,7 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
 
         this.createAnimations();
- 
-        if (this.currentRoom.roomKey==='room4'){
-            this.scene.start('Room4Scene');
-        }
+
         // const item= this.physics.add.sprite(300,300,'item_key');
         // item.pickable=true;
        // this.physics.add.overlap(character,item);
@@ -111,7 +109,24 @@ class GameScene extends Phaser.Scene {
         this.currentRoom.checkTransition(this.character);
 
         this.character.update();
-    }
 
+        if (this.room && this.room.inkGlob) {
+            if (this.room.roomKey === 'room4') {
+                if (this.lightsOff) {
+                    this.room.inkGlob.chase(this.player);  // Ink glob chases the player when lights are off
+                } else {
+                    this.room.inkGlob.setVelocity(0, 0);  // Stop the chase when lights are on
+                }
+            }
+        } else {
+            console.error('Room or inkGlob is not properly initialized');
+        }
+    }
+turnLightsOff(){
+    this.lightOff= true;
+}
+turnLightsOn(){
+    this.lightsOff=false;
+}
 }
 export default GameScene;

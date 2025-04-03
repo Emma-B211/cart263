@@ -1,5 +1,6 @@
 
 import GameScene from './GameScene.js';
+//import Room4Scene from './room4scene.js';
 
 const config = {
     type: Phaser.AUTO,

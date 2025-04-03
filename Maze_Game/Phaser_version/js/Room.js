@@ -11,6 +11,7 @@ class Room extends Phaser.GameObjects.Container {
         this.roomKey = roomKey;
         this.scene.add.existing(this);
 
+
         //add room background
         this.background = this.scene.add.image(400, 300, roomKey);
         this.background.setDisplaySize(this.scene.scale.width, this.scene.scale.height);
@@ -20,8 +21,21 @@ class Room extends Phaser.GameObjects.Container {
 
         this.createWalls();
         this.createDoorways();
-    }
 
+        this.inkGlob= new Phaser.GameObjects.Sprite(this.scene, 100, 100,'inkGlobTexture');
+        this.scene.add.existing(this.inkGlob);
+        // if (this.roomKey === 'room4'){
+        //     this.inkGlob= new InkGlob(this.scene,600,300);
+
+        // }
+    }
+update(){
+    if (this.roomKey === 'room4' && this.scene.lightsOff){
+        this.inkGlob.chase(this.scene.player);
+    } else {
+        this.inkGlob.setVelocity(0,0);
+    }
+}
     createWalls() {
         this.walls.clear(true, true);
 
@@ -134,6 +148,8 @@ class Room extends Phaser.GameObjects.Container {
         else if (this.roomKey === 'room4') {
             this.doorways.add(new Doorway(this.scene, 785, 245, 10, 115, 'room3', 70, 250));
             this.doorways.add(new Doorway(this.scene, 10, 245, 10, 115, 'room5', 770, 350));
+
+            this.inkGlob= new InkGlob(this.scene,600,300);
         }
 
         else if (this.roomKey === 'room5') {
@@ -211,6 +227,22 @@ class Room extends Phaser.GameObjects.Container {
         // this.createDoorways();
 
         // this.scene.physics.add.collider(character, this.walls);
+    }
+}
+
+class InkGlob extends Phaser.GameObjects.Sprite{
+    constructor(scene,x,y){
+        super(scene,x,y,'inkglob');
+        scene.add.existing(this);
+        scene.physics.world.enable(this);
+        this.setCollideWorldBounds(true);
+        this.setGravityY(0);
+    }
+     // Method to make the glob follow the character
+     chase(target) {
+        const speed = 100; // Adjust the speed of the chase
+        const angle = Phaser.Math.Angle.Between(this.x, this.y, target.x, target.y);
+        this.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     }
 }
 export default Room;
