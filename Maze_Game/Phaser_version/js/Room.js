@@ -10,7 +10,7 @@ class Room extends Phaser.GameObjects.Container {
         this.scene = scene;
         this.roomKey = roomKey;
         this.scene.add.existing(this);
-
+this.name= roomKey;
 
         //add room background
         this.background = this.scene.add.image(400, 300, roomKey);
@@ -59,6 +59,7 @@ update(){
             this.walls.add(new Wall(this.scene, 400, 140, 800, 60));
 
             this.inkGlob= new InkGlob (this.scene, 600, 300);
+            this.physics.add.collider(inkGlob, someOtherObject, this.handleCollision,null,this);
             this.scene.physics.add.collider(this.background.inkGlob, this.walls, this.onInkGlobCollision,null,this);
         }
         else if (this.roomKey === 'room5') {

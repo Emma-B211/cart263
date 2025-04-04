@@ -3,7 +3,7 @@ class InkGlob extends Phaser.GameObjects.Sprite {
         super(scene, x, y, 'inkglobTexture');
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
-        this.setCollideWorldBounds(true);
+        //this.setCollideWorldBounds(true);
         this.body.setCollideWorldBounds(true);
     }
 

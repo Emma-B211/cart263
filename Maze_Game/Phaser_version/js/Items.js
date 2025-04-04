@@ -39,6 +39,8 @@ class Item extends Phaser.Physics.Arcade.Sprite {
         this.setScale(0.2);
         this.setInteractive();
 
+this.setDepth(10);
+
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.setImmovable(true);

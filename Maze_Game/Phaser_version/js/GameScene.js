@@ -1,7 +1,7 @@
 
 import Room from './Room.js';
 import Character from './Character.js';
-
+import InkGlob from './InkGlob.js'
 class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene');
@@ -49,6 +49,8 @@ class GameScene extends Phaser.Scene {
         this.load.image('textbox', 'assets/images/textbox.png');
 
         this.load.image('chapter2', 'assets/images/chapter2.png');
+
+        this.load.image('inkglobtexture', 'assets/images/ink_glob.png')
     }
 
     create() {
@@ -70,6 +72,11 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
         this.physics.add.overlap(this.character, this.currentRoom.itemsGroup, this.showMessage, null, this);
 
+        this.inkGlob=new InkGlob(this,100,200);
+        this.character=this.add.sprite(200,200,'character');
+        this.physics.add.existing(this.character);
+
+        this.physics.add.collider(this.inkGlob, this.character);
          // Setup item data
          this.items = this.add.group();
          this.overlappingItem = null;
@@ -97,7 +104,7 @@ class GameScene extends Phaser.Scene {
         this.spawnItems();
      
     }
-
+    
     createAnimations() {
 
         this.anims.create({
@@ -192,38 +199,61 @@ class GameScene extends Phaser.Scene {
 
     update() {
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
-        this.currentRoom.checkTransition(this.character);
-
-if (this.currentRoom.inkGlob){
-    this.physics.add.overlap(this.player, this.currentRoom.inkGlob, () =>
-    {
-        console.log("player hit by the ink glob!");
-
-    // create for loop to restart game if caught by ink glob
-    })
-}
-        this.character.update();
-
-        // Check if we changed rooms
+    
+        // Ink Glob follows the character
+        if (this.inkGlob && this.character) {
+            this.inkGlob.followCharacter(this.character);
+        }
+    
+        // Handle collision between Ink Glob and the character
+        this.physics.collide(this.inkGlob, this.character, this.handleInkGlobCollision, null, this);
+    
+        // Check for room transitions
+        if (this.currentRoom) {
+            this.currentRoom.checkTransition(this.character);
+        }
+    
+        // Handle Ink Glob overlap (if player is caught)
+        if (this.currentRoom.inkGlob) {
+            this.physics.add.overlap(this.character, this.currentRoom.inkGlob, () => {
+                console.log("Player hit by the Ink Glob!");
+                // Restart the game or implement another consequence
+                this.restartGame(); // Example function to restart the game
+            });
+        }
+    
+        // Check if the character has moved to a new room
         if (this.currentRoom.roomKey !== this.lastRoomKey) {
             this.lastRoomKey = this.currentRoom.roomKey;
-            this.spawnItems(); // Respawn only correct items for this room
-
-            // Update collision for new room
-            this.physics.add.collider(this.character, this.currentRoom.walls);
-        }
-
-        if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
-            this.collectItem(this.overlappingItem);
-            this.overlappingItem = null;
-        }
+            this.spawnItems(); // Respawn the correct items for the current room
+            this.physics
+        }// Handle item collection via spacebar
+    if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
+        this.collectItem(this.overlappingItem);
+        this.overlappingItem = null;
     }
 
+    // Update character movements and animations
+    this.character.update();
+
+    }
+    // Handle collision between the Ink Glob and the character
+handleInkGlobCollision() {
+    console.log('Ink Glob hit the character!');
+    // Implement specific actions like restarting the game or triggering a special event
+    this.restartGame();
+}
+
+// Function to restart the game or handle Ink Glob interaction consequences
+restartGame() {
+    // Logic to restart the game or move to a different scene
+    this.scene.restart();
+}
     exitLastRoom() {
         this.scene('Chapter2Scene'); //switches to chapter 3 page when the charcter exit the last room
     }
-
 }
+
 export default GameScene; 
 
 /**
