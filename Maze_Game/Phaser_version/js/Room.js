@@ -1,6 +1,6 @@
 import Wall from './Wall.js';
 import Doorway from './Doorway.js';
-
+import InkGlob from './InkGlob.js';
 
 class Room extends Phaser.GameObjects.Container {
     constructor(scene, roomKey) {
@@ -22,58 +22,16 @@ class Room extends Phaser.GameObjects.Container {
         this.createWalls();
         this.createDoorways();
 
-        // this.inkGlob= new Phaser.Physics.Arcade.Sprite(this.scene, 100, 100,'ink_glob.png');
-        // this.scene.add.existing(this.inkGlob);
-        
-        // if (this.roomKey === 'room4') { // Only create inkGlob for room4
-        //     this.inkGlob = this.scene.physics.add.sprite(200, 200, 'ink_glob.png'); // Adjust position
-        //     this.inkGlob.setCollideWorldBounds(true);
-        //     this.scene.add.existing(this.inkGlob);
-        // } else {
-        //     this.inkGlob = null; // Ensure inkGlob is defined but null for other rooms
-        // }
-        // if (this.roomKey === 'room4'){
-        //     this.inkGlob= new InkGlob(this.scene,600,300);
+        if (this.roomKey=== 'room4'){
+            this.inkGlob= new InkGlob (this.scene, 600, 300);
+        }
 
-        // }
     }
-    // update() {
-    //     console.log('this.room:', this.room);
-    //     if (this.room) {
-//             console.log('this.room.roomKey:', this.room.roomKey);
-//             console.log('this.room.inkGlob:', this.room.inkGlob);
-//         } else {
-//             this.inkGlob = null;
-//             console.error('this.room is null or undefined');
-//         }
-    
-//         if (this.room && this.room.inkGlob) {
-//             if (this.room.roomKey === 'room4') {
-//                 if (this.lightsOff) {
-//                     this.room.inkGlob.chase(this.player);  // Ink glob chases the player when lights are off
-//                 } else {
-//                     this.room.inkGlob.setVelocity(0, 0);  // Stop the chase when lights are on
-//                 }
-//                 if (this.inkGlob) {
-//                     if (this.lightsOff) {
-//                         this.inkGlob.chase(this.player);
-//                     } else {
-//                         this.inkGlob.setVelocity(0, 0);
-//                     }
-//                 }else if (this.roomKey === 'room4') {
-//                     // ...
-//                     this.inkGlob = new InkGlob(this.scene, 600, 300); // <--- THIS ONE
-//                 }
-//         } else {
-//             console.error('Room or inkGlob is not properly initialized');
-//         } if (this.inkGlob) {
-//             this.inkGlob.setCollideWorldBounds(true);
-//         }if (this.inkGlob) {
-//             this.scene.physics.add.collider(this.inkGlob, this.walls);
-//         }
-        
-//     }
-// }
+update(){
+    if (this.inkGlob){
+        this.inkGlob.chase(character);
+    }
+}
     createWalls() {
         this.walls.clear(true, true);
 
@@ -99,6 +57,9 @@ class Room extends Phaser.GameObjects.Container {
         else if (this.roomKey === 'room4') {
             this.walls.add(new Wall(this.scene, 400, 290, 800, 60));
             this.walls.add(new Wall(this.scene, 400, 140, 800, 60));
+
+            this.inkGlob= new InkGlob (this.scene, 600, 300);
+            this.scene.physics.add.collider(this.background.inkGlob, this.walls, this.onInkGlobCollision,null,this);
         }
         else if (this.roomKey === 'room5') {
             this.walls.add(new Wall(this.scene, 720, 490, 125, 200));
@@ -248,6 +209,14 @@ class Room extends Phaser.GameObjects.Container {
         // Destroy old walls and doorways before creating new ones
         this.walls.clear(true, true);
         this.doorways.clear(true, true);
+
+// destroy ink glob if it exist
+if (this.inkGlob){
+    this.inkGlob.destroy();
+    this,inkGlob=null;
+}
+
+
 
         this.createWalls();
         this.createDoorways();

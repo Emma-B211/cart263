@@ -131,6 +131,16 @@ class GameScene extends Phaser.Scene {
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.currentRoom.checkTransition(this.character);
 
+if (this.currentRoom.inkGlob){
+    this.physics.add.overlap(this.player, this.currentRoom.inkGlob, () =>
+    {
+        console.log("player hit by the ink glob!");
+
+    // create for loop to restart game if caught by ink glob
+    })
+}
+
+
         this.character.update();
     }
 
