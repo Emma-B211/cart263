@@ -52,6 +52,7 @@ class GameScene extends Phaser.Scene {
 
         this.createAnimations();
 
+        //this.room = new Room(this, 'room4');
         // const item= this.physics.add.sprite(300,300,'item_key');
         // item.pickable=true;
        // this.physics.add.overlap(character,item);
@@ -104,29 +105,6 @@ class GameScene extends Phaser.Scene {
         });
     }
 
-    update() {
-        console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
-        this.currentRoom.checkTransition(this.character);
 
-        this.character.update();
-
-        if (this.room && this.room.inkGlob) {
-            if (this.room.roomKey === 'room4') {
-                if (this.lightsOff) {
-                    this.room.inkGlob.chase(this.player);  // Ink glob chases the player when lights are off
-                } else {
-                    this.room.inkGlob.setVelocity(0, 0);  // Stop the chase when lights are on
-                }
-            }
-        } else {
-            console.error('Room or inkGlob is not properly initialized');
-        }
-    }
-turnLightsOff(){
-    this.lightOff= true;
-}
-turnLightsOn(){
-    this.lightsOff=false;
-}
 }
 export default GameScene;

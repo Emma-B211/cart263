@@ -31,26 +31,26 @@ preload(){
   update() {
     this.setVelocity(0);
   
-    // Movement controls
-    if (this.keys.left.isDown) {
-      this.setVelocityX(-this.speed);
-      this.play('walk_left', true);
-      this.body.setSize(130, 200);
-    } else if (this.keys.right.isDown) {
-      this.setVelocityX(this.speed);
-      this.play('walk_right', true);
-      this.body.setSize(130, 200);
-    } else if (this.keys.up.isDown) {
-      this.setVelocityY(-this.speed);
-      this.play('walk_up', true);
-      this.body.setSize(220, 200);
-    } else if (this.keys.down.isDown) {
-      this.setVelocityY(this.speed);
-      this.play('walk_down', true);
-      this.body.setSize(220, 200);
-    } else {
-      this.stop();
-    }
+    // // Movement controls
+    // if (this.keys.left.isDown) {
+    //   this.setVelocityX(-this.speed);
+    //   this.play('walk_left', true);
+    //   this.body.setSize(130, 200);
+    // } else if (this.keys.right.isDown) {
+    //   this.setVelocityX(this.speed);
+    //   this.play('walk_right', true);
+    //   this.body.setSize(130, 200);
+    // } else if (this.keys.up.isDown) {
+    //   this.setVelocityY(-this.speed);
+    //   this.play('walk_up', true);
+    //   this.body.setSize(220, 200);
+    // } else if (this.keys.down.isDown) {
+    //   this.setVelocityY(this.speed);
+    //   this.play('walk_down', true);
+    //   this.body.setSize(220, 200);
+    // } else {
+    //   this.stop();
+    // }
 
     // if in room 4 and the ink glob chase hasnt started
     if (this.inRoom4 && !this.inkGlob.chasing){
@@ -93,24 +93,24 @@ leaveRoom4(){
   this.inkGlob.setVelocity(0,0);
   this.inkGlob.setVisible(false);
 }
-  pickUpObject() {
-    if (this.holdingObject) {
-      console.log("Dropping object:", this.holdingObject.texture.key);
-      this.holdingObject = null;
-      return;
-    }
+  // pickUpObject() {
+  //   if (this.holdingObject) {
+  //     console.log("Dropping object:", this.holdingObject.texture.key);
+  //     this.holdingObject = null;
+  //     return;
+  //   }
   
-    const objects = this.scene.physics.overlapRect(this.x, this.y, 50, 50);
+  //   const objects = this.scene.physics.overlapRect(this.x, this.y, 50, 50);
   
-    for (let obj of objects) {
-      if (obj.gameObject && obj.gameObject.pickable) {
-        console.log("Picked up object:", obj.gameObject.texture.key);
-        this.holdingObject = obj.gameObject;
-        return;
-      }
-    }
-    console.log("No object to pick up.");
-  }
+  //   for (let obj of objects) {
+  //     if (obj.gameObject && obj.gameObject.pickable) {
+  //       console.log("Picked up object:", obj.gameObject.texture.key);
+  //       this.holdingObject = obj.gameObject;
+  //       return;
+  //     }
+  //   }
+  //   console.log("No object to pick up.");
+  // }
 }
 
 export default Character;

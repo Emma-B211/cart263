@@ -22,20 +22,58 @@ class Room extends Phaser.GameObjects.Container {
         this.createWalls();
         this.createDoorways();
 
-        this.inkGlob= new Phaser.GameObjects.Sprite(this.scene, 100, 100,'inkGlobTexture');
-        this.scene.add.existing(this.inkGlob);
+        // this.inkGlob= new Phaser.Physics.Arcade.Sprite(this.scene, 100, 100,'ink_glob.png');
+        // this.scene.add.existing(this.inkGlob);
+        
+        // if (this.roomKey === 'room4') { // Only create inkGlob for room4
+        //     this.inkGlob = this.scene.physics.add.sprite(200, 200, 'ink_glob.png'); // Adjust position
+        //     this.inkGlob.setCollideWorldBounds(true);
+        //     this.scene.add.existing(this.inkGlob);
+        // } else {
+        //     this.inkGlob = null; // Ensure inkGlob is defined but null for other rooms
+        // }
         // if (this.roomKey === 'room4'){
         //     this.inkGlob= new InkGlob(this.scene,600,300);
 
         // }
     }
-update(){
-    if (this.roomKey === 'room4' && this.scene.lightsOff){
-        this.inkGlob.chase(this.scene.player);
-    } else {
-        this.inkGlob.setVelocity(0,0);
-    }
-}
+    // update() {
+    //     console.log('this.room:', this.room);
+    //     if (this.room) {
+//             console.log('this.room.roomKey:', this.room.roomKey);
+//             console.log('this.room.inkGlob:', this.room.inkGlob);
+//         } else {
+//             this.inkGlob = null;
+//             console.error('this.room is null or undefined');
+//         }
+    
+//         if (this.room && this.room.inkGlob) {
+//             if (this.room.roomKey === 'room4') {
+//                 if (this.lightsOff) {
+//                     this.room.inkGlob.chase(this.player);  // Ink glob chases the player when lights are off
+//                 } else {
+//                     this.room.inkGlob.setVelocity(0, 0);  // Stop the chase when lights are on
+//                 }
+//                 if (this.inkGlob) {
+//                     if (this.lightsOff) {
+//                         this.inkGlob.chase(this.player);
+//                     } else {
+//                         this.inkGlob.setVelocity(0, 0);
+//                     }
+//                 }else if (this.roomKey === 'room4') {
+//                     // ...
+//                     this.inkGlob = new InkGlob(this.scene, 600, 300); // <--- THIS ONE
+//                 }
+//         } else {
+//             console.error('Room or inkGlob is not properly initialized');
+//         } if (this.inkGlob) {
+//             this.inkGlob.setCollideWorldBounds(true);
+//         }if (this.inkGlob) {
+//             this.scene.physics.add.collider(this.inkGlob, this.walls);
+//         }
+        
+//     }
+// }
     createWalls() {
         this.walls.clear(true, true);
 
@@ -230,21 +268,6 @@ update(){
     }
 }
 
-class InkGlob extends Phaser.GameObjects.Sprite{
-    constructor(scene,x,y){
-        super(scene,x,y,'inkglob');
-        scene.add.existing(this);
-        scene.physics.world.enable(this);
-        this.setCollideWorldBounds(true);
-        this.setGravityY(0);
-    }
-     // Method to make the glob follow the character
-     chase(target) {
-        const speed = 100; // Adjust the speed of the chase
-        const angle = Phaser.Math.Angle.Between(this.x, this.y, target.x, target.y);
-        this.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
-    }
-}
 export default Room;
 
 
