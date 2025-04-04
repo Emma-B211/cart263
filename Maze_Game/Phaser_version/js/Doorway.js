@@ -9,8 +9,13 @@ class Doorway extends Phaser.GameObjects.Rectangle {
 
         // Add Doorway to the scene
         this.scene.add.existing(this);
-        this.scene.physics.add.existing(this, true); // Static body to detect overlap
+        this.scene.physics.add.existing(this, true); // Static body to detect overlap   
     }
 }
 export default Doorway;
-
+// // Enable overlap detection
+// this.scene.physics.add.overlap(player, this, this.enterRoom, null, this);
+// enterRoom() {
+//     console.log(`Entering room: ${this.targetRoom}`);
+//     this.scene.switchRoom(this.targetRoom, this.targetX, this.targetY);
+// }
