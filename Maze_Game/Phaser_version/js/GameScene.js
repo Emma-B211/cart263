@@ -52,21 +52,49 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
+// load room
 
         this.currentRoom = new Room(this, 'room1');
         this.add.existing(this.currentRoom);
+      this.lastRoomKey=null;
+      
         this.character = new Character(this, 400, 300);
         this.add.existing(this.character);
 
         this.inventory = [];
         this.messageText = this.add.text(20, 20, '', { fontSize: '16px', fill: '#fff' }).setScrollFactor(0);
 
-        this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+       
+       // this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.physics.add.collider(this.character, this.currentRoom.walls);
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
         this.physics.add.overlap(this.character, this.currentRoom.itemsGroup, this.showMessage, null, this);
 
+         // Setup item data
+         this.items = this.add.group();
+         this.overlappingItem = null;
+ 
+         // Create textbox image and message text (initially hidden)
+         // this.textbox = this.add.image(400, 550, 'textbox').setScrollFactor(0);
+ 
+         this.textbox = this.add.image(150, 100, 'textbox').setScale(0.5).setScrollFactor(0).setOrigin(0, 0);
+         this.textbox.setVisible(false);
+ 
+         this.messageText = this.add.text(170, 110, '', {
+             fontSize: '16px',
+             fill: '#000000', // black text
+             wordWrap: { width: 300 },
+         }).setScrollFactor(0).setVisible(false);
+ 
+         // Item configuration per room
+         this.itemData = [
+             { name: 'key', x: 360, y: 400, room: 'room1', message: 'You found a key!' },
+             { name: 'paper_code', x: 420, y: 300, room: 'room3', message: 'An old mysterious book...' },
+             { name: 'paper_code', x: 350, y: 350, room: 'room6', message: 'You found a paper with a code!' },
+             { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
+         ];
         this.createAnimations();
+        this.spawnItems();
      
     }
 
@@ -121,6 +149,41 @@ class GameScene extends Phaser.Scene {
         this.messageText.setText(item.message);
     }
 
+    spawnItems() {
+        // Clear current item group
+        this.items.clear(true, true);
+
+        this.itemData.forEach(data => {
+            if (data.room === this.currentRoom.roomKey) {
+                const item = this.physics.add.sprite(data.x, data.y, data.name);
+                item.setData('message', data.message);
+                item.setData('name', data.name);
+
+                this.physics.add.overlap(this.character, item, () => {
+                    this.overlappingItem = item;
+                }, null, this);
+            }
+        });
+    }
+    collectItem(item) {
+        if (!item.active) return;
+
+        // Show textbox and message
+        this.textbox.setVisible(true);
+        this.messageText.setText(item.getData('message'));
+        this.messageText.setVisible(true);
+
+        // Hide after 2 seconds
+        this.time.delayedCall(2000, () => {
+            this.textbox.setVisible(false);
+            this.messageText.setVisible(false);
+        });
+ // Remove item
+ item.disableBody(true, true);
+ 
+ // Optionally track collected items
+ this.itemData = this.itemData.filter(data => data.name !== item.getData('name'));
+}
     checkItemPickup(character) {
         this.physics.overlap(character, this.currentRoom.itemsGroup, (character, item) => {
             item.pickup(character, this.inventory);
@@ -139,9 +202,21 @@ if (this.currentRoom.inkGlob){
     // create for loop to restart game if caught by ink glob
     })
 }
-
-
         this.character.update();
+
+        // Check if we changed rooms
+        if (this.currentRoom.roomKey !== this.lastRoomKey) {
+            this.lastRoomKey = this.currentRoom.roomKey;
+            this.spawnItems(); // Respawn only correct items for this room
+
+            // Update collision for new room
+            this.physics.add.collider(this.character, this.currentRoom.walls);
+        }
+
+        if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
+            this.collectItem(this.overlappingItem);
+            this.overlappingItem = null;
+        }
     }
 
     exitLastRoom() {

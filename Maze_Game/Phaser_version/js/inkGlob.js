@@ -30,3 +30,5 @@ class InkGlob extends Phaser.GameObjects.Sprite {
         );
     }
 }
+
+export default InkGlob;
