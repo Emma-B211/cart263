@@ -1,7 +1,7 @@
 
 import Wall from './Wall.js';
 import Doorway from './Doorway.js';
-
+import InkGlob from './inkglob.js';
 
 class Room extends Phaser.GameObjects.Container {
     constructor(scene, roomKey) {
@@ -28,17 +28,40 @@ class Room extends Phaser.GameObjects.Container {
 
         if (this.roomKey === 'room4') {
             this.inkGlob = new InkGlob(this.scene, 600, 300);  // Starting position of the ink glob
+            this.chaseDuration = 5000;
+            this.chaseTimer=null;
         }
         
     }
 
     update(){
         // Check if lights are off in room4
-        if (this.roomKey === 'room4' && this.lightsOff) {
+        if (this.roomKey === 'room4' && this.lightsOff && this.inkGlob) {
+            if (this.chaseTimer){
+                this.startChase();
+            }
             this.inkGlob.chase(this.scene.player);  // Chase the player
         } else {
+            if (this.chaseTimer){
+                this.chaseTimer.remove();
+                this.chaseTimer=null;
+            }
             this.inkGlob.setVelocity(0, 0);  // Stop chasing when lights are on
         }
+    }
+    startChase(){
+        this.chaseTimer= this.scene.time.addEvent({
+            delay: this.chaseDuration,
+            callback:this.stopChase,
+            callbackScope:this,
+            loop:false
+        });
+    }
+    stopChase(){
+        if(this.inkGlob){
+            this.inkGlob.setVelocity(0,0);
+        }
+        this.chaseTimer=null;
     }
     createWalls() {
         this.walls.clear(true, true);
