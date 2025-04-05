@@ -12,3 +12,14 @@ class Wall extends Phaser.Physics.Arcade.Sprite { // class Wall extends Phaser.P
     }
 }
 export default Wall;
+
+// class Wall extends Phaser.GameObjects.Rectangle {
+//     constructor(scene, x, y, width, height) {
+//         super(scene, x, y, width, height, 0xffffff, 0); // Invisible rectangle
+
+//         this.scene = scene;
+//         this.scene.physics.add.existing(this, true); // Static body
+//         this.scene.add.existing(this);
+//     }
+// }
+// export default Wall;

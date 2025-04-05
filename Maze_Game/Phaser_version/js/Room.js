@@ -1,18 +1,18 @@
+
 import Wall from './Wall.js';
 import Doorway from './Doorway.js';
-import InkGlob from './InkGlob.js';
 
 class Room extends Phaser.GameObjects.Container {
     constructor(scene, roomKey) {
 
         super(scene);
 
-        this.scene = scene;
-        this.roomKey = roomKey;
-        this.scene.add.existing(this);
-this.name= roomKey;
+        this.scene = scene; //Store references to the GameScene
+        this.roomKey = roomKey;  // store the room's name (like "room1")
 
-        //add room background
+        this.scene.add.existing(this);
+        this.name = roomKey;
+
         this.background = this.scene.add.image(400, 300, roomKey);
         this.background.setDisplaySize(this.scene.scale.width, this.scene.scale.height);
 
@@ -21,26 +21,14 @@ this.name= roomKey;
 
         this.createWalls();
         this.createDoorways();
-
-        if (this.roomKey=== 'room4'){
-            this.inkGlob= new InkGlob (this.scene, 600, 300);
-        }
-
     }
-update(){
-    if (this.inkGlob){
-        this.inkGlob.chase(character);
-    }
-}
+
     createWalls() {
         this.walls.clear(true, true);
 
         if (this.roomKey === 'room1') {
             this.walls.add(new Wall(this.scene, 318, 300, 30, 600)); // this is the left wall
             this.walls.add(new Wall(this.scene, 454, 300, 30, 600)); //this is the right wall
-
-            // this.inkGlob.destroy();
-            // this.inkGlob= null;
         }
         else if (this.roomKey === 'room2') {
             this.walls.add(new Wall(this.scene, 290, 300, 20, 600));//left wall
@@ -49,9 +37,6 @@ update(){
             this.walls.add(new Wall(this.scene, 530, 285, 320, 405)); //middle square wall
             this.walls.add(new Wall(this.scene, 380, 10, 200, 15));// top left wall
             this.walls.add(new Wall(this.scene, 700, 10, 200, 15));// top right wall
-           
-            // this.inkGlob.destroy();
-            // this.inkGlob= null;
         }
 
         else if (this.roomKey === 'room3') {
@@ -63,11 +48,6 @@ update(){
         else if (this.roomKey === 'room4') {
             this.walls.add(new Wall(this.scene, 400, 290, 800, 60));
             this.walls.add(new Wall(this.scene, 400, 140, 800, 60));
-
-           // this.walls = this.scene.physics.add.staticGroup();
-            //this.inkGlob= new InkGlob (this.scene, 600, 300);
-            this.scene.physics.add.collider(this.inkGlob, this.walls);
-            this.scene.physics.add.overlap(this.player, this.inkGlob, this.handleInkGlobTouch,null,this);
         }
         else if (this.roomKey === 'room5') {
             this.walls.add(new Wall(this.scene, 720, 490, 125, 200));
@@ -77,9 +57,6 @@ update(){
             this.walls.add(new Wall(this.scene, 400, 300, 350, 265));
             this.walls.add(new Wall(this.scene, 80, 500, 125, 200));
             this.walls.add(new Wall(this.scene, 80, 150, 125, 200));
-
-            this.inkGlob.destroy();
-            this.inkGlob= null;
         }
         else if (this.roomKey === 'room6') {
             this.walls.add(new Wall(this.scene, 610, 120, 350, 355));
@@ -137,16 +114,7 @@ update(){
             this.walls.add(new Wall(this.scene, 305, 300, 30, 600)); //this is the right wall
         }
     }
-createWalls(){
-    this.walls = this.scene.physics.add.staticGroup();
 
-    this.walls.create(this.x,this.y, 'wall');
-    this.walls.create(this.x + 100, this.y, 'wall');
-
-    if (this.name === 'room4' && this.inkGlob){
-this.scene.physics.add.collider(this.inkGlob, this.walls)
-    }
-}
     createDoorways() {
         this.doorways.clear(true, true);
 
@@ -167,8 +135,6 @@ this.scene.physics.add.collider(this.inkGlob, this.walls)
         else if (this.roomKey === 'room4') {
             this.doorways.add(new Doorway(this.scene, 785, 245, 10, 115, 'room3', 70, 250));
             this.doorways.add(new Doorway(this.scene, 10, 245, 10, 115, 'room5', 770, 350));
-
-            this.inkGlob= new InkGlob(this.scene,600,300);
         }
 
         else if (this.roomKey === 'room5') {
@@ -201,7 +167,7 @@ this.scene.physics.add.collider(this.inkGlob, this.walls)
             this.doorways.add(new Doorway(this.scene, 610, 600, 125, 10, 'room9', 675, 70));
         }
         else if (this.roomKey === 'room11') {
-            this.doorways.add(new Doorway(this.scene, 785, 270, 10, 125, 'room8', 270, 70));
+            this.doorways.add(new Doorway(this.scene, 785, 270, 10, 125, 'room8', 50, 250));
             this.doorways.add(new Doorway(this.scene, 210, 10, 125, 10, 'room12', 215, 595));
         }
         else if (this.roomKey === 'room12') {
@@ -230,70 +196,11 @@ this.scene.physics.add.collider(this.inkGlob, this.walls)
         this.walls.clear(true, true);
         this.doorways.clear(true, true);
 
-// destroy ink glob if it exist
-if (this.inkGlob){
-    this.inkGlob.destroy();
-    this,inkGlob=null;
-}
-
-
-
         this.createWalls();
         this.createDoorways();
 
         this.scene.physics.add.collider(character, this.walls);
-
-        // this.roomKey = doorway.targetRoom;
-        // character.x = doorway.targetX;
-        // character.y = doorway.targetY;
-
-        // this.walls.getChildren().forEach(wall => wall.destroy());
-        // this.createWalls();
-
-        // this.doorways.getChildren().forEach(doorway => doorway.destroy());
-        // this.createDoorways();
-
-        // this.scene.physics.add.collider(character, this.walls);
     }
 }
-
 export default Room;
 
-
-// changeRoom(targetRoom, targetX, targetY) {
-//     if (this.currentRoom) {
-//         // Destroy the old room (if necessary)
-//         this.currentRoom.destroy();
-//     }
-
-//     // Remove old doorways before switching
-//     if (this.doorways) {
-//         this.doorways.clear(true, true);
-//     }
-
-//     // Load the new room
-//     this.currentRoom = new Room(this, targetRoom);
-//     this.player.setPosition(targetX, targetY);
-
-//     // Recreate doorways for the new room
-//     this.doorways = this.add.group(); // Create a new group for doorways
-//     this.currentRoom.createDoorways(this.doorways);
-// }
-
-// changeRoom(character, newRoomKey, newX, newY) {
-//     console.log(`Transitioning to ${newRoomKey}...`);
-
-//     //  Keep the character and only change background & walls
-//     this.background.setTexture(newRoomKey);
-//     this.roomKey = newRoomKey;
-
-//     this.walls.getChildren().forEach(wall => wall.destroy());
-//     this.createWalls();
-
-//     character.y = newY;
-//     character.x = newX;
-
-//     //  Re-add collision so character interacts with new walls
-//     this.scene.physics.add.collider(character, this.walls);
-//     //this.scene.physics.add.overlap(scene.character, this, this.onOverlap, null, this);
-// }

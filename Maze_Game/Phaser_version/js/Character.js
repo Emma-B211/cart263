@@ -13,10 +13,9 @@ class Character extends Phaser.Physics.Arcade.Sprite {
 
         // //Handle input keys
         this.keys = scene.input.keyboard.createCursorKeys();
-       // this.interactKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.speed = 150;
 
-       // this.holdingObject = null; // Track picked-up object
+
 
         console.log("Character created:", this.x, this.y);
         console.log(this.position, this.x, this.y);
@@ -57,44 +56,9 @@ class Character extends Phaser.Physics.Arcade.Sprite {
         else {
             this.stop(); // Stop animation when no key is pressed
         }
-
-        // if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
-        //     this.scene.checkItemPickup(this, this.scene.inventory, this.scene.messageText);
-        // }
     }
 }
 
 export default Character;
 
 
-
-
-
-//     // Pick-up object with spacebar
-//     if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
-//         this.pickUpObject();
-//     }
-
-//     // Carry the object if one is held
-//     if (this.holdingObject) {
-//         this.holdingObject.setPosition(this.x, this.y - 50);
-//     }
-// }
-
-// pickUpObject() {
-//     if (this.holdingObject) {
-//         console.log("Dropping object:", this.holdingObject.texture.key);
-//         this.holdingObject = null;
-//         return;
-//     }
-
-//     const objects = this.scene.physics.overlapRect(this.x, this.y, 50, 50);
-
-//     for (let obj of objects) {
-//         if (obj.gameObject && obj.gameObject.pickable) {
-//             console.log("Picked up object:", obj.gameObject.texture.key);
-//             this.holdingObject = obj.gameObject;
-//             return;
-//         }
-//     }
-//     console.log("No object to pick up.");

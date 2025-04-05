@@ -18,7 +18,7 @@ function preload(){
     this.load.image('inkGlob', 'assets/images/ink_glob.png');
 
 }
-function create(inkGlob){
+function create(){
     inkGlob=this.physics.add.sprite(100,100,'inkGlob');
     inkGlob.setScale(0.5);
     inkGlob.setVisible(false);
@@ -36,22 +36,22 @@ function create(inkGlob){
 }
 
 function update(){
-//     if (this.cursors.left.isDown){
-// inkGlob.setVelocityX(-160);
-//     } else if(this.cursors.right.isDown){
-//         character.setVelocityX(160);
-//     } else{
-//         character.setVelocityX(0);
-//     }
-//     if (this.cursors.up.isDown){
-//         character.setVelocityY(-160);
-//     }
-//     else if(this.cursors.down.isDown){
-// character.setVelocityY(160);
-//     }
-//     else {
-//         character.setVelocityY(0);
-//     }
+    if (this.cursors.left.isDown){
+character.setVelocityX(-160);
+    } else if(this.cursors.right.isDown){
+        character.setVelocityX(160);
+    } else{
+        character.setVelocityX(0);
+    }
+    if (this.cursors.up.isDown){
+        character.setVelocityY(-160);
+    }
+    else if(this.cursors.down.isDown){
+character.setVelocityY(160);
+    }
+    else {
+        character.setVelocityY(0);
+    }
 
     if (!lightOn){
         this.physics.moveToObject(inkGlob,character,100);
