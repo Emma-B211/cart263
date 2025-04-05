@@ -7,9 +7,12 @@ class Room extends Phaser.GameObjects.Container {
 
         super(scene);
 
+        this.lightsOff = false;  // Set to true when lights are off
+
         this.scene = scene; //Store references to the GameScene
         this.roomKey = roomKey;  // store the room's name (like "room1")
 
+        
         this.scene.add.existing(this);
         this.name = roomKey;
 
@@ -21,8 +24,21 @@ class Room extends Phaser.GameObjects.Container {
 
         this.createWalls();
         this.createDoorways();
+
+        if (this.roomKey === 'room4') {
+            this.inkGlob = new InkGlob(this.scene, 600, 300);  // Starting position of the ink glob
+        }
+        
     }
 
+    update(){
+        // Check if lights are off in room4
+        if (this.roomKey === 'room4' && this.lightsOff) {
+            this.inkGlob.chase(this.scene.player);  // Chase the player
+        } else {
+            this.inkGlob.setVelocity(0, 0);  // Stop chasing when lights are on
+        }
+    }
     createWalls() {
         this.walls.clear(true, true);
 
@@ -133,9 +149,13 @@ class Room extends Phaser.GameObjects.Container {
         }
 
         else if (this.roomKey === 'room4') {
-            this.doorways.add(new Doorway(this.scene, 785, 245, 10, 115, 'room3', 70, 250));
-            this.doorways.add(new Doorway(this.scene, 10, 245, 10, 115, 'room5', 770, 350));
+            this.walls.add(new Wall(this.scene, 400, 290, 800, 60));
+            this.walls.add(new Wall(this.scene, 400, 140, 800, 60));
+        
+            // Add ink glob
+            this.inkGlob = new InkGlob(this.scene, 600, 300);  // Starting position of the ink glob
         }
+        
 
         else if (this.roomKey === 'room5') {
             this.doorways.add(new Doorway(this.scene, 785, 350, 10, 115, 'room4', 50, 250));

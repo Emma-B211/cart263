@@ -1,88 +1,46 @@
-
 import Room from './Room.js';
 import Character from './Character.js';
-
+import inkGlob from './InkGlob.js';
 class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene');
     }
 
     preload() {
+        // Load assets
+        const assets = [
+            'room1', 'room2', 'room3', 'room4', 'room5', 'room6', 'room7', 'room8', 'room9', 'room10', 'room11', 'room12', 'room13',
+            'locked_door', 'open_door',
+            'character_front_left', 'character_front_middle', 'character_front_right',
+            'character_back_left', 'character_back_middle', 'character_back_right',
+            'character_left_side_left', 'character_left_side_middle', 'character_left_side_right',
+            'character_right_side_left', 'character_right_side_middle', 'character_right_side_right',
+            'inkglob', 'key', 'paper_code', 'keycard', 'textbox', 'chapter2'
+        ];
 
-        this.load.image('room1', 'assets/images/room1.png');
-        this.load.image('room2', 'assets/images/room2.png');
-        this.load.image('room3', 'assets/images/room3.png');
-        this.load.image('room4', 'assets/images/room4.png');
-        this.load.image('room5', 'assets/images/room5.png');
-        this.load.image('room6', 'assets/images/room6.png');
-        this.load.image('room7', 'assets/images/room7.png');
-        this.load.image('room8', 'assets/images/room8.png');
-        this.load.image('room9', 'assets/images/room9.png');
-        this.load.image('room10', 'assets/images/room10.png');
-        this.load.image('room11', 'assets/images/room11.png');
-        this.load.image('room12', 'assets/images/room12.png');
-        this.load.image('room13', 'assets/images/room13.png');
-
-        this.load.image('locked_door', 'assets/images/locked_door.png');
-        this.load.image('open_door', 'assets/images/open_door.png');
-
-        this.load.image('character_front_left', 'assets/images/character_front_left.png');
-        this.load.image('character_front_middle', 'assets/images/character_front_middle.png');
-        this.load.image('character_front_right', 'assets/images/character_front_right.png');
-
-        this.load.image('character_back_left', 'assets/images/character_back_left.png');
-        this.load.image('character_back_middle', 'assets/images/character_back_middle.png');
-        this.load.image('character_back_right', 'assets/images/character_back_right.png');
-
-        this.load.image('character_left_side_left', 'assets/images/character_left_side_left.png');
-        this.load.image('character_left_side_middle', 'assets/images/character_left_side_middle.png');
-        this.load.image('character_left_side_right', 'assets/images/character_left_side_right.png');
-
-        this.load.image('character_right_side_left', 'assets/images/character_right_side_left.png');
-        this.load.image('character_right_side_middle', 'assets/images/character_right_side_middle.png');
-        this.load.image('character_right_side_right', 'assets/images/character_right_side_right.png');
-
-        this.load.image('key', 'assets/images/key.png');
-        this.load.image('paper_code', 'assets/images/paper_code.png');
-        this.load.image('keycard', 'assets/images/keycard.png');
-
-        this.load.image('textbox', 'assets/images/textbox.png');
-
-        this.load.image('chapter2', 'assets/images/chapter2.png');
+        assets.forEach(asset => this.load.image(asset, `assets/images/${asset}.png`));
     }
 
     create() {
-
-        //load room
+        // Initialize Room and Character
         this.currentRoom = new Room(this, 'room1');
         this.add.existing(this.currentRoom);
-        this.lastRoomKey = null; // Track room changes properly
-
-
-        //load Character
         this.character = new Character(this, 400, 300);
         this.add.existing(this.character);
 
-
+        this.itemsGroup = this.physics.add.group();
+        // Collisions and overlaps
         this.physics.add.collider(this.character, this.currentRoom.walls);
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
 
+        // Initialize UI elements
+        this.textbox = this.add.image(150, 100, 'textbox').setScale(0.5).setScrollFactor(0).setOrigin(0, 0).setVisible(false);
+        this.messageText = this.add.text(170, 110, '', { fontSize: '16px', fill: '#000000', wordWrap: { width: 300 } })
+            .setScrollFactor(0).setVisible(false);
 
-        // Setup item data
-        this.items = this.add.group();
-        this.overlappingItem = null;
-
-        // Create textbox image and message text (initially hidden)
-        // this.textbox = this.add.image(400, 550, 'textbox').setScrollFactor(0);
-
-        this.textbox = this.add.image(150, 100, 'textbox').setScale(0.5).setScrollFactor(0).setOrigin(0, 0);
-        this.textbox.setVisible(false);
-
-        this.messageText = this.add.text(170, 110, '', {
-            fontSize: '16px',
-            fill: '#000000', // black text
-            wordWrap: { width: 300 },
-        }).setScrollFactor(0).setVisible(false);
+        // Initialize InkGlob chase
+        this.inkglob = this.physics.add.sprite(500, 500, 'inkglob').setVisible(false);
+        this.inkglobChaseTimer = null;
 
         // Item configuration per room
         this.itemData = [
@@ -92,63 +50,34 @@ class GameScene extends Phaser.Scene {
             { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
         ];
 
+        // Create animations and spawn items
         this.createAnimations();
         this.spawnItems();
-
     }
 
-
-
     createAnimations() {
+        const animations = [
+            { key: 'walk_down', frames: ['character_front_left', 'character_front_middle', 'character_front_right'] },
+            { key: 'walk_up', frames: ['character_back_left', 'character_back_middle', 'character_back_right'] },
+            { key: 'walk_left', frames: ['character_left_side_left', 'character_left_side_middle', 'character_left_side_right'] },
+            { key: 'walk_right', frames: ['character_right_side_left', 'character_right_side_middle', 'character_right_side_right'] }
+        ];
 
-        this.anims.create({
-            key: 'walk_down',
-            frames: [
-                { key: 'character_front_left' },
-                { key: 'character_front_middle' },
-                { key: 'character_front_right' }
-            ],
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'walk_up',
-            frames: [
-                { key: 'character_back_left' },
-                { key: 'character_back_middle' },
-                { key: 'character_back_right' }
-            ],
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'walk_left',
-            frames: [
-                { key: 'character_left_side_left' },
-                { key: 'character_left_side_middle' },
-                { key: 'character_left_side_right' }
-            ],
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'walk_right',
-            frames: [
-                { key: 'character_right_side_left' },
-                { key: 'character_right_side_middle' },
-                { key: 'character_right_side_right' }
-            ],
-            frameRate: 10,
-            repeat: -1
+        animations.forEach(anim => {
+            this.anims.create({
+                key: anim.key,
+                frames: anim.frames.map(frame => ({ key: frame })),
+                frameRate: 10,
+                repeat: -1
+            });
         });
     }
 
     spawnItems() {
-        // Clear current item group
-        this.items.clear(true, true);
+        if (this.itemsGroup){
+           this.itemsGroup.clear(true, true); // Clear previous items  
+        }
+       
 
         this.itemData.forEach(data => {
             if (data.room === this.currentRoom.roomKey) {
@@ -166,10 +95,9 @@ class GameScene extends Phaser.Scene {
     collectItem(item) {
         if (!item.active) return;
 
-        // Show textbox and message
+        // Display message
         this.textbox.setVisible(true);
-        this.messageText.setText(item.getData('message'));
-        this.messageText.setVisible(true);
+        this.messageText.setText(item.getData('message')).setVisible(true);
 
         // Hide after 2 seconds
         this.time.delayedCall(2000, () => {
@@ -177,38 +105,55 @@ class GameScene extends Phaser.Scene {
             this.messageText.setVisible(false);
         });
 
-        // Remove item
+        // Disable item
         item.disableBody(true, true);
-
-        // Optionally track collected items
-        this.itemData = this.itemData.filter(data => data.name !== item.getData('name'));
+        this.itemData = this.itemData.filter(data => data.name !== item.getData('name')); // Optionally track collected items
     }
 
     update() {
-
-        console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.character.update();
         this.currentRoom.checkTransition(this.character);
 
-        // Check if we changed rooms
+        // Room change logic
         if (this.currentRoom.roomKey !== this.lastRoomKey) {
             this.lastRoomKey = this.currentRoom.roomKey;
-            this.spawnItems(); // Respawn only correct items for this room
-
-            // Update collision for new room
+            this.spawnItems(); // Respawn correct items for the new room
             this.physics.add.collider(this.character, this.currentRoom.walls);
+
+            // Start InkGlob chase in room4
+            if (this.currentRoom.roomKey === 'room4' && !this.inkglobChaseTimer) {
+                this.startInkGlobChase();
+            }
+            // In your game scene's update method
+if (this.roomKey === 'room4') {
+    // Assume player is the character you are controlling
+    this.inkGlob.chase(this.player);
+}
         }
 
+        // InkGlob chase logic
+        if (this.inkglob.visible) {
+            this.physics.moveToObject(this.inkglob, this.character, 100); // 100 is the chase speed
+        }
+
+        // Handle item collection with spacebar
         if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
             this.collectItem(this.overlappingItem);
             this.overlappingItem = null;
         }
-        // this.overlappingItem = null;
+    }
+
+    startInkGlobChase() {
+        this.inkglob.setVisible(true);
+        this.inkglobChaseTimer = this.time.delayedCall(10000, () => {
+            this.inkglob.setVisible(false);
+            this.inkglobChaseTimer = null;
+        });
     }
 
     exitLastRoom() {
-        this.scene('Chapter2Scene'); //switches to chapter 3 page when the charcter exit the last room
+        this.scene('Chapter2Scene'); // Switches to the next scene when exiting the last room
     }
-
 }
-export default GameScene; 
+
+export default GameScene;
