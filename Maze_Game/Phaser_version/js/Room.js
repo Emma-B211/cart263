@@ -2,6 +2,7 @@
 import Wall from './Wall.js';
 import Doorway from './Doorway.js';
 
+
 class Room extends Phaser.GameObjects.Container {
     constructor(scene, roomKey) {
 
