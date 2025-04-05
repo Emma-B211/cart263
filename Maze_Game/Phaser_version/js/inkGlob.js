@@ -17,7 +17,7 @@ class InkGlob extends Phaser.GameObjects.Sprite {
 
         // Set speed (you can change this value)
         let speed = 80;
-
+this.scene.physics.moveToObject(this, character, speed);
         // If within a certain range, reduce speed to avoid overshooting
         if (distance < 50) {
             speed = 20; // Slow down when near the character

@@ -13,7 +13,7 @@ class Character extends Phaser.Physics.Arcade.Sprite {
 
         // //Handle input keys
         this.keys = scene.input.keyboard.createCursorKeys();
-        this.interactKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+       // this.interactKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.speed = 150;
 
        // this.holdingObject = null; // Track picked-up object

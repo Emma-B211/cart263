@@ -50,7 +50,7 @@ class GameScene extends Phaser.Scene {
 
         this.load.image('chapter2', 'assets/images/chapter2.png');
 
-        this.load.image('inkglobtexture', 'assets/images/ink_glob.png')
+        this.load.image('inkGlob', 'assets/images/ink_glob.png')
     }
 
     create() {
@@ -63,6 +63,9 @@ class GameScene extends Phaser.Scene {
         this.character = new Character(this, 400, 300);
         this.add.existing(this.character);
 
+        this.physics.add.collider(this.character, this.currentRoom.walls);
+        this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
+
         this.inventory = [];
         this.messageText = this.add.text(20, 20, '', { fontSize: '16px', fill: '#fff' }).setScrollFactor(0);
 
@@ -72,11 +75,11 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
         this.physics.add.overlap(this.character, this.currentRoom.itemsGroup, this.showMessage, null, this);
 
-        this.inkGlob=new InkGlob(this,100,200);
-        this.character=this.add.sprite(200,200,'character');
-        this.physics.add.existing(this.character);
+        // this.inkGlob=new InkGlob(this,100,200);
+        // this.character=this.add.sprite(200,200,'character');
+        // this.physics.add.existing(this.character);
 
-        this.physics.add.collider(this.inkGlob, this.character);
+        // this.physics.add.collider(this.inkGlob, this.character);
          // Setup item data
          this.items = this.add.group();
          this.overlappingItem = null;
@@ -101,7 +104,7 @@ class GameScene extends Phaser.Scene {
              { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
          ];
         this.createAnimations();
-        this.spawnItems();
+        //this.spawnItems();
      
     }
     
@@ -152,9 +155,9 @@ class GameScene extends Phaser.Scene {
         });
     }
 
-    showMessage(character, item) {
-        this.messageText.setText(item.message);
-    }
+    // showMessage(character, item) {
+    //     this.messageText.setText(item.message);
+    // }
 
     spawnItems() {
         // Clear current item group
@@ -191,22 +194,44 @@ class GameScene extends Phaser.Scene {
  // Optionally track collected items
  this.itemData = this.itemData.filter(data => data.name !== item.getData('name'));
 }
-    checkItemPickup(character) {
-        this.physics.overlap(character, this.currentRoom.itemsGroup, (character, item) => {
-            item.pickup(character, this.inventory);
-        });
-    }
+    // checkItemPickup(character) {
+    //     this.physics.overlap(character, this.currentRoom.itemsGroup, (character, item) => {
+    //         item.pickup(character, this.inventory);
+    //     });
+    // }
 
     update() {
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
-    
+    // Update character movements and animations
+    this.character.update();
+    this.currentRoom.checkTransition(this.character);
+
+     // Check if we changed rooms
+     if (this.currentRoom.roomKey !== this.lastRoomKey) {
+        this.lastRoomKey = this.currentRoom.roomKey;
+        this.spawnItems(); // Respawn only correct items for this room
+
+        // Update collision for new room
+        this.physics.add.collider(this.character, this.currentRoom.walls);
+    }
+
+    if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
+        this.collectItem(this.overlappingItem);
+        this.overlappingItem = null;
+    }
         // Ink Glob follows the character
         if (this.inkGlob && this.character) {
             this.inkGlob.followCharacter(this.character);
         }
     
         // Handle collision between Ink Glob and the character
-        this.physics.collide(this.inkGlob, this.character, this.handleInkGlobCollision, null, this);
+        if (this.inkGlob && this.character){
+           this.physics.add.collider(this.inkGlob, this.character, this.handleInkGlobCollision, () =>{
+            console.log("Caught by the inkGlob!");
+           }, null, this);  
+           
+        }
+       
     
         // Check for room transitions
         if (this.currentRoom) {
@@ -222,28 +247,54 @@ class GameScene extends Phaser.Scene {
             });
         }
     
-        // Check if the character has moved to a new room
-        if (this.currentRoom.roomKey !== this.lastRoomKey) {
-            this.lastRoomKey = this.currentRoom.roomKey;
-            this.spawnItems(); // Respawn the correct items for the current room
-            this.physics
-        }// Handle item collection via spacebar
+        // Handle item collection via spacebar
     if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
         this.collectItem(this.overlappingItem);
         this.overlappingItem = null;
     }
 
-    // Update character movements and animations
-    this.character.update();
+    
 
+    // Check if the character has moved to a new room
+    // if (this.currentRoom.roomKey !== this.lastRoomKey) {
+    //     this.lastRoomKey = this.currentRoom.roomKey;
+    //     this.spawnItems(); // Respawn the correct items for the current room
+    //     this.physics
+    // }
+
+    if(this.currentRoom.roomKey === 'room4'){
+if (!this.inkGlob){
+this.inkGlob = new InkGlob(this, 100, 200);
+this.add.existing(this.inkGlob);
+this.physics.add.existing(this.inkGlob);
+}   
+this.inkGlob.active=true;
+this.physics.add.overlap(this.character, this.inkGlob, ()=>{
+    console.log ("Caught by the InkGlob!");
+}, null, this);     
+    } else {
+        if (this.inkGlob){
+            this.inkGlob.active=false;
+            this.inkGlob.setVisible(false);
+            this.inkGlob.body.enable=false;
+        }
     }
-    // Handle collision between the Ink Glob and the character
-handleInkGlobCollision() {
-    console.log('Ink Glob hit the character!');
-    // Implement specific actions like restarting the game or triggering a special event
-    this.restartGame();
-}
+    if (this.inkGlob && this.inkGlob.active){
+this.inkGlob.followCharacter(this.character);
+    }
 
+    if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))){
+        this.collectItem(this.overlappingItem);
+        this.overlappingItem=null;
+    }
+    }
+    
+    // Handle collision between the Ink Glob and the character
+     handleInkGlobCollision(player, inkGlob, scene) {
+        scene.physics.pause();
+        scene.scene.restart();
+    }
+   
 // Function to restart the game or handle Ink Glob interaction consequences
 restartGame() {
     // Logic to restart the game or move to a different scene

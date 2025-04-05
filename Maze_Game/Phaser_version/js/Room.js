@@ -38,6 +38,9 @@ update(){
         if (this.roomKey === 'room1') {
             this.walls.add(new Wall(this.scene, 318, 300, 30, 600)); // this is the left wall
             this.walls.add(new Wall(this.scene, 454, 300, 30, 600)); //this is the right wall
+
+            // this.inkGlob.destroy();
+            // this.inkGlob= null;
         }
         else if (this.roomKey === 'room2') {
             this.walls.add(new Wall(this.scene, 290, 300, 20, 600));//left wall
@@ -46,6 +49,9 @@ update(){
             this.walls.add(new Wall(this.scene, 530, 285, 320, 405)); //middle square wall
             this.walls.add(new Wall(this.scene, 380, 10, 200, 15));// top left wall
             this.walls.add(new Wall(this.scene, 700, 10, 200, 15));// top right wall
+           
+            // this.inkGlob.destroy();
+            // this.inkGlob= null;
         }
 
         else if (this.roomKey === 'room3') {
@@ -58,9 +64,10 @@ update(){
             this.walls.add(new Wall(this.scene, 400, 290, 800, 60));
             this.walls.add(new Wall(this.scene, 400, 140, 800, 60));
 
-            this.inkGlob= new InkGlob (this.scene, 600, 300);
-            this.physics.add.collider(inkGlob, someOtherObject, this.handleCollision,null,this);
-            this.scene.physics.add.collider(this.background.inkGlob, this.walls, this.onInkGlobCollision,null,this);
+           // this.walls = this.scene.physics.add.staticGroup();
+            //this.inkGlob= new InkGlob (this.scene, 600, 300);
+            this.scene.physics.add.collider(this.inkGlob, this.walls);
+            this.scene.physics.add.overlap(this.player, this.inkGlob, this.handleInkGlobTouch,null,this);
         }
         else if (this.roomKey === 'room5') {
             this.walls.add(new Wall(this.scene, 720, 490, 125, 200));
@@ -70,6 +77,9 @@ update(){
             this.walls.add(new Wall(this.scene, 400, 300, 350, 265));
             this.walls.add(new Wall(this.scene, 80, 500, 125, 200));
             this.walls.add(new Wall(this.scene, 80, 150, 125, 200));
+
+            this.inkGlob.destroy();
+            this.inkGlob= null;
         }
         else if (this.roomKey === 'room6') {
             this.walls.add(new Wall(this.scene, 610, 120, 350, 355));
@@ -127,7 +137,16 @@ update(){
             this.walls.add(new Wall(this.scene, 305, 300, 30, 600)); //this is the right wall
         }
     }
+createWalls(){
+    this.walls = this.scene.physics.add.staticGroup();
 
+    this.walls.create(this.x,this.y, 'wall');
+    this.walls.create(this.x + 100, this.y, 'wall');
+
+    if (this.name === 'room4' && this.inkGlob){
+this.scene.physics.add.collider(this.inkGlob, this.walls)
+    }
+}
     createDoorways() {
         this.doorways.clear(true, true);
 
