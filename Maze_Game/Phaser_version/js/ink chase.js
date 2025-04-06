@@ -1,4 +1,4 @@
-class Character extends Phaser.Physics.Arcade.Sprite {
+class InkGlobChase extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, inkGlob) {
     super(scene, x, y, 'character_front_left');
   
@@ -21,39 +21,43 @@ class Character extends Phaser.Physics.Arcade.Sprite {
     // Ink Glob Variables
     this.inkGlob = inkGlob; 
     this.lightOn = true; // Track light state
-  
+    this.chaseTimer=null;
+  this.inRoom4=false;
+
     console.log("Character created:", this.x, this.y);
   }
-
+preload(){
+  this.preload.image('inkglob','assets/images/ink_glob.png')
+}
   update() {
     this.setVelocity(0);
   
-    // Movement controls
-    if (this.keys.left.isDown) {
-      this.setVelocityX(-this.speed);
-      this.play('walk_left', true);
-      this.body.setSize(130, 200);
-    } else if (this.keys.right.isDown) {
-      this.setVelocityX(this.speed);
-      this.play('walk_right', true);
-      this.body.setSize(130, 200);
-    } else if (this.keys.up.isDown) {
-      this.setVelocityY(-this.speed);
-      this.play('walk_up', true);
-      this.body.setSize(220, 200);
-    } else if (this.keys.down.isDown) {
-      this.setVelocityY(this.speed);
-      this.play('walk_down', true);
-      this.body.setSize(220, 200);
-    } else {
-      this.stop();
-    }
+    // // Movement controls
+    // if (this.keys.left.isDown) {
+    //   this.setVelocityX(-this.speed);
+    //   this.play('walk_left', true);
+    //   this.body.setSize(130, 200);
+    // } else if (this.keys.right.isDown) {
+    //   this.setVelocityX(this.speed);
+    //   this.play('walk_right', true);
+    //   this.body.setSize(130, 200);
+    // } else if (this.keys.up.isDown) {
+    //   this.setVelocityY(-this.speed);
+    //   this.play('walk_up', true);
+    //   this.body.setSize(220, 200);
+    // } else if (this.keys.down.isDown) {
+    //   this.setVelocityY(this.speed);
+    //   this.play('walk_down', true);
+    //   this.body.setSize(220, 200);
+    // } else {
+    //   this.stop();
+    // }
 
     // Ink glob chase logic when lights are off
-    if (!this.lightOn) {
-      this.scene.physics.moveToObject(this.inkGlob, this, 100); // Ink glob chases the character
+    if (this.inRoom4 && !this.lightOn) {
+      this.startTimeChase();
     } else {
-      this.inkGlob.setVelocity(0, 0); // Ink glob stops when lights are on
+      this.stopTimeChase();
     }
   
     // Pick-up object with spacebar
@@ -65,26 +69,64 @@ class Character extends Phaser.Physics.Arcade.Sprite {
     if (this.holdingObject) {
       this.holdingObject.setPosition(this.x, this.y - 50);
     }
-  }
 
-  pickUpObject() {
-    if (this.holdingObject) {
-      console.log("Dropping object:", this.holdingObject.texture.key);
-      this.holdingObject = null;
-      return;
+    if(!this.lighton && this.chaseTimer){
+      this.startTimeChase();
+    } else if(this.lightOn && this.chaseTimer){
+      this.stopTimeChase();
     }
-  
-    const objects = this.scene.physics.overlapRect(this.x, this.y, 50, 50);
-  
-    for (let obj of objects) {
-      if (obj.gameObject && obj.gameObject.pickable) {
-        console.log("Picked up object:", obj.gameObject.texture.key);
-        this.holdingObject = obj.gameObject;
-        return;
-      }
-    }
-    console.log("No object to pick up.");
   }
+    startTimeChase() {
+        if (this.lightOn) return;
+    
+        console.log("Chase event started!");
+    
+        this.chaseTimer = this.scene.time.addEvent({
+            delay: 1000, // every second
+            loop: true,
+            callback: () => {
+                if (!this.lightOn) {
+                  this.scene.physics.moveToObject(this.inkGlob, this, 100); // Ink glob chases the character
+                    // Put your chase logic here: spawn enemy, reduce timer, etc.
+                    console.log("Time chase running...");
+                } else {
+                  this.inkGlob.setVelocity(0, 0); // Ink glob stops when lights are on
+                    this.stopTimeChase();
+                }
+            }
+        });
+    }
+    
+    stopTimeChase() {
+        if (this.chaseTimer) {
+            this.chaseTimer.remove();
+            this.chaseTimer = null;
+            console.log("Chase event stopped.");
+        }
+    }
+    
+timeUp(){
+    console.log("Time is up! Game over or event trigger.");
+    this.scene.scene.start('GameOverScene');
+}
+  // pickUpObject() {
+  //   if (this.holdingObject) {
+  //     console.log("Dropping object:", this.holdingObject.texture.key);
+  //     this.holdingObject = null;
+  //     return;
+  //   }
+  
+  //   const objects = this.scene.physics.overlapRect(this.x, this.y, 50, 50);
+  
+  //   for (let obj of objects) {
+  //     if (obj.gameObject && obj.gameObject.pickable) {
+  //       console.log("Picked up object:", obj.gameObject.texture.key);
+  //       this.holdingObject = obj.gameObject;
+  //       return;
+  //     }
+  //   }
+  //   console.log("No object to pick up.");
+  // }
 }
 
-export default Character;
+export default InkGlobChase;

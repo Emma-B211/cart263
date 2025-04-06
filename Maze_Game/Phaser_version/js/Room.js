@@ -1,19 +1,17 @@
-
 import Wall from './Wall.js';
 import Doorway from './Doorway.js';
-import InkGlob from './inkglob.js';
+//import Room4 from'./Room4Scene.js';
+//import InkGlobChase from './ink chase.js';
+//import InkGlob from '/Maze_Game/Phaser_version/js/inkglob.js';
 
 class Room extends Phaser.GameObjects.Container {
     constructor(scene, roomKey) {
 
         super(scene);
 
-        this.lightsOff = false;  // Set to true when lights are off
-
         this.scene = scene; //Store references to the GameScene
         this.roomKey = roomKey;  // store the room's name (like "room1")
 
-        
         this.scene.add.existing(this);
         this.name = roomKey;
 
@@ -26,43 +24,12 @@ class Room extends Phaser.GameObjects.Container {
         this.createWalls();
         this.createDoorways();
 
-        if (this.roomKey === 'room4') {
-            this.inkGlob = new InkGlob(this.scene, 600, 300);  // Starting position of the ink glob
-            this.chaseDuration = 5000;
-            this.chaseTimer=null;
-        }
-        
+        // if (this.roomKey === 'room4'){
+        //     this.inRoom4=true;
+        //     this.lightOn=false;
+        // }
     }
 
-    update(){
-        // Check if lights are off in room4
-        if (this.roomKey === 'room4' && this.lightsOff && this.inkGlob) {
-            if (this.chaseTimer){
-                this.startChase();
-            }
-            this.inkGlob.chase(this.scene.player);  // Chase the player
-        } else {
-            if (this.chaseTimer){
-                this.chaseTimer.remove();
-                this.chaseTimer=null;
-            }
-            this.inkGlob.setVelocity(0, 0);  // Stop chasing when lights are on
-        }
-    }
-    startChase(){
-        this.chaseTimer= this.scene.time.addEvent({
-            delay: this.chaseDuration,
-            callback:this.stopChase,
-            callbackScope:this,
-            loop:false
-        });
-    }
-    stopChase(){
-        if(this.inkGlob){
-            this.inkGlob.setVelocity(0,0);
-        }
-        this.chaseTimer=null;
-    }
     createWalls() {
         this.walls.clear(true, true);
 
@@ -88,6 +55,8 @@ class Room extends Phaser.GameObjects.Container {
         else if (this.roomKey === 'room4') {
             this.walls.add(new Wall(this.scene, 400, 290, 800, 60));
             this.walls.add(new Wall(this.scene, 400, 140, 800, 60));
+
+           
         }
         else if (this.roomKey === 'room5') {
             this.walls.add(new Wall(this.scene, 720, 490, 125, 200));
@@ -154,7 +123,16 @@ class Room extends Phaser.GameObjects.Container {
             this.walls.add(new Wall(this.scene, 305, 300, 30, 600)); //this is the right wall
         }
     }
-
+    // chaseCharacter(character) {
+    //     this.scene.physics.moveToObject(this, character, this.speed);
+    // }
+    // stopTimeChase() {
+    //     if (this.chaseTimer) {
+    //         this.chaseTimer.remove();
+    //         this.chaseTimer = null;
+    //         console.log("Chase event stopped.");
+    //     }
+    // }
     createDoorways() {
         this.doorways.clear(true, true);
 
@@ -173,13 +151,11 @@ class Room extends Phaser.GameObjects.Container {
         }
 
         else if (this.roomKey === 'room4') {
-            this.walls.add(new Wall(this.scene, 400, 290, 800, 60));
-            this.walls.add(new Wall(this.scene, 400, 140, 800, 60));
-        
-            // Add ink glob
-            this.inkGlob = new InkGlob(this.scene, 600, 300);  // Starting position of the ink glob
+            this.doorways.add(new Doorway(this.scene, 785, 245, 10, 115, 'room3', 70, 250));
+            this.doorways.add(new Doorway(this.scene, 10, 245, 10, 115, 'room5', 770, 350));
+
+           // this.load.images('inkglob','assets/images/ink_glob.png');
         }
-        
 
         else if (this.roomKey === 'room5') {
             this.doorways.add(new Doorway(this.scene, 785, 350, 10, 115, 'room4', 50, 250));
@@ -222,7 +198,44 @@ class Room extends Phaser.GameObjects.Container {
             this.doorways.add(new Doorway(this.scene, 215, 600, 125, 10, 'room12', 215, 70));
             this.doorways.add(new Doorway(this.scene, 215, 5, 125, 10, 'roomEnd', 575, 595));
         }
-    }
+    } 
+    // toggleLight(state){
+    //     this.lightOn=state;
+    //     if(this.lightOn){
+    //         console.log("Light turned on");
+    //     } else{
+    //         console.log("light turned off");
+    //     }
+    // }
+
+spawnItems() {
+    this.items.clear(true, true); // Clear previous items
+
+    this.itemData.forEach(data => {
+        if (data.room === this.currentRoom.roomKey) {
+            const item = this.physics.add.sprite(data.x, data.y, data.name);
+            item.setData('message', data.message);
+            item.setData('name', data.name);
+
+            this.physics.add.overlap(this.character, item, () => {
+                this.overlappingItem = item;
+            }, null, this);
+        }
+    });
+}
+collectItem(item) {
+    if (!item.active) return;
+
+    // Display message
+    this.textbox.setVisible(true);
+    this.messageText.setText(item.getData('message')).setVisible(true);
+
+    // Hide after 2 seconds
+    this.time.delayedCall(2000, () => {
+        this.textbox.setVisible(false);
+        this.messageText.setVisible(false);
+    });
+}
 
     checkTransition(character) {
         this.scene.physics.world.overlap(character, this.doorways, this.onOverlap, null, this);
@@ -244,7 +257,7 @@ class Room extends Phaser.GameObjects.Container {
         this.createDoorways();
 
         this.scene.physics.add.collider(character, this.walls);
+         
     }
 }
 export default Room;
-

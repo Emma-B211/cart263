@@ -1,10 +1,15 @@
 
 import Room from './Room.js';
 import Character from './Character.js';
+//import ink_globmovement from './ink_glob movement.js';
+import InkGlob from '/Maze_Game/Phaser_version/js/inkglob.js';
+//import InkGlobChase from './ink chase.js';
 
 class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene');
+        this.inkGlob= null;
+        this.inkSpeed=0;
     }
 
     preload() {
@@ -77,6 +82,19 @@ class GameScene extends Phaser.Scene {
         // Create textbox image and message text (initially hidden)
         // this.textbox = this.add.image(400, 550, 'textbox').setScrollFactor(0);
 
+        // instintiate inkglob
+//         this.inkGlob = new InkGlob(this, 400, 300);
+// this.add.existing(this.inkGlob);
+
+if (this.currentRoom.roomKey === 'room4' && !this.inkGlob){
+    this.spawnInkGlob();
+}
+console.log(this.inkglob);
+
+//const InkGlob= new InkGlob(this,x,y);
+// this.inkGlob.setVisible(false);
+// this.inkGlob.body.setEnable(false);
+
         this.textbox = this.add.image(150, 100, 'textbox').setScale(0.5).setScrollFactor(0).setOrigin(0, 0);
         this.textbox.setVisible(false);
 
@@ -98,9 +116,6 @@ class GameScene extends Phaser.Scene {
         this.spawnItems();
 
     }
-
-
-
     createAnimations() {
 
         this.anims.create({
@@ -192,25 +207,73 @@ class GameScene extends Phaser.Scene {
         this.character.update();
         this.currentRoom.checkTransition(this.character);
 
-        // Check if we changed rooms
-        if (this.currentRoom.roomKey !== this.lastRoomKey) {
-            this.lastRoomKey = this.currentRoom.roomKey;
-            this.spawnItems(); // Respawn only correct items for this room
-
-            // Update collision for new room
-            this.physics.add.collider(this.character, this.currentRoom.walls);
+        if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
+            this.spawnInkGlob();
         }
 
+        if (this.inkGlob && this.inkGlob.visible) {
+            this.physics.moveToObject(this.inkGlob, this.character, this.inkSpeed);
+        }
+       
+
+        // Handle item collection with spacebar
         if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
             this.collectItem(this.overlappingItem);
             this.overlappingItem = null;
         }
-        // this.overlappingItem = null;
     }
+    // onOverlap(){
+    //     //console.log("Entering new room:", doorway.targetRoom);
+    //    // this.currentRoom= new Room(this, doorway.targetRoom);
 
+    //     if(this.inkGlob == 'room4'){
+    //         this.inkGlob.destroy();
+    //         this.inkGlob=null;
+    //         console.log("ink glob disappears");
+    //     }
+    // }
+    spawnInkGlob() {
+        console.log("Entering Room 4 - Ink chase begins!");
+    
+        this.inkGlob = new InkGlob(this, 400, 300); // Create an instance of your InkGlob class
+        this.add.existing(this.inkGlob);
+    
+        this.inkGlob.setScale(0.5);
+        this.inkGlob.setVisible(false);
+        this.inkSpeed = 0;
+    
+        this.physics.add.existing(this.inkGlob); // Add physics if not already in your class
+        this.physics.add.overlap(this.character, this.inkGlob, this.onInkGlobCatch, null, this);
+    
+        this.startChaseSequence();
+    }
+  startChaseSequence(){
+    console.log("ink glob will appear soon...");
+
+    this.time.delayedCall(2000,()=>{
+this.inkGlob.setVisible(true);
+console.log("ink glob appears!");
+    });
+
+    this.time.delayedCall(5000,()=>{
+        this.inkSpeed=50;
+        console.log("Ink glob starts moving");
+    });
+
+    this.time.delayedCall(10000, ()=>{
+        if(this.currentRoom.roomKey === 'room4'){
+            console.log("Ink glob catches you! Game Over!");
+            this.scene.restart();
+        }
+    });
+  }
+//   onInkGlobCatch(){
+//     console.log("Caught by the ink glob! Game Over!");
+//     this.scene.restart();
+//   }
     exitLastRoom() {
         this.scene('Chapter2Scene'); //switches to chapter 3 page when the charcter exit the last room
     }
-
 }
+
 export default GameScene; 

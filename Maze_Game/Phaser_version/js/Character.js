@@ -57,8 +57,10 @@ class Character extends Phaser.Physics.Arcade.Sprite {
             this.stop(); // Stop animation when no key is pressed
         }
     }
+chaseCharacter(character) {
+    this.scene.physics.moveToObject(this, character, this.speed);
 }
-
+}
 export default Character;
 
 
