@@ -48,15 +48,18 @@ class GameScene extends Phaser.Scene {
         this.load.image('character_right_side_middle', 'assets/images/character_right_side_middle.png');
         this.load.image('character_right_side_right', 'assets/images/character_right_side_right.png');
 
-        this.load.image('inkglob','assets/images/ink_glob_copy_optimized.png');
+        this.load.image('inkglob','assets/images/ink_glob.png');
 
         this.load.image('notecard','assets/images/notecard.png');
         this.load.image('notecard2','assets/images/notecard.2.png');
 
-        this.load.image('key', 'assets/images/key_copy_optimized.png');
-        this.load.image('paper_code', 'assets/images/paper_code_copy_optimized.png');
+        this.load.image('key', 'assets/images/key_copy.png');
+        this.load.image('paper_code', 'assets/images/paper_code.png');
         this.load.image('keycard', 'assets/images/keycard.png');
 
+        this.load.image('key2', 'assets/images/key_copy_optimized.png');
+        this.load.image('paper_code2','assets/images/paper_code_copy_optimized.png');
+        this.load.image('inkglob2','assets/images/ink_glob_copy_optimized.png');
         this.load.image('textbox', 'assets/images/textbox.png');
 
         this.load.image('chapter2', 'assets/images/chapter2.png');
@@ -94,7 +97,7 @@ if (this.currentRoom.roomKey === 'room4' && !this.inkGlob){
     this.spawnInkGlob();
 }
 console.log(this.inkglob);
-this.lastRoomKey= this.currentRoom.roomKey;
+//this.lastRoomKey= this.currentRoom.roomKey;
 //const InkGlob= new InkGlob(this,x,y);
 // this.inkGlob.setVisible(false);
 // this.inkGlob.body.setEnable(false);
@@ -167,7 +170,7 @@ this.lastRoomKey= this.currentRoom.roomKey;
         });
 
         this.anims.create({
-            key:'animeRoom13',
+            key:'animateRoom13',
             frames:[
                 {key:'room13'},
             {key:'room13.2'},
@@ -190,6 +193,9 @@ this.lastRoomKey= this.currentRoom.roomKey;
                 const item = this.physics.add.sprite(data.x, data.y, data.name);
                 item.setData('message', data.message);
                 item.setData('name', data.name);
+                item.setImmovable(true);
+
+                this.item.adds(item);
 
                 this.physics.add.overlap(this.character, item, () => {
                     this.overlappingItem = item;
