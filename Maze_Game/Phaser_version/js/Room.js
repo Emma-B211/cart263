@@ -123,7 +123,8 @@ class Room extends Phaser.GameObjects.Container {
             this.walls.add(new Wall(this.scene, 80, 590, 100, 30));
             this.walls.add(new Wall(this.scene, 278, 590, 100, 30));
             this.walls.add(new Wall(this.scene, 506, 590, 100, 30));
-            this.walls.add(new Wall(this.scene, 713, 590, 100, 30));
+            this.walls.add(new Wall(this.scene, 650, 590, 100, 30));
+            this.walls.add(new Wall(this.scene, 55,360,25,75));
         }
         else if (this.roomKey === 'room11') {
             this.walls.add(new Wall(this.scene, 530, 100, 550, 170));
