@@ -132,9 +132,9 @@ console.log(this.inkglob);
       // Item configuration per room
       this.itemData = [
         { name: 'key', x: 610, y: 564,  room: 'room2', message: 'You found a key!' },
-        { name: 'paper_code1', x: 377, y: 188,  room: 'room6', message: 'You found a paper with a code!'}
+        { name: 'paper_code1', x: 377, y: 188,  room: 'room6', message: 'You found a paper with a code!'},
        // { name: 'paper_code2', x: 382, y: 320, room: 'room9', message: 'You found a paper with a code!' },
-       // { name: 'keycard', x: 400, y: 186, room: 'room10', message: 'This might unlock something important.' },
+        { name: 'keycard', x: 400, y: 186, room: 'room10', message: 'This might unlock something important.' },
     ];
 
         this.createAnimations();
@@ -259,35 +259,35 @@ console.log(this.inkglob);
         // Optionally track collected items (remove it from the item data)
         this.itemData = this.itemData.filter(data => data.name !== item.getData('name'));
     }
-    openChest() {
-        this.lockedChest.setTexture('open_chest');
-        this.hasOpenedChest = true;
-    
-        if(!this.keycardCollected){
-// Make the keycard appear in room 10
-const keycard = this.physics.add.sprite(400, 186, 'keycard').setScale(0.3);
-keycard.setData('message', 'This might unlock something important.');
-keycard.setData('name', 'keycard');
+//     openChest() {
+//         this.lockedChest.setTexture('open_chest');
+//         this.hasOpenedChest = true;
+//     console.log('hasOpenedChest')
+//         if(!this.keycardCollected){
+// // Make the keycard appear in room 10
+// const keycard = this.physics.add.sprite(400, 186, 'keycard').setScale(0.3);
+// keycard.setData('message', 'This might unlock something important.');
+// keycard.setData('name', 'keycard');
 
-this.items.add(keycard);
-this.physics.add.overlap(this.character, keycard, () => {
-    this.overlappingItem = keycard;
-}, null, this);
-        }
+// this.items.add(keycard);
+// this.physics.add.overlap(this.character, keycard, () => {
+//     this.overlappingItem = keycard;
+// }, null, this);
+//         }
         
     
-        // Optional: Show a short message
-        this.textbox.setVisible(true);
-        this.messageText.setText("The chest creaks open...");
-        this.messageText.setVisible(true);
-        this.time.delayedCall(2000, () => {
-            this.textbox.setVisible(false);
-            this.messageText.setVisible(false);
-        });
-    }
+//         // Optional: Show a short message
+//         this.textbox.setVisible(true);
+//         this.messageText.setText("The chest creaks open...");
+//         this.messageText.setVisible(true);
+//         this.time.delayedCall(2000, () => {
+//             this.textbox.setVisible(false);
+//             this.messageText.setVisible(false);
+//         });
+//     }
     update() {
 
-        console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
+        //console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.character.update();
         this.currentRoom.checkTransition(this.character);
 
@@ -319,6 +319,45 @@ this.physics.add.overlap(this.character, keycard, () => {
         this.overlappingItem = null; // Reset overlapping item
     }
 //added room13 animation
+// if(this.currentRoom.roomKey !== this.lastRoomKey){
+//     if (this.currentRoom.roomKey === 'room13' && this.keycardCollected) {
+//         this.room13AnimSprite.setVisible(true);
+//         this.room13AnimSprite.play('room13_animation');
+//     } else {
+//         this.room13AnimSprite.setVisible(false);
+//         this.room13AnimSprite.stop();
+//     }
+     
+// }
+   // Spawn chest ONLY when entering room10 and if it hasn't already spawned
+   if (this.currentRoom.roomKey === 'room10' && !this.lockedChest) {
+    console.log('chest');
+    this.lockedChest = this.physics.add.sprite(400, 186, 'locked_chest');
+    this.lockedChest.setScale(0.4);
+    this.lockedChest.setImmovable(true);
+
+//     this.physics.add.overlap(this.character, this.lockedChest, () => {
+//         if (this.hasKey && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
+//             this.openChest();
+//         }
+//     });
+// } else if (this.hasOpenedChest && !this.lockedChest) {
+//     // Show open chest if already opened
+//     this.lockedChest = this.physics.add.sprite(400, 186, 'locked_chest');
+//     this.lockedChest.setScale(0.4);
+//     this.lockedChest.setImmovable(true);
+// }
+// if (this.currentRoom.roomKey === 'room9' && this.hasOpenedChest) {
+//         this.lockedChest = this.physics.add.sprite(400, 186, 'open_chest');
+//         this.lockedChest.setScale(0.4);
+//         this.lockedChest.setImmovable(true);
+    }
+    
+    // Destroy the open chest if leaving room 9
+    // if (this.lastRoomKey === 'room9') {
+    //     this.lockedChest.destroy();
+    //     //this.lockedChest= null;
+    // }
 if(this.currentRoom.roomKey !== this.lastRoomKey){
     if (this.currentRoom.roomKey === 'room13' && this.keycardCollected) {
         this.room13AnimSprite.setVisible(true);
@@ -328,23 +367,6 @@ if(this.currentRoom.roomKey !== this.lastRoomKey){
         this.room13AnimSprite.stop();
     }
      
-}
-   // Spawn chest ONLY when entering room10 and if it hasn't already spawned
-   if (this.currentRoom.roomKey === 'room10' && !this.lockedChest) {
-    this.lockedChest = this.physics.add.sprite(400, 186, 'locked_chest');
-    this.lockedChest.setScale(0.4);
-    this.lockedChest.setImmovable(true);
-
-    this.physics.add.overlap(this.character, this.lockedChest, () => {
-        if (this.hasKey && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
-            this.openChest();
-        }
-    });
-} else if (this.hasOpenedChest && !this.lockedChest) {
-    // Show open chest if already opened
-    this.lockedChest = this.physics.add.sprite(400, 186, 'open_chest');
-    this.lockedChest.setScale(0.4);
-    this.lockedChest.setImmovable(true);
 }
 // //added room13 animation
 // if(this.currentRoom.roomKey !== this.lastRoomKey){
@@ -358,17 +380,17 @@ if(this.currentRoom.roomKey !== this.lastRoomKey){
      
 // }
 // Inside update(), after checking for room change
-if (this.currentRoom.roomKey === 'room9' && this.hasOpenedChest) {
-    this.openChest = this.physics.add.sprite(400, 186, 'open_chest');
-    this.openChest.setScale(0.4);
-    this.openChest.setImmovable(true);
-}
+// if (this.currentRoom.roomKey === 'room9' && this.hasOpenedChest) {
+//     this.openChestSprite = this.physics.add.sprite(400, 186, 'open_chest');
+//     this.openChestSprite.setScale(0.4);
+//     this.openChestSprite.setImmovable(true);
+// }
 
-// Destroy the open chest if leaving room 9
-if (this.lastRoomKey === 'room9' && this.openChest) {
-    this.openChest.destroy();
-    this.openChest= null;
-}
+// // Destroy the open chest if leaving room 9
+// if (this.lastRoomKey === 'room9' && this.openChest) {
+//     this.openChestSprite.destroy();
+//     this.openChestSprite= null;
+// }
     
         if (this.currentRoom.roomKey !== this.lastRoomKey) {
             if (this.lastRoomKey === 'room4' && this.inkGlob) {
