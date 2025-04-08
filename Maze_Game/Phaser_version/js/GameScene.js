@@ -58,7 +58,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('keycard', 'assets/images/keycard.png');
 
         this.load.image('key2', 'assets/images/key_copy_2_optimized.png');
-        this.load.image('paper_code2','assets/images/paper_code_copy_optimized.png');
+        this.load.image('paper_code2','assets/images/paper_code_copy_1_optimized.png');
         this.load.image('inkglob2','assets/images/ink_glob_copy_8_optimized.png');
         this.load.image('textbox', 'assets/images/textbox.png');
 
