@@ -358,17 +358,17 @@ if(this.currentRoom.roomKey !== this.lastRoomKey){
      
 // }
 // Inside update(), after checking for room change
-// if (this.currentRoom.roomKey === 'room9' && this.hasOpenedChest && !this.openChestSprite) {
-//     this.openChestSprite = this.physics.add.sprite(400, 186, 'open_chest');
-//     this.openChestSprite.setScale(0.4);
-//     this.openChestSprite.setImmovable(true);
-// }
+if (this.currentRoom.roomKey === 'room9' && this.hasOpenedChest) {
+    this.openChest = this.physics.add.sprite(400, 186, 'open_chest');
+    this.openChest.setScale(0.4);
+    this.openChest.setImmovable(true);
+}
 
-// // Destroy the open chest if leaving room 9
-// if (this.lastRoomKey === 'room9' && this.openChestSprite) {
-//     this.openChestSprite.destroy();
-//     this.openChestSprite = null;
-// }
+// Destroy the open chest if leaving room 9
+if (this.lastRoomKey === 'room9' && this.openChest) {
+    this.openChest.destroy();
+    this.openChest= null;
+}
     
         if (this.currentRoom.roomKey !== this.lastRoomKey) {
             if (this.lastRoomKey === 'room4' && this.inkGlob) {
