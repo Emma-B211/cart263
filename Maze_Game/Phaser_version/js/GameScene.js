@@ -58,7 +58,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('keycard', 'assets/images/keycard.png');
        // this.load.image('key2', 'assets/images/key_copy_2_optimized.png');
        // this.load.image('paper_code2','assets/images/paper_code_copy_1_optimized.png');
-        this.load.image('inkglob2','assets/images/ink_glob_copy_8_optimized.png');
+        this.load.image('inkglob2','assets/images/ink_glob_copy_9_optimized.png');
         this.load.image('textbox', 'assets/images/textbox.png');
 
         this.load.image('chapter1', 'assets/images/chapter1.png');
@@ -81,9 +81,6 @@ this.ambience= this.sound.add('ambience', {
 this.ambience.play();
 }
 
-
-
-
         //load Character
         this.character = new Character(this, 400, 300);
         this.add.existing(this.character);
@@ -104,7 +101,7 @@ this.ambience.play();
 //         this.inkGlob = new InkGlob(this, 400, 300);
 // this.add.existing(this.inkGlob);
 
-if (this.currentRoom.roomKey === 'room4' && !this.inkGlob){
+if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
     this.spawnInkGlob();
 }
 console.log(this.inkglob);
@@ -213,23 +210,23 @@ console.log(this.inkglob);
     }
 
     collectItem(item) {
-        if (!item.active) return;
-
+        if (!item.active) return; // Don't collect if it's already inactive
+    
         // Show textbox and message
         this.textbox.setVisible(true);
         this.messageText.setText(item.getData('message'));
         this.messageText.setVisible(true);
-
+    
         // Hide after 2 seconds
         this.time.delayedCall(2000, () => {
             this.textbox.setVisible(false);
             this.messageText.setVisible(false);
         });
-
-        // Remove item
+    
+        // Remove item (disable body to make it disappear)
         item.disableBody(true, true);
-
-        // Optionally track collected items
+    
+        // Optionally track collected items (remove it from the item data)
         this.itemData = this.itemData.filter(data => data.name !== item.getData('name'));
     }
 
@@ -238,14 +235,30 @@ console.log(this.inkglob);
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.character.update();
         this.currentRoom.checkTransition(this.character);
-
+    
         if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
             this.spawnInkGlob();
         }
-
+    
         if (this.inkGlob && this.inkGlob.visible) {
             this.physics.moveToObject(this.inkGlob, this.character, this.inkSpeed);
         }
+        // Handle item collection with spacebar
+    if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
+        this.collectItem(this.overlappingItem);
+        this.overlappingItem = null; // Reset overlapping item
+    }
+        // if (this.currentRoom.roomKey !== this.lastRoomKey) {
+        //     this.spawnItems();
+        //     this.lastRoomKey = this.currentRoom.roomKey;
+        // }
+        if (this.currentRoom.roomKey !== this.lastRoomKey) {
+            if (this.lastRoomKey === 'room4' && this.inkGlob) {
+                this.inkGlob.destroy();
+                this.inkGlob = null;
+                this.inkSpeed = 0;
+                console.log("left room 4 - ink glob removed");
+            }
         // if (this.currentRoom.roomKey !== this.lastRoomKey){
         //     if(this.lastRoomKey === 'room1' && this.ambience && this.ambience.isPlaying){
         //         this.ambience.stop();
@@ -265,14 +278,17 @@ if (this.currentRoom.roomKey === 'room1'){
             this.collectItem(this.overlappingItem);
             this.overlappingItem = null;
         }
-
         if(this.currentRoom.roomKey !== this.lastRoomKey){
-            if(this.lastRoomKey === 'room4' && this.inkGlob){
-            this.inkGlob.destroy();
-            this.inkGlob=null;
-            this.inkSpeed=0;
-            console.log("left room 4- ink glob removed")
+            this.spawnItems();
+            this.lastRoomKey= this.currentRoom.roomKey;
         }
+        // if(this.currentRoom.roomKey !== this.lastRoomKey) {
+        //     if(this.lastRoomKey === 'room4' && this.inkGlob) {
+        //         this.inkGlob.destroy();
+        //         this.inkGlob = null;
+        //         this.inkSpeed = 0;
+        //         console.log("left room 4 - ink glob removed");
+        //     }
         
         
         this.lastRoomKey= this.currentRoom.roomKey;
@@ -290,46 +306,49 @@ if (this.currentRoom.roomKey === 'room1'){
     // }
     spawnInkGlob() {
         console.log("Entering Room 4 - Ink chase begins!");
+        const spawnX = 517.5;
+        const spawnY = 245;
     
-const spawnX= 517.5;
-const spawnY= 245;
-
-
-        this.inkGlob = new InkGlob(this, spawnX, spawnY); // Create an instance of your InkGlob class
+        this.inkGlob = new InkGlob(this, spawnX, spawnY);
         this.add.existing(this.inkGlob);
-
-
         this.inkGlob.setScale(0.5);
         this.inkGlob.setVisible(false);
         this.inkSpeed = 0;
     
-        this.physics.add.existing(this.inkGlob); // Add physics if not already in your class
+        this.physics.add.existing(this.inkGlob);
         this.physics.add.overlap(this.character, this.inkGlob, this.onInkGlobCatch, null, this);
     
         this.startChaseSequence();
     }
-  startChaseSequence(){
-    console.log("ink glob will appear soon...");
-
-    this.time.delayedCall(2000, () => {
+    
+    startChaseSequence() {
+        console.log("Ink glob will appear soon...");
+        this.time.delayedCall(2000, () => {
+            if (this.inkGlob) {
+                this.inkGlob.setVisible(true);
+                console.log("Ink glob appears!");
+            }
+        });
+    
+        this.time.delayedCall(3000, () => {
+            this.inkSpeed = 70;
+            console.log("Ink glob starts moving");
+        });
+    
+        this.time.delayedCall(10000, () => {
+            if (this.currentRoom.roomKey === 'room4') {
+                console.log("Ink glob catches you! Game Over!");
+                this.scene.restart();
+            }
+        });
+    }
+    shutdown() {
         if (this.inkGlob) {
-            this.inkGlob.setVisible(true);
-            console.log("ink glob appears!");
+            this.inkGlob.destroy();
+            this.inkGlob = null;
+            console.log("Room transition - ink glob cleaned up.");
         }
-    });
-
-    this.time.delayedCall(3000,()=>{
-        this.inkSpeed=70;
-        console.log("Ink glob starts moving");
-    });
-
-    this.time.delayedCall(10000, ()=>{
-        if(this.currentRoom.roomKey === 'room4'){
-            console.log("Ink glob catches you! Game Over!");
-            this.scene.restart();
-        }
-    });
-  }
+    }
 //   onInkGlobCatch(){
 //     console.log("Caught by the ink glob! Game Over!");
 //     this.scene.restart();

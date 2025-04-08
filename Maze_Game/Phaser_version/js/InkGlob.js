@@ -17,7 +17,7 @@ this.body.setEnable(false);
     this.lightOn = true; // Track light state
     }
 preload(){
-    this.load.image('inkglob2','assets/images/ink_glob_copy_8_optimized.png')
+    this.load.image('inkglob2','assets/images/ink_glob_copy_9_optimized.png')
 }
 // create(){
 //     this.inkGlob= new InkGlob(this,400,300);
