@@ -250,11 +250,11 @@ console.log(this.inkglob);
         if (this.inkGlob && this.inkGlob.visible) {
             this.physics.moveToObject(this.inkGlob, this.character, this.inkSpeed);
         }
-        if (this.currentRoom.roomkEY !== this.lastRoomKey){
-            if(this.lastRoomKey === 'room1' && this.ambience && this.ambience.isPlaying){
-                this.ambience.stop();
-            }
-            }
+        // if (this.currentRoom.roomKey !== this.lastRoomKey){
+        //     if(this.lastRoomKey === 'room1' && this.ambience && this.ambience.isPlaying){
+        //         this.ambience.stop();
+        //     }
+        //     }
 if (this.currentRoom.roomKey === 'room1'){
     if(!this.ambience || !this.ambience.isPlaying){
         this.ambience=this.sound.add('ambience', {
