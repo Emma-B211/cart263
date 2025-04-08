@@ -48,7 +48,10 @@ class GameScene extends Phaser.Scene {
         this.load.image('character_right_side_middle', 'assets/images/character_right_side_middle.png');
         this.load.image('character_right_side_right', 'assets/images/character_right_side_right.png');
 
-        this.load.image('inkglob','assets/images/ink_glob.png')
+        this.load.image('inkglob','assets/images/ink_glob.png');
+
+        this.load.image('notecard','assets/images/notecard.png');
+        this.load.image('notecard2','assets/images/notecard.2.png');
 
         this.load.image('key', 'assets/images/key.png');
         this.load.image('paper_code', 'assets/images/paper_code.png');
@@ -91,7 +94,7 @@ if (this.currentRoom.roomKey === 'room4' && !this.inkGlob){
     this.spawnInkGlob();
 }
 console.log(this.inkglob);
-
+this.lastRoomKey= this.currentRoom.roomKey;
 //const InkGlob= new InkGlob(this,x,y);
 // this.inkGlob.setVisible(false);
 // this.inkGlob.body.setEnable(false);
@@ -222,7 +225,19 @@ console.log(this.inkglob);
             this.collectItem(this.overlappingItem);
             this.overlappingItem = null;
         }
+
+        if(this.currentRoom.roomKey !== this.lastRoomKey){
+            if(this.lastRoomKey === 'room4' && this.inkGlob){
+            this.inkGlob.destroy();
+            this.inkGlob=null;
+            this.inkSpeed=0;
+            console.log("left room 4- ink glob removed")
+        }
+        
+        
+        this.lastRoomKey= this.currentRoom.roomKey;
     }
+}
     // onOverlap(){
     //     //console.log("Entering new room:", doorway.targetRoom);
     //    // this.currentRoom= new Room(this, doorway.targetRoom);
@@ -251,9 +266,11 @@ console.log(this.inkglob);
   startChaseSequence(){
     console.log("ink glob will appear soon...");
 
-    this.time.delayedCall(2000,()=>{
-this.inkGlob.setVisible(true);
-console.log("ink glob appears!");
+    this.time.delayedCall(2000, () => {
+        if (this.inkGlob) {
+            this.inkGlob.setVisible(true);
+            console.log("ink glob appears!");
+        }
     });
 
     this.time.delayedCall(5000,()=>{

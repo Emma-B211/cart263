@@ -23,7 +23,21 @@ class Room extends Phaser.GameObjects.Container {
 
         this.createWalls();
         this.createDoorways();
+        if(this.roomKey === 'room13'){
+            this.handleRoom13Animation();
+        }
+// if(roomKey === 'room13'){
+//     this.background= this.scene.add.image(400,300,'room13.3.png');
+//     this.background.setDisplaySize(this.scene.scale.width, this.scene.scale.height);
 
+//     this.animationState=true;
+// this.room13Timer=this.scene.time.addEvent({
+//     delay:500,
+
+// })
+//}
+
+        
         // if (this.roomKey === 'room4'){
         //     this.inRoom4=true;
         //     this.lightOn=false;
@@ -199,6 +213,21 @@ class Room extends Phaser.GameObjects.Container {
             this.doorways.add(new Doorway(this.scene, 215, 5, 125, 10, 'roomEnd', 575, 595));
         }
     } 
+handleRoom13Animations(){
+    if(this.scene.hasKey){
+        this.background.setTexture('room13.3.png');
+
+        this.scene.tweens.add({
+            targets:this.background,
+            scaleX:1.2,
+            scaleY:1.2,
+            ease:'Power1',
+            duration: 1000,
+            yoyo:true,
+            repeat: -1
+        });
+    }
+}
     // toggleLight(state){
     //     this.lightOn=state;
     //     if(this.lightOn){
@@ -226,6 +255,9 @@ spawnItems() {
 collectItem(item) {
     if (!item.active) return;
 
+    if(item.getData('paper_code' === 'code')){
+        this.scene.hasCode = true;
+    }
     // Display message
     this.textbox.setVisible(true);
     this.messageText.setText(item.getData('message')).setVisible(true);
@@ -244,6 +276,13 @@ collectItem(item) {
     onOverlap(character, doorway) {
         console.log(`Transitioning to ${doorway.targetRoom}...`);
 
+if(this.roomKey === 'room13' && doorway.TargetRoom === 'roomEnd'){
+    if(!this.scene.hasCode){
+        console.log("you need the code to proceed.");
+        return;
+    }}
+
+    
         this.background.setTexture(doorway.targetRoom);
 
         this.roomKey = doorway.targetRoom;
