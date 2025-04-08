@@ -1,7 +1,7 @@
 import InkGlobChase from "./ink chase.js";
 class InkGlob extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
-        super(scene, x, y, 'inkglob'); // 'inkglob' is the preloaded image
+        super(scene, x, y, 'inkglob2'); // 'inkglob' is the preloaded image
        // this.scene = scene;
         scene.add.existing(this);
         this.scene.physics.add.existing(this); // Important: adds physics body
@@ -17,7 +17,7 @@ this.body.setEnable(false);
     this.lightOn = true; // Track light state
     }
 preload(){
-    this.load.image('inkglob2','assets/images/ink_glob_copy_2_optimized.png')
+    this.load.image('inkglob2','assets/images/ink_glob_copy_7_optimized.png')
 }
 create(){
     this.inkGlob= new InkGlob(this,400,300);
