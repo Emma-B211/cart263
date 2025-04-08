@@ -50,19 +50,18 @@ class GameScene extends Phaser.Scene {
 
         //this.load.image('inkglob','assets/images/ink_glob.png');
 
-        this.load.image('notecard','assets/images/notecard.png');
-        this.load.image('notecard2','assets/images/notecard.2.png');
+        // this.load.image('notecard','assets/images/notecard.png');
+        // this.load.image('notecard2','assets/images/notecard.2.png');
 
-       this.load.image('key', 'assets/images/key_copy.png');
+        this.load.image('key', 'assets/images/key.png');
         this.load.image('paper_code', 'assets/images/paper_code.png');
         this.load.image('keycard', 'assets/images/keycard.png');
-
        // this.load.image('key2', 'assets/images/key_copy_2_optimized.png');
        // this.load.image('paper_code2','assets/images/paper_code_copy_1_optimized.png');
         this.load.image('inkglob2','assets/images/ink_glob_copy_8_optimized.png');
         this.load.image('textbox', 'assets/images/textbox.png');
 
-        this.load.image('chapter2', 'assets/images/chapter2.png');
+        this.load.image('chapter1', 'assets/images/chapter1.png');
 
         this.load.audio('ambience','assets/ambience/eerie-ambience-6836.mp3');
     }
@@ -125,9 +124,9 @@ console.log(this.inkglob);
 
       // Item configuration per room
       this.itemData = [
-        { name: 'key', x: 360, y: 400, room: 'room1', message: 'You found a key!' },
-        { name: 'paper_code', x: 420, y: 300, room: 'room3', message: 'An old mysterious book...' },
-        { name: 'paper_code', x: 350, y: 350, room: 'room6', message: 'You found a paper with a code!' },
+        { name: 'key', x: 360, y: 400, room: 'room2', message: 'You found a key!' },
+        { name: 'paper_code', x: 420, y: 300, room: 'room6', message: 'An old mysterious book...' },
+        { name: 'paper_code', x: 350, y: 350, room: 'room9', message: 'You found a paper with a code!' },
         { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
     ];
 
