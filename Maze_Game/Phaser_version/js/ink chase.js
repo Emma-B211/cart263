@@ -27,7 +27,7 @@ class InkGlobChase extends Phaser.Physics.Arcade.Sprite {
     console.log("Character created:", this.x, this.y);
   }
 preload(){
-  this.preload.image('inkglob2','assets/images/ink_glob_copy_7_optimized.png')
+  this.preload.image('inkglob2','assets/images/ink_glob_copy_8_optimized.png')
 }
   update() {
     this.setVelocity(0);

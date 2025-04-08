@@ -17,28 +17,28 @@ this.body.setEnable(false);
     this.lightOn = true; // Track light state
     }
 preload(){
-    this.load.image('inkglob2','assets/images/ink_glob_copy_7_optimized.png')
+    this.load.image('inkglob2','assets/images/ink_glob_copy_8_optimized.png')
 }
-create(){
-    this.inkGlob= new InkGlob(this,400,300);
-    this.add.existing(this.inkGlob)
-}
-    chaseCharacter(character) {
-        this.scene.physics.moveToObject(this, character, this.speed);
-    }
+// create(){
+//     this.inkGlob= new InkGlob(this,400,300);
+//     this.add.existing(this.inkGlob)
+// }
+    // chaseCharacter(character) {
+    //     this.scene.physics.moveToObject(this, character, this.speed);
+    // }
 
     stopChase() {
         this.body.setVelocity(0, 0); // Properly stop using physics body
     }
 
-    update() {
-        // Optional: behavior logic
-        if (!this.lightOn) {
-            this.scene.physics.moveToObject(this.inkGlob, this, 100); // Ink glob chases the character
-          } else {
-            this.inkGlob.setVelocity(0, 0); // Ink glob stops when lights are on
-          }
-    }
+    // update() {
+    //     // Optional: behavior logic
+    //     if (!this.lightOn) {
+    //         this.scene.physics.moveToObject(this.inkGlob, this, 100); // Ink glob chases the character
+    //       } else {
+    //         this.inkGlob.setVelocity(0, 0); // Ink glob stops when lights are on
+    //       }
+    // }
     // onOverlap(InkGlob, doorway) {
     //     console.log(`Transitioning to ${doorway.targetRoom}...`);
 

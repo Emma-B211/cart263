@@ -53,13 +53,13 @@ class GameScene extends Phaser.Scene {
         this.load.image('notecard','assets/images/notecard.png');
         this.load.image('notecard2','assets/images/notecard.2.png');
 
-        this.load.image('key', 'assets/images/key_copy.png');
-        this.load.image('paper_code', 'assets/images/paper_code.png');
+       // this.load.image('key', 'assets/images/key_copy.png');
+       // this.load.image('paper_code', 'assets/images/paper_code.png');
         this.load.image('keycard', 'assets/images/keycard.png');
 
-        this.load.image('key2', 'assets/images/key_copy_optimized.png');
+        this.load.image('key2', 'assets/images/key_copy_2_optimized.png');
         this.load.image('paper_code2','assets/images/paper_code_copy_optimized.png');
-        this.load.image('inkglob2','assets/images/ink_glob_copy_7_optimized.png');
+        this.load.image('inkglob2','assets/images/ink_glob_copy_8_optimized.png');
         this.load.image('textbox', 'assets/images/textbox.png');
 
         this.load.image('chapter2', 'assets/images/chapter2.png');
@@ -271,9 +271,14 @@ console.log(this.inkglob);
     spawnInkGlob() {
         console.log("Entering Room 4 - Ink chase begins!");
     
-        this.inkGlob = new InkGlob(this, 400, 300); // Create an instance of your InkGlob class
+const spawnX= 517.5;
+const spawnY= 245;
+
+
+        this.inkGlob = new InkGlob(this, spawnX, spawnY); // Create an instance of your InkGlob class
         this.add.existing(this.inkGlob);
-    
+
+
         this.inkGlob.setScale(0.5);
         this.inkGlob.setVisible(false);
         this.inkSpeed = 0;
@@ -293,8 +298,8 @@ console.log(this.inkglob);
         }
     });
 
-    this.time.delayedCall(5000,()=>{
-        this.inkSpeed=50;
+    this.time.delayedCall(3000,()=>{
+        this.inkSpeed=70;
         console.log("Ink glob starts moving");
     });
 
