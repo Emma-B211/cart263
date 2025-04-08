@@ -63,6 +63,8 @@ class GameScene extends Phaser.Scene {
         this.load.image('textbox', 'assets/images/textbox.png');
 
         this.load.image('chapter2', 'assets/images/chapter2.png');
+
+        this.load.audio('ambience','assets/ambience/eerie-ambience-6836.mp3');
     }
 
     create() {
@@ -71,6 +73,16 @@ class GameScene extends Phaser.Scene {
         this.currentRoom = new Room(this, 'room1');
         this.add.existing(this.currentRoom);
         this.lastRoomKey = null; // Track room changes properly
+
+if (!this.ambience || !this.ambience.isPlaying){
+this.ambience= this.sound.add('ambience', {
+    loop:true,
+    volume:0.5
+});
+this.ambience.play();
+}
+
+
 
 
         //load Character
@@ -238,8 +250,20 @@ console.log(this.inkglob);
         if (this.inkGlob && this.inkGlob.visible) {
             this.physics.moveToObject(this.inkGlob, this.character, this.inkSpeed);
         }
-       
-
+        if (this.currentRoom.roomkEY !== this.lastRoomKey){
+            if(this.lastRoomKey === 'room1' && this.ambience && this.ambience.isPlaying){
+                this.ambience.stop();
+            }
+            }
+if (this.currentRoom.roomKey === 'room1'){
+    if(!this.ambience || !this.ambience.isPlaying){
+        this.ambience=this.sound.add('ambience', {
+            loop:true,
+            volume:0.5
+        });
+        this.ambience.play();
+    }
+}
         // Handle item collection with spacebar
         if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
             this.collectItem(this.overlappingItem);
@@ -316,6 +340,9 @@ const spawnY= 245;
 //   }
     exitLastRoom() {
         this.scene('Chapter2Scene'); //switches to chapter 3 page when the charcter exit the last room
+        if (this.ambience && this.ambience.isPlaying){
+            this.ambience.stop();
+        }
     }
 }
 

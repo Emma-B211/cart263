@@ -20,9 +20,11 @@ class Room extends Phaser.GameObjects.Container {
 
         this.walls = this.scene.physics.add.staticGroup(); // Makes walls static
         this.doorways = this.scene.physics.add.staticGroup();
-
+        this.scene.sound.pauseOnBlur=false;
         this.createWalls();
         this.createDoorways();
+
+       // this.sound.pauseOnBlur=false;
         if(this.roomKey === 'room13'){
             this.handleRoom13Animation();
         }
