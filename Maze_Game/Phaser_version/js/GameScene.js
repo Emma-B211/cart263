@@ -110,19 +110,20 @@ console.log(this.inkglob);
 // this.inkGlob.setVisible(false);
 // this.inkGlob.body.setEnable(false);
 
-        this.textbox = this.add.image(150, 100, 'textbox').setScale(0.5).setScrollFactor(0).setOrigin(0, 0);
+        this.textbox = this.add.image(200, 100, 'textbox').setScale(0.3).setScrollFactor(0).setOrigin(0, 0);
         this.textbox.setVisible(false);
 
-        this.messageText = this.add.text(170, 110, '', {
-            fontSize: '16px',
+        this.messageText = this.add.text(250, 150, '', {
+            fontSize: '32px',
             fill: '#000000', // black text
-            wordWrap: { width: 300 },
+            align: 'center',
+            wordWrap: { width: 300, useAdvancedWrap:true },
         }).setScrollFactor(0).setVisible(false);
 
       // Item configuration per room
       this.itemData = [
-        { name: 'key', x: 360, y: 400, room: 'room2', message: 'You found a key!' },
-        { name: 'paper_code', x: 420, y: 300, room: 'room6', message: 'An old mysterious book...' },
+        { name: 'key', x: 360, y: 400,  room: 'room2', message: 'You found a key!' },
+        { name: 'paper_code', x: 420, y: 300,  room: 'room6', message: 'An old mysterious book...' },
         { name: 'paper_code', x: 350, y: 350, room: 'room9', message: 'You found a paper with a code!' },
         { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
     ];
