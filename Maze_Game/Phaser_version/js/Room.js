@@ -215,7 +215,7 @@ class Room extends Phaser.GameObjects.Container {
     } 
 handleRoom13Animations(){
     if(this.scene.hasKey){
-        this.background.setTexture('room13.3.png');
+        this.background.setTexture('room13_3.png');
 
         this.scene.tweens.add({
             targets:this.background,
@@ -276,11 +276,11 @@ collectItem(item) {
     onOverlap(character, doorway) {
         console.log(`Transitioning to ${doorway.targetRoom}...`);
 
-if(this.roomKey === 'room13' && doorway.TargetRoom === 'roomEnd'){
-    if(!this.scene.hasCode){
-        console.log("you need the code to proceed.");
-        return;
-    }}
+// if(this.roomKey === 'room13' && doorway.TargetRoom === 'roomEnd'){
+//     if(!this.scene.hasCode){
+//         console.log("you need the code to proceed.");
+//         return;
+//     }}
 
     
         this.background.setTexture(doorway.targetRoom);
