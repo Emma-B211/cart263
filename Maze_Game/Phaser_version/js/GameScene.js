@@ -23,7 +23,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('room7', 'assets/images/room7.png');
         this.load.image('room8', 'assets/images/room8.png');
         this.load.image('room9', 'assets/images/room9.png');
-        this.load.image('room10', 'assets/images/room10.png');
+        this.load.image('room10', 'assets/images/room10_2.png');
         this.load.image('room11', 'assets/images/room11.png');
         this.load.image('room12', 'assets/images/room12.png');
         this.load.image('room13', 'assets/images/room13.png');
@@ -122,10 +122,10 @@ console.log(this.inkglob);
 
       // Item configuration per room
       this.itemData = [
-        { name: 'key', x: 360, y: 400,  room: 'room2', message: 'You found a key!' },
+        { name: 'key', x: 610, y: 564,  room: 'room2', message: 'You found a key!' },
         { name: 'paper_code', x: 420, y: 300,  room: 'room6', message: 'An old mysterious book...' },
-        { name: 'paper_code', x: 350, y: 350, room: 'room9', message: 'You found a paper with a code!' },
-        { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
+        { name: 'paper_code', x: 382, y: 3202, room: 'room9', message: 'You found a paper with a code!' },
+        { name: 'keycard', x: 56, y: 362, room: 'room10', message: 'This might unlock something important.' },
     ];
 
         this.createAnimations();
