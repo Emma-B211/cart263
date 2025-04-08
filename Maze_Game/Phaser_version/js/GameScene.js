@@ -32,7 +32,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('locked_door', 'assets/images/locked_door.png');
         this.load.image('open_door', 'assets/images/open_door.png');
 this.load.image('locked_chest','assets/images/locked_chest.png');
-this.load.image('open_chest.png','assets/images/open_chest.png');
+this.load.image('open_chest','assets/images/open_chest.png');
         this.load.image('character_front_left', 'assets/images/character_front_left.png');
         this.load.image('character_front_middle', 'assets/images/character_front_middle.png');
         this.load.image('character_front_right', 'assets/images/character_front_right.png');
@@ -95,6 +95,17 @@ this.ambience.play();
         this.items = this.add.group();
         this.overlappingItem = null;
 
+//         if(this.currentRoom.roomKey === 'room10'){
+//             this.hasOpenedChest=false;
+//             this.lockedChest=this.physics.add.sprite(400, 186,'locked_chest'),
+//             this.lockedChest.setImmovable(true);
+
+//             this.physics.add.overlap(this.character,this.lockedChest,()=>{
+// if(!this.hasOpenedchest && this.hasKey && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))){
+// this.openChest();
+// }
+//             })
+//         }
         // Create textbox image and message text (initially hidden)
         // this.textbox = this.add.image(400, 550, 'textbox').setScrollFactor(0);
 
@@ -115,7 +126,7 @@ console.log(this.inkglob);
         this.textbox.setVisible(false);
 
         this.messageText = this.add.text(250, 150, '', {
-            fontSize: '32px',
+            fontSize: '30px',
             fill: '#000000', // black text
             align: 'center',
             wordWrap: { width: 300, useAdvancedWrap:true },
@@ -125,8 +136,8 @@ console.log(this.inkglob);
       this.itemData = [
         { name: 'key', x: 610, y: 564,  room: 'room2', message: 'You found a key!' },
         { name: 'paper_code', x: 420, y: 300,  room: 'room6', message: 'An old mysterious book...' },
-        { name: 'paper_code', x: 382, y: 3202, room: 'room9', message: 'You found a paper with a code!' },
-        { name: 'keycard', x: 56, y: 362, room: 'room10', message: 'This might unlock something important.' },
+        { name: 'paper_code', x: 382, y: 320, room: 'room9', message: 'You found a paper with a code!' },
+        { name: 'keycard', x: 400, y: 186, room: 'room10', message: 'This might unlock something important.' },
     ];
 
         this.createAnimations();
@@ -229,10 +240,35 @@ console.log(this.inkglob);
         // Remove item (disable body to make it disappear)
         item.disableBody(true, true);
     
+        if(item.getData('name')=== 'key'){
+this.hasKey=true;
+        }
         // Optionally track collected items (remove it from the item data)
         this.itemData = this.itemData.filter(data => data.name !== item.getData('name'));
     }
-
+    openChest() {
+        this.lockedChest.setTexture('open_chest');
+        this.hasOpenedChest = true;
+    
+        // Make the keycard appear in room 10
+        const keycard = this.physics.add.sprite(320, 360, 'keycard').setScale(0.3);
+        keycard.setData('message', 'This might unlock something important.');
+        keycard.setData('name', 'keycard');
+    
+        this.items.add(keycard);
+        this.physics.add.overlap(this.character, keycard, () => {
+            this.overlappingItem = keycard;
+        }, null, this);
+    
+        // Optional: Show a short message
+        this.textbox.setVisible(true);
+        this.messageText.setText("The chest creaks open...");
+        this.messageText.setVisible(true);
+        this.time.delayedCall(2000, () => {
+            this.textbox.setVisible(false);
+            this.messageText.setVisible(false);
+        });
+    }
     update() {
 
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
@@ -250,6 +286,18 @@ console.log(this.inkglob);
     if (this.overlappingItem && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
         this.collectItem(this.overlappingItem);
         this.overlappingItem = null; // Reset overlapping item
+    }
+
+    if(this.currentRoom.roomKey === 'room10'){
+        this.hasOpenedChest=false;
+        this.lockedChest=this.physics.add.sprite(400, 186,'locked_chest'),
+        this.lockedChest.setImmovable(true);
+
+        this.physics.add.overlap(this.character,this.lockedChest,()=>{
+if(!this.hasOpenedchest && this.hasKey && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))){
+this.openChest();
+}
+        })
     }
         // if (this.currentRoom.roomKey !== this.lastRoomKey) {
         //     this.spawnItems();
@@ -285,6 +333,9 @@ if (this.currentRoom.roomKey === 'room1'){
             this.spawnItems();
             this.lastRoomKey= this.currentRoom.roomKey;
         }
+        // if(this.currentRoom.roomKey !== this.lastRoomKey){
+        //     this.
+        // }
         // if(this.currentRoom.roomKey !== this.lastRoomKey) {
         //     if(this.lastRoomKey === 'room4' && this.inkGlob) {
         //         this.inkGlob.destroy();
@@ -296,6 +347,7 @@ if (this.currentRoom.roomKey === 'room1'){
         
         this.lastRoomKey= this.currentRoom.roomKey;
     }
+
 }
     // onOverlap(){
     //     //console.log("Entering new room:", doorway.targetRoom);
