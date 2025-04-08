@@ -27,8 +27,8 @@ class GameScene extends Phaser.Scene {
         this.load.image('room11', 'assets/images/room11.png');
         this.load.image('room12', 'assets/images/room12.png');
         this.load.image('room13', 'assets/images/room13.png');
-        this.load.image('room13_2','assets/images/room13_3.png');
-        this.load.image('room13_3','assets/images/room13_4.png');
+        this.load.image('room13.2','assets/images/room13_3.png');
+        this.load.image('room13.3','assets/images/room13_4.png');
         this.load.image('locked_door', 'assets/images/locked_door.png');
         this.load.image('open_door', 'assets/images/open_door.png');
 
@@ -110,9 +110,9 @@ this.lastRoomKey= this.currentRoom.roomKey;
 
         // Item configuration per room
         this.itemData = [
-            { name: 'key', x: 360, y: 400, room: 'room1', message: 'You found a key!' },
-            { name: 'paper_code', x: 420, y: 300, room: 'room3', message: 'An old mysterious book...' },
-            { name: 'paper_code', x: 350, y: 350, room: 'room6', message: 'You found a paper with a code!' },
+            { name: 'key', x: 612.5, y: 578.81, room: 'room2', message: 'You found a key!' },
+            { name: 'notecard', x: 420, y: 300, room: 'room3', message: 'An old mysterious book...' },
+            { name: 'paper_code', x: 56.05, y: 370, room: 'room10', message: 'You found a paper with a code!' },
             { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
         ];
 
@@ -165,6 +165,20 @@ this.lastRoomKey= this.currentRoom.roomKey;
             frameRate: 10,
             repeat: -1
         });
+
+        this.anims.create({
+            key:'animeRoom13',
+            frames:[
+                {key:'room13'},
+            {key:'room13.2'},
+        {key: 'room13.3'}
+    ],
+    frameRate: 5,
+    repeat:-1
+
+        });
+
+    
     }
 
     spawnItems() {

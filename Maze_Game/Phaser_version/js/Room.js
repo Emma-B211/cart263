@@ -246,6 +246,10 @@ spawnItems() {
             item.setData('message', data.message);
             item.setData('name', data.name);
 
+            if(data.name === 'paper_code' && this.roomKey === 'room10'){
+item.setData('paper_code','code');
+            }
+            
             this.physics.add.overlap(this.character, item, () => {
                 this.overlappingItem = item;
             }, null, this);
