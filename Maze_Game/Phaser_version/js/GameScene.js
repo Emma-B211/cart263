@@ -203,6 +203,7 @@ console.log(this.inkglob);
                 item.setData('message', data.message);
                 item.setData('name', data.name);
 
+                item.setScale(0.3);
                 this.physics.add.overlap(this.character, item, () => {
                     this.overlappingItem = item;
                 }, null, this);
