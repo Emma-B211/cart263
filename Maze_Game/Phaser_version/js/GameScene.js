@@ -48,7 +48,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('character_right_side_middle', 'assets/images/character_right_side_middle.png');
         this.load.image('character_right_side_right', 'assets/images/character_right_side_right.png');
 
-        this.load.image('inkglob','assets/images/ink_glob.png');
+        //this.load.image('inkglob','assets/images/ink_glob.png');
 
         this.load.image('notecard','assets/images/notecard.png');
         this.load.image('notecard2','assets/images/notecard.2.png');
@@ -59,7 +59,7 @@ class GameScene extends Phaser.Scene {
 
         this.load.image('key2', 'assets/images/key_copy_optimized.png');
         this.load.image('paper_code2','assets/images/paper_code_copy_optimized.png');
-        this.load.image('inkglob2','assets/images/ink_glob_copy_optimized.png');
+        this.load.image('inkglob2','assets/images/ink_glob_copy_2_optimized.png');
         this.load.image('textbox', 'assets/images/textbox.png');
 
         this.load.image('chapter2', 'assets/images/chapter2.png');
@@ -113,9 +113,9 @@ console.log(this.inkglob);
 
         // Item configuration per room
         this.itemData = [
-            { name: 'key', x: 612.5, y: 578.81, room: 'room2', message: 'You found a key!' },
+            { name: 'key2', x: 612.5, y: 578.81, room: 'room2', message: 'You found a key!' },
             { name: 'notecard', x: 420, y: 300, room: 'room3', message: 'An old mysterious book...' },
-            { name: 'paper_code', x: 56.05, y: 370, room: 'room10', message: 'You found a paper with a code!' },
+            { name: 'paper_code2', x: 56.05, y: 370, room: 'room10', message: 'You found a paper with a code!' },
             { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
         ];
 
