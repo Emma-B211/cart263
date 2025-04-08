@@ -118,25 +118,25 @@ class Room extends Phaser.GameObjects.Container {
             this.walls.add(new Wall(this.scene, 342, 300, 20, 600));
             this.walls.add(new Wall(this.scene, 458, 300, 20, 600));
             this.walls.add(new Wall(this.scene, 30, 300, 30, 600));
-            this.walls.add(new Wall(this.scene, 780, 300, 30, 600));
+            this.walls.add(new Wall(this.scene, 765, 300, 30, 600));
             this.walls.add(new Wall(this.scene, 400, 85, 800, 100));
             this.walls.add(new Wall(this.scene, 80, 590, 100, 30));
             this.walls.add(new Wall(this.scene, 278, 590, 100, 30));
             this.walls.add(new Wall(this.scene, 506, 590, 100, 30));
-            this.walls.add(new Wall(this.scene, 650, 590, 100, 30));
+            this.walls.add(new Wall(this.scene, 695, 590, 100, 30));
             this.walls.add(new Wall(this.scene, 55,360,25,75));
         }
         else if (this.roomKey === 'room11') {
-            this.walls.add(new Wall(this.scene, 530, 100, 550, 170));
+            this.walls.add(new Wall(this.scene, 545, 100, 550, 170));
             this.walls.add(new Wall(this.scene, 110, 300, 100, 600));
             this.walls.add(new Wall(this.scene, 450, 355, 700, 100));
         }
         else if (this.roomKey === 'room12') {
-            this.walls.add(new Wall(this.scene, 170, 300, 30, 600)); // this is the left wall
+            this.walls.add(new Wall(this.scene, 143, 300, 30, 600)); // this is the left wall
             this.walls.add(new Wall(this.scene, 305, 300, 30, 600)); //this is the right wall
         }
         else if (this.roomKey === 'room13') {
-            this.walls.add(new Wall(this.scene, 170, 300, 30, 600)); // this is the left wall
+            this.walls.add(new Wall(this.scene, 143, 300, 30, 600)); // this is the left wall
             this.walls.add(new Wall(this.scene, 305, 300, 30, 600)); //this is the right wall
         }
        // this.spawnItems();

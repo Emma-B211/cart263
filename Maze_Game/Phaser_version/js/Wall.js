@@ -8,7 +8,7 @@ class Wall extends Phaser.Physics.Arcade.Sprite { // class Wall extends Phaser.P
         this.scene.add.existing(this);
         this.setDisplaySize(width, height); // Resize the sprite
 
-        this.setAlpha(0.5); //makes the wall invisible
+        this.setAlpha(0); //makes the wall invisible
     }
 }
 export default Wall;

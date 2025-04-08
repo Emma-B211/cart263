@@ -1,6 +1,7 @@
 
 import IntroScene from './IntroScene.js';
 import GameScene from './GameScene.js';
+import Chapter2Scene from './Chapter2Scene.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -8,9 +9,9 @@ const config = {
     height: 600,
     physics: {
         default: 'arcade',
-        arcade: { debug: true }
+        // arcade: { debug: false }
     },
-    scene: [IntroScene, GameScene]
+    scene: [IntroScene, GameScene, Chapter2Scene]
 };
 
 const game = new Phaser.Game(config);

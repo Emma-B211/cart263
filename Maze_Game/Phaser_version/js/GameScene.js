@@ -11,9 +11,9 @@ class GameScene extends Phaser.Scene {
         this.inkGlob= null;
         this.inkSpeed=0;
 
-        this.chestSpawned=false;
+      //  this.chestSpawned=false;
 this.keycardCollected=false;
-this.openChestSprite = null;
+//this.openChestSprite = null;
     }
 
     preload() {
@@ -31,12 +31,12 @@ this.openChestSprite = null;
         this.load.image('room11', 'assets/images/room11.png');
         this.load.image('room12', 'assets/images/room12.png');
         this.load.image('room13', 'assets/images/room13.png');
-        this.load.image('room13.2','assets/images/room13_3.png');
-        this.load.image('room13.3','assets/images/room13_4.png');
+        this.load.image('room13.2','assets/images/room13_1.png');
+        //this.load.image('room13.3','assets/images/room13_4.png');
         this.load.image('locked_door', 'assets/images/locked_door.png');
         this.load.image('open_door', 'assets/images/open_door.png');
-this.load.image('locked_chest','assets/images/locked_chest.png');
-this.load.image('open_chest','assets/images/open_chest.png');
+// this.load.image('locked_chest','assets/images/locked_chest.png');
+// this.load.image('open_chest','assets/images/open_chest.png');
         this.load.image('character_front_left', 'assets/images/character_front_left.png');
         this.load.image('character_front_middle', 'assets/images/character_front_middle.png');
         this.load.image('character_front_right', 'assets/images/character_front_right.png');
@@ -191,8 +191,8 @@ console.log(this.inkglob);
              key:'room13animation',
              frames: [
                 {key:'room13'},
-                {key:'room13.2'},
-                {key:'room13.3'}
+                {key:'room13.2'}
+               
              ],
              frameRate: 2,
              repeat: -1
@@ -330,11 +330,11 @@ console.log(this.inkglob);
      
 // }
    // Spawn chest ONLY when entering room10 and if it hasn't already spawned
-   if (this.currentRoom.roomKey === 'room10' && !this.lockedChest) {
-    console.log('chest');
-    this.lockedChest = this.physics.add.sprite(400, 186, 'locked_chest');
-    this.lockedChest.setScale(0.4);
-    this.lockedChest.setImmovable(true);
+//    if (this.currentRoom.roomKey === 'room10' && !this.lockedChest) {
+//     console.log('chest');
+//     this.lockedChest = this.physics.add.sprite(400, 186, 'locked_chest');
+//     this.lockedChest.setScale(0.4);
+//     this.lockedChest.setImmovable(true);
 
 //     this.physics.add.overlap(this.character, this.lockedChest, () => {
 //         if (this.hasKey && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE'))) {
@@ -351,7 +351,7 @@ console.log(this.inkglob);
 //         this.lockedChest = this.physics.add.sprite(400, 186, 'open_chest');
 //         this.lockedChest.setScale(0.4);
 //         this.lockedChest.setImmovable(true);
-    }
+   // }
     
     // Destroy the open chest if leaving room 9
     // if (this.lastRoomKey === 'room9') {
