@@ -25,9 +25,9 @@ class Room extends Phaser.GameObjects.Container {
         this.createDoorways();
 
        // this.sound.pauseOnBlur=false;
-        if(this.roomKey === 'room13'){
-            this.handleRoom13Animation();
-        }
+        // if(this.roomKey === 'room13'){
+        //     this.handleRoom13Animation();
+        // }
 // if(roomKey === 'room13'){
 //     this.background= this.scene.add.image(400,300,'room13.3.png');
 //     this.background.setDisplaySize(this.scene.scale.width, this.scene.scale.height);
@@ -138,6 +138,7 @@ class Room extends Phaser.GameObjects.Container {
             this.walls.add(new Wall(this.scene, 170, 300, 30, 600)); // this is the left wall
             this.walls.add(new Wall(this.scene, 305, 300, 30, 600)); //this is the right wall
         }
+       // this.spawnItems();
     }
     // chaseCharacter(character) {
     //     this.scene.physics.moveToObject(this, character, this.speed);
@@ -215,21 +216,21 @@ class Room extends Phaser.GameObjects.Container {
             this.doorways.add(new Doorway(this.scene, 215, 5, 125, 10, 'roomEnd', 575, 595));
         }
     } 
-handleRoom13Animations(){
-    if(this.scene.hasKey){
-        this.background.setTexture('room13_3.png');
+// handleRoom13Animations(){
+//     if(this.scene.hasKey){
+//         this.background.setTexture('room13_3.png');
 
-        this.scene.tweens.add({
-            targets:this.background,
-            scaleX:1.2,
-            scaleY:1.2,
-            ease:'Power1',
-            duration: 1000,
-            yoyo:true,
-            repeat: -1
-        });
-    }
-}
+//         this.scene.tweens.add({
+//             targets:this.background,
+//             scaleX:1.2,
+//             scaleY:1.2,
+//             ease:'Power1',
+//             duration: 1000,
+//             yoyo:true,
+//             repeat: -1
+//         });
+//     }
+// }
     // toggleLight(state){
     //     this.lightOn=state;
     //     if(this.lightOn){
@@ -239,41 +240,7 @@ handleRoom13Animations(){
     //     }
     // }
 
-spawnItems() {
-    this.items.clear(true, true); // Clear previous items
 
-    this.itemData.forEach(data => {
-        if (data.room === this.currentRoom.roomKey) {
-            const item = this.physics.add.sprite(data.x, data.y, data.name);
-            item.setData('message', data.message);
-            item.setData('name', data.name);
-
-            if(data.name === 'paper_code' && this.roomKey === 'room10'){
-item.setData('paper_code','code');
-            }
-            
-            this.physics.add.overlap(this.character, item, () => {
-                this.overlappingItem = item;
-            }, null, this);
-        }
-    });
-}
-collectItem(item) {
-    if (!item.active) return;
-
-    if(item.getData('paper_code' === 'code')){
-        this.scene.hasCode = true;
-    }
-    // Display message
-    this.textbox.setVisible(true);
-    this.messageText.setText(item.getData('message')).setVisible(true);
-
-    // Hide after 2 seconds
-    this.time.delayedCall(2000, () => {
-        this.textbox.setVisible(false);
-        this.messageText.setVisible(false);
-    });
-}
 
     checkTransition(character) {
         this.scene.physics.world.overlap(character, this.doorways, this.onOverlap, null, this);

@@ -53,12 +53,12 @@ class GameScene extends Phaser.Scene {
         this.load.image('notecard','assets/images/notecard.png');
         this.load.image('notecard2','assets/images/notecard.2.png');
 
-       // this.load.image('key', 'assets/images/key_copy.png');
-       // this.load.image('paper_code', 'assets/images/paper_code.png');
+       this.load.image('key', 'assets/images/key_copy.png');
+        this.load.image('paper_code', 'assets/images/paper_code.png');
         this.load.image('keycard', 'assets/images/keycard.png');
 
-        this.load.image('key2', 'assets/images/key_copy_2_optimized.png');
-        this.load.image('paper_code2','assets/images/paper_code_copy_1_optimized.png');
+       // this.load.image('key2', 'assets/images/key_copy_2_optimized.png');
+       // this.load.image('paper_code2','assets/images/paper_code_copy_1_optimized.png');
         this.load.image('inkglob2','assets/images/ink_glob_copy_8_optimized.png');
         this.load.image('textbox', 'assets/images/textbox.png');
 
@@ -123,13 +123,13 @@ console.log(this.inkglob);
             wordWrap: { width: 300 },
         }).setScrollFactor(0).setVisible(false);
 
-        // Item configuration per room
-        this.itemData = [
-            { name: 'key2', x: 612.5, y: 578.81, room: 'room2', message: 'You found a key!' },
-            { name: 'notecard', x: 420, y: 300, room: 'room3', message: 'An old mysterious book...' },
-            { name: 'paper_code2', x: 56.05, y: 370, room: 'room10', message: 'You found a paper with a code!' },
-            { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
-        ];
+      // Item configuration per room
+      this.itemData = [
+        { name: 'key', x: 360, y: 400, room: 'room1', message: 'You found a key!' },
+        { name: 'paper_code', x: 420, y: 300, room: 'room3', message: 'An old mysterious book...' },
+        { name: 'paper_code', x: 350, y: 350, room: 'room6', message: 'You found a paper with a code!' },
+        { name: 'keycard', x: 320, y: 420, room: 'room10', message: 'This might unlock something important.' },
+    ];
 
         this.createAnimations();
         this.spawnItems();
@@ -181,17 +181,17 @@ console.log(this.inkglob);
             repeat: -1
         });
 
-        this.anims.create({
-            key:'animateRoom13',
-            frames:[
-                {key:'room13'},
-            {key:'room13.2'},
-        {key: 'room13.3'}
-    ],
-    frameRate: 5,
-    repeat:-1
+    //     this.anims.create({
+    //         key:'animateRoom13',
+    //         frames:[
+    //             {key:'room13'},
+    //         {key:'room13.2'},
+    //     {key: 'room13.3'}
+    // ],
+    // frameRate: 5,
+    // repeat:-1
 
-        });
+    //     });
 
     
     }
@@ -205,9 +205,6 @@ console.log(this.inkglob);
                 const item = this.physics.add.sprite(data.x, data.y, data.name);
                 item.setData('message', data.message);
                 item.setData('name', data.name);
-                item.setImmovable(true);
-
-                this.item.adds(item);
 
                 this.physics.add.overlap(this.character, item, () => {
                     this.overlappingItem = item;
