@@ -105,7 +105,18 @@ this.ambience.play();
         this.overlappingItem = null;
         this.lockedChest = null;
 
-
+this.room13Frame=0;
+this.room13Frames=['room13','room13.2'];
+this.room13AnimTimer= this.time.addEvent({
+    delay:500,
+    callback: ()=>{
+        if(this.room13AnimSprite.visible){
+            this.room13Frame=(this.room13Frame+1) % this.room13Frames.length;
+            this.room13AnimSprite.setTexture(this.room13Frames[this.room13Frame]);
+        }
+    },
+    loop: true
+})
         // Create textbox image and message text (initially hidden)
         // this.textbox = this.add.image(400, 550, 'textbox').setScrollFactor(0);
 
@@ -190,30 +201,7 @@ if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
             repeat: -1
         });
 
-        this.anims.create({
-             key:'room13animation',
-             frames: [
-                {key:'room13'},
-                {key:'room13.2'}
-               
-             ],
-             frameRate: 2,
-             repeat: -1
-        })
-       
-    //     this.anims.create({
-    //         key:'animateRoom13',
-    //         frames:[
-    //             {key:'room13'},
-    //         {key:'room13.2'},
-    //     {key: 'room13.3'}
-    // ],
-    // frameRate: 5,
-    // repeat:-1
 
-    //     });
-
-    
     }
 
     spawnItems() {
@@ -256,38 +244,11 @@ if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
     
         if(item.getData('name')==='key') this.hasKey=true;
         if(item.getData('name')==='keycard') this.keycardCollected = true;
-//         if(item.getData('name')=== 'key'){
-// //this.hasKey=true;
-//         }
+     
         // Optionally track collected items (remove it from the item data)
         this.itemData = this.itemData.filter(data => data.name !== item.getData('name'));
     }
-//     openChest() {
-//         this.lockedChest.setTexture('open_chest');
-//         this.hasOpenedChest = true;
-//     console.log('hasOpenedChest')
-//         if(!this.keycardCollected){
-// // Make the keycard appear in room 10
-// const keycard = this.physics.add.sprite(400, 186, 'keycard').setScale(0.3);
-// keycard.setData('message', 'This might unlock something important.');
-// keycard.setData('name', 'keycard');
 
-// this.items.add(keycard);
-// this.physics.add.overlap(this.character, keycard, () => {
-//     this.overlappingItem = keycard;
-// }, null, this);
-//         }
-        
-    
-//         // Optional: Show a short message
-//         this.textbox.setVisible(true);
-//         this.messageText.setText("The chest creaks open...");
-//         this.messageText.setVisible(true);
-//         this.time.delayedCall(2000, () => {
-//             this.textbox.setVisible(false);
-//             this.messageText.setVisible(false);
-//         });
-//     }
     update() {
 
         //console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
@@ -356,15 +317,10 @@ this.room13AnimSprite.play('room13animation',true);
         this.overlappingItem = null; // Reset overlapping item
     }
 
-if(this.currentRoom.roomKey !== this.lastRoomKey){
-    if (this.currentRoom.roomKey === 'room13' && this.keycardCollected) {
-        this.room13AnimSprite.setVisible(true);
-        this.room13AnimSprite.play('room13_animation');
-    } else {
-        this.room13AnimSprite.setVisible(false);
-        this.room13AnimSprite.stop();
-    }
-     
+if(this.currentRoom.roomKey === 'room13' && this.hasKeyCardCollected){
+    this.room13AnimSprite.setVisible(true);
+} else {
+    this.room13AnimSprite.setVisible(false);
 }
 
     
