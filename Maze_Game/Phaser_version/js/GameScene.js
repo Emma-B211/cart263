@@ -93,13 +93,16 @@ this.ambience.play();
 
         //load Character
         this.character = new Character(this, 400, 300);
+        
         this.add.existing(this.character);
 
 
         this.physics.add.collider(this.character, this.currentRoom.walls);
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
 
-
+        this.chandelierLight = this.add.graphics({ x: 160, y: 0 });
+        this.chandelierLight.fillCircle(400,186, Phaser.Math.Between(10,20));
+        this.chandelierLight.setDepth(1);
         // Setup item data
         this.items = this.add.group();
         this.overlappingItem = null;
@@ -127,17 +130,26 @@ this.room13AnimTimer= this.time.addEvent({
 if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
     this.spawnInkGlob();
 }
-//console.log(this.inkglob);
-//this.lastRoomKey= this.currentRoom.roomKey;
-//const InkGlob= new InkGlob(this,x,y);
-// this.inkGlob.setVisible(false);
-// this.inkGlob.body.setEnable(false);
+this.time.addEvent({
+    delay:100,
+    callback:()=>{
+        if(this.currentRoom.roomKey === 'room10' && this.hasKeyCardCollected){
+            this.chandelierLight.clear();
+            this.chandelierLight.fillStyle(0xffffcc, Phaser.Math.FloatBetween(0.2,0.6));
+            this.chandelierLight.fillCircle(400,100,Phaser.Math.Between(20,40));
+            this.chandelierLight.visible=true;
+        } else{
+            this.chandelierLight.visible=false;
+        }
+    },
+    loop: true
+});
 
-        this.textbox = this.add.image(200, 100, 'textbox').setScale(0.3).setScrollFactor(0).setOrigin(0, 0);
+        this.textbox = this.add.image(30, 30, 'textbox').setScale(0.3).setScrollFactor(0).setOrigin(0, 0);
         this.textbox.setVisible(false);
 
-        this.messageText = this.add.text(250, 150, '', {
-            fontSize: '30px',
+        this.messageText = this.add.text(100, 100, '', {
+            fontSize: '27px',
             fill: '#000000', // black text
             align: 'center',
             wordWrap: { width: 300, useAdvancedWrap:true },
@@ -251,12 +263,12 @@ if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
 
     update() {
 
-        //console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
+        console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.character.update();
         if(this.currentRoom.roomKey ==='room10'){
         if(!this.lockedChest){
             this.lockedChest= this.physics.add.sprite(400,186,this.hasOpenedChest ? 'open_chest' : 'locked_chest');
-            this.lockedChest.setScale(0.3);
+            this.lockedChest.setScale(0.4);
             this.lockedChest.setImmovable(true);
 
             this.physics.add.overlap(this.character,this.lockedChest,()=>{
@@ -282,18 +294,28 @@ this.overlappingItem=keycard;
                     });
                 }
             });
-        }
+        }// Flickering chandelier light in room10 after picking up keycard
+if (this.currentRoom.roomKey === 'room10' && this.keycardCollected) {
+    this.chandelierLight.clear();
+    this.chandelierLight.fillStyle(0xffffcc, Phaser.Math.FloatBetween(0.2, 0.6)); // Soft yellow flicker
+    this.chandelierLight.fillCircle(400, 100, Phaser.Math.Between(60, 90)); // Flicker radius
+
+    this.chandelierLight.visible = true;
+} else {
+    this.chandelierLight.visible = false;
+}
     }
+    
     else if (this.lockedChest){
         this.lockedChest.destroy();
         this.lockedChest=null;
     }
         this.currentRoom.checkTransition(this.character);
 
-        //added room13 animation
+      //  added room13 animation
         if (this.currentRoom.roomKey==='room13' && this.keyCardCollected){
 this.room13AnimSprite.setVisible(true);
-this.room13AnimSprite.play('room13animation',true);
+this.room13AnimSprite.play();
         } else {
             this.room13AnimSprite.setVisible(false);
             this.room13AnimSprite.stop();
@@ -359,8 +381,8 @@ if (this.currentRoom.roomKey === 'room1'){
    
     spawnInkGlob() {
         console.log("Entering Room 4 - Ink chase begins!");
-        const spawnX = 517;
-        const spawnY = 300;
+        const spawnX = 550;
+        const spawnY = 230;
     
         this.inkGlob = new InkGlob(this, spawnX, spawnY);
         this.add.existing(this.inkGlob);
