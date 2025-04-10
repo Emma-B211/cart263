@@ -163,8 +163,9 @@ this.time.addEvent({
         { name: 'key', x: 610, y: 564,  room: 'room2', message: 'You found a key!' },
         { name: 'paper_code1', x: 377, y: 188,  room: 'room6', message: 'You found a paper with a code!'},
         {name:'note',x:344,y:135, room:'room1', message: 'You need to leave!'},
-        {name:'note2', x: 400, y:300, room:'room4', message:'You are not safe here'},
-        {name: 'note3', x: 400, y: 200, room:'room7', message:'They are coming for you'}
+        {name:'note1', x: 575, y:250, room:'room3', message:'You are not safe here'},
+        {name: 'note2', x: 400, y: 200, room:'room5', message:'They are coming for you'},
+        {name:'note3', x: 500, y: 100, room: 'room10', message: 'GET OUT!'}
        // { name: 'paper_code2', x: 382, y: 320, room: 'room9', message: 'You found a paper with a code!' },
         //{ name: 'keycard', x: 400, y: 186, room: 'room10', message: 'This might unlock something important.' },
     ];
