@@ -348,7 +348,7 @@ if (this.currentRoom.roomKey === 'room10' && this.keycardCollected) {
 
         if(this.currentRoom.roomKey === 'room13' && this.keycardCollected){
             this.room13AnimSprite.setVisible(true);
-            if(this.character.y<600 || this.character>800){
+            if(this.character.x>210){
                 this.scene.start('Chapter2Scene');
             }
         } else{
