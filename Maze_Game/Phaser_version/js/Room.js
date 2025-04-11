@@ -138,7 +138,8 @@ class Room extends Phaser.GameObjects.Container {
         else if (this.roomKey === 'room13') {
             this.walls.add(new Wall(this.scene, 143, 300, 30, 600)); // this is the left wall
             this.walls.add(new Wall(this.scene, 305, 300, 30, 600)); //this is the right wall
-        }
+        } 
+        
        // this.spawnItems();
     }
     // chaseCharacter(character) {

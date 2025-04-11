@@ -6,7 +6,8 @@ export default class Chapter2Scene extends Phaser.Scene {
 
     create() {
 
-        this.add.image(400, 300, 'chapter2');
+       const chapter2Image= this.add.image(400, 300, 'chapter2');
+        chapter2Image.setScale(0.3);
         this.input.on('pointerdown', () => {
             console.log('End of Demo');
         });

@@ -71,7 +71,7 @@ this.load.image('locked_chest','assets/images/locked_chest.png');
         this.load.image('note','assets/images/note.png');
         this.load.image('note1','assets/images/note2.png');
         this.load.image('note2','assets/images/note3.png');
-        this.load.image('note3','assets/images/notes4.png');
+        this.load.image('note3','assets/images/note4.png');
         this.load.image('chapter1', 'assets/images/chapter1.png');
 this.load.image('chapter2','assets/images/chapter2.png');
         this.load.audio('ambience','assets/ambience/eerie-ambience-6836.mp3');
@@ -111,18 +111,22 @@ this.ambience.play();
         this.overlappingItem = null;
         this.lockedChest = null;
 
-this.room13Frame=0;
-this.room13Frames=['room13','room13.2'];
-this.room13AnimTimer= this.time.addEvent({
-    delay:500,
-    callback: ()=>{
-        if(this.room13AnimSprite.visible){
-            this.room13Frame=(this.room13Frame+1) % this.room13Frames.length;
+this.room13Frame = 0;
+this.room13Frames = ['room13', 'room13.2'];
+
+this.room13AnimSprite = this.add.sprite(400, 300, 'room13').setDepth(-1);
+this.room13AnimSprite.setVisible(false);
+
+this.room13AnimTimer = this.time.addEvent({
+    delay: 500,
+    callback: () => {
+        if (this.room13AnimSprite.visible) {
+            this.room13Frame = (this.room13Frame + 1) % this.room13Frames.length;
             this.room13AnimSprite.setTexture(this.room13Frames[this.room13Frame]);
         }
     },
     loop: true
-})
+});
         // Create textbox image and message text (initially hidden)
         // this.textbox = this.add.image(400, 550, 'textbox').setScrollFactor(0);
 
@@ -164,8 +168,8 @@ this.time.addEvent({
         { name: 'paper_code1', x: 377, y: 188,  room: 'room6', message: 'You found a paper with a code!'},
         {name:'note',x:344,y:135, room:'room1', message: 'You need to leave!'},
         {name:'note1', x: 575, y:250, room:'room3', message:'You are not safe here'},
-        {name: 'note2', x: 400, y: 200, room:'room5', message:'They are coming for you'},
-        {name:'note3', x: 500, y: 100, room: 'room10', message: 'GET OUT!'}
+        {name: 'note2', x: 418, y: 96, room:'room5', message:'They are coming for you'},
+        {name:'note3', x: 79, y: 385, room: 'room10', message: 'GET OUT!'}
        // { name: 'paper_code2', x: 382, y: 320, room: 'room9', message: 'You found a paper with a code!' },
         //{ name: 'keycard', x: 400, y: 186, room: 'room10', message: 'This might unlock something important.' },
     ];
@@ -222,7 +226,13 @@ this.time.addEvent({
 
 
     }
-
+    updateRoom13Animation() {
+        if (this.currentRoom.roomKey === 'room13' && this.keycardCollected) {
+            this.room13AnimSprite.setVisible(true);
+        } else {
+            this.room13AnimSprite.setVisible(false);
+        }
+    }
     spawnItems() {
         // Clear current item group
         this.items.clear(true, true);
@@ -272,6 +282,8 @@ this.time.addEvent({
 
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.character.update();
+        this.updateRoom13Animation();
+
         if(this.currentRoom.roomKey ==='room10'){
         if(!this.lockedChest){
             this.lockedChest= this.physics.add.sprite(400,186,this.hasOpenedChest ? 'open_chest' : 'locked_chest');
@@ -320,19 +332,28 @@ if (this.currentRoom.roomKey === 'room10' && this.keycardCollected) {
         this.currentRoom.checkTransition(this.character);
 
       //  added room13 animation
-        if (this.currentRoom.roomKey==='room13' && this.keyCardCollected){
-this.room13AnimSprite.setVisible(true);
-this.room13AnimSprite.play();
-        } else {
-            this.room13AnimSprite.setVisible(false);
-            this.room13AnimSprite.stop();
-        }
+//         if (this.currentRoom.roomKey==='room13' && this.keycardCollected){
+// this.room13AnimSprite.setVisible(true);
+// this.room13AnimSprite.play();
+//         } else {
+//             this.room13AnimSprite.setVisible(false);
+//             this.room13AnimSprite.stop();
+//         }
              
         // }
       // if (this.currentRoom.roomKey !== this.lastRoomKey) {
         //     this.spawnItems();
         //     this.lastRoomKey = this.currentRoom.roomKey;
         // }
+
+        if(this.currentRoom.roomKey === 'room13' && this.keycardCollected){
+            this.room13AnimSprite.setVisible(true);
+            if(this.character.y<600 || this.character>800){
+                this.scene.start('Chapter2Scene');
+            }
+        } else{
+            this.room13AnimSprite.setVisible(false);
+        }
         if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
             this.spawnInkGlob();
         }
@@ -346,13 +367,7 @@ this.room13AnimSprite.play();
         this.overlappingItem = null; // Reset overlapping item
     }
 
-if(this.currentRoom.roomKey === 'room13' && this.hasKeyCardCollected){
-    this.room13AnimSprite.setVisible(true);
-} else {
-    this.room13AnimSprite.setVisible(false);
-}
 
-    
         if (this.currentRoom.roomKey !== this.lastRoomKey) {
             if (this.lastRoomKey === 'room4' && this.inkGlob) {
                 this.inkGlob.destroy();
