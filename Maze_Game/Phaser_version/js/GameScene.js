@@ -98,8 +98,8 @@ this.load.image('chapter2','assets/images/chapter2.png');
         this.room13AnimSprite=this.add.sprite(400,300,'room13').setDepth(-1);
         this.room13AnimSprite.setVisible(false);
 
-        this.timerText = this.add.text(10,10,'',{font:'16px Arial',fill:'#fff'}).setScrollFactor(0);
-this.remainingTime=60;
+        this.timerText = this.add.text(600,10,'',{font:'25px Input',fill:'#FF0000'}).setScrollFactor(0);
+this.remainingTime=30;
 if (!this.ambience || !this.ambience.isPlaying){
 this.ambience= this.sound.add('ambience', {
     loop:true,
