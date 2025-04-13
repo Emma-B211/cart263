@@ -15,6 +15,14 @@ class GameScene extends Phaser.Scene {
       this.hasKey=false;
       this.hasOpenedChest=false;
 this.keyCardCollected=false;
+
+this.timerStarted=false;
+this.countdownDuration =60;
+this.remainingTime= this.countdownDuration;
+this.timerEvent=null;
+this.timerText=null;
+
+
 //this.openChestSprite = null;
     }
 
@@ -80,12 +88,18 @@ this.load.image('chapter2','assets/images/chapter2.png');
     create() {
 
         //load room
+       
         this.currentRoom = new Room(this, 'room1');
         this.add.existing(this.currentRoom);
         this.lastRoomKey = null; // Track room changes properly
-
+       // this.timerText=null;
+        // const startRoomKey= this.scene.settings.data?startRoom|| 'room1';
+        // this.currentRoom=new Room(this, startRoomKey);
         this.room13AnimSprite=this.add.sprite(400,300,'room13').setDepth(-1);
         this.room13AnimSprite.setVisible(false);
+
+        this.timerText = this.add.text(10,10,'',{font:'16px Arial',fill:'#fff'}).setScrollFactor(0);
+this.remainingTime=60;
 if (!this.ambience || !this.ambience.isPlaying){
 this.ambience= this.sound.add('ambience', {
     loop:true,
@@ -266,10 +280,17 @@ this.time.addEvent({
             this.textbox.setVisible(false);
             this.messageText.setVisible(false);
         });
-
-        if(item.getData('name')==='keycard') this.keycardCollected = true;
+        if (item.getData('name') === 'keycard') {
+            this.keyCardCollected = true;
+        
+            // Start the countdown timer
+            if (!this.timerStarted) {
+                this.startCountdownTimer();
+            }
+        }
         // Remove item (disable body to make it disappear)
         item.disableBody(true, true);
+       this.overlappingItem=null;
     
         if(item.getData('name')==='key') this.hasKey=true;
         if(item.getData('name')==='keycard') this.keycardCollected = true;
@@ -284,6 +305,7 @@ this.time.addEvent({
         this.character.update();
         this.updateRoom13Animation();
 
+       // this.remainingTIme -= deltaTime;
         if(this.currentRoom.roomKey ==='room10'){
         if(!this.lockedChest){
             this.lockedChest= this.physics.add.sprite(400,186,this.hasOpenedChest ? 'open_chest' : 'locked_chest');
@@ -314,7 +336,7 @@ this.overlappingItem=keycard;
                 }
             });
         }// Flickering chandelier light in room10 after picking up keycard
-if (this.currentRoom.roomKey === 'room10' && this.keycardCollected) {
+if (this.currentRoom.roomKey === 'room10' && this.keyCardCollected) {
     this.chandelierLight.clear();
     this.chandelierLight.fillStyle(0xffffcc, Phaser.Math.FloatBetween(0.2, 0.6)); // Soft yellow flicker
     this.chandelierLight.fillCircle(400, 100, Phaser.Math.Between(60, 90)); // Flicker radius
@@ -324,13 +346,11 @@ if (this.currentRoom.roomKey === 'room10' && this.keycardCollected) {
     this.chandelierLight.visible = false;
 }
     }
-    
-    else if (this.lockedChest){
+      else if (this.lockedChest){
         this.lockedChest.destroy();
         this.lockedChest=null;
     }
         this.currentRoom.checkTransition(this.character);
-
       //  added room13 animation
 //         if (this.currentRoom.roomKey==='room13' && this.keycardCollected){
 // this.room13AnimSprite.setVisible(true);
@@ -350,6 +370,9 @@ if (this.currentRoom.roomKey === 'room10' && this.keycardCollected) {
             this.room13AnimSprite.setVisible(true);
             if(this.character.x>210){
                 this.scene.start('Chapter2Scene');
+            } if(this.timerStarted){
+                this.timerEvent.remove();
+                this.timerText.setVisible(false);
             }
         } else{
             this.room13AnimSprite.setVisible(false);
@@ -399,6 +422,37 @@ if (this.currentRoom.roomKey === 'room1'){
         this.lastRoomKey= this.currentRoom.roomKey;
     }
 
+}
+startCountdownTimer(){
+    this.timerStarted=true;
+    this.remainingTime= this.countdownDuration;
+
+    this.timerEvent=this.time.addEvent({
+        delay: 1000,
+        callback: ()=>{
+            this.remainingTime-= 1;
+            this.updateTimerText();
+
+            if(this.remainingTime<= 0){
+                this.timerEvent.removed();
+                this.timerExpired();
+            }
+        },
+        callBackScope:this,
+        loop: true
+    });
+    this.updateTimerText();
+}
+updateTimerText(){
+    const minutes= Math.floor(this.remainingTime / 60);
+    const seconds=this.remainingTime % 60;
+
+    this.timerText.setText(`Time Left: ${minutes}: ${seconds.toString().padStart(2,'0')}`);
+
+}
+timerExpired(){
+    this.scenerestrat({startRoom:10});
+    this.scene.start('Restart');
 }
    
     spawnInkGlob() {
