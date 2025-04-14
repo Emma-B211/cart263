@@ -345,7 +345,7 @@ this.overlappingItem=keycard;
             loop:true,
             callback:()=>{
                 if(this.timerStarted && this.remainingTime >0){
-                    this.remainingTime--;
+                     this.remainingTime--;
                     this.timerText.setText(`time left: ${this.remainingTime}s`);
                     if(this.remainingTime <=0){
                         this.gameOver();
@@ -469,8 +469,8 @@ startCountdownTimer(){
     this.updateTimerText();
 }
 updateTimerText(){
-    const minutes= Math.floor(this.remainingTime / 60);
-    const seconds=this.remainingTime % 60;
+    const minutes= Math.floor(this.remainingTime / 30);
+    const seconds=this.remainingTime % 30;
 
     this.timerText.setText(`Time Left: ${minutes}: ${seconds.toString().padStart(2,'0')}`);
 
@@ -499,14 +499,14 @@ timerExpired(){
     
     startChaseSequence() {
         console.log("Ink glob will appear soon...");
-        this.time.delayedCall(2000, () => {
+        this.time.delayedCall(1000, () => {
             if (this.inkGlob) {
                 this.inkGlob.setVisible(true);
                 console.log("Ink glob appears!");
             }
         });
     
-        this.time.delayedCall(3000, () => {
+        this.time.delayedCall(2000, () => {
             this.inkSpeed = 70;
             console.log("Ink glob starts moving");
         });

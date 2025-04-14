@@ -15,7 +15,13 @@ class GameOverScene extends Phaser.Scene{
       }).setInteractive();
 
       restartBtn.on('pointerdown',()=>{
-        this.scene.start('GameScene');
+
+        this.cameras.main.fadeOut(500,0,0,0,(camera,progress)=>{
+            if(progress=== 1){
+                 this.scene.start('GameScene');
+            }
+        })
+       
       });
     }
 }
