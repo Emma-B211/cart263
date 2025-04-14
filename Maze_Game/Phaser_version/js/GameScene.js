@@ -287,6 +287,7 @@ this.time.addEvent({
             // Start the countdown timer
             if (!this.timerStarted) {
                 this.startCountdownTimer();
+                this.timerStarted=true;
             }
         }
         // Remove item (disable body to make it disappear)
@@ -449,8 +450,9 @@ gameOver(){
 }
 // countdown at the end to leave to the exit
 startCountdownTimer(){
-    this.timerStarted=true;
+   // this.timerStarted=true;
     this.remainingTime= this.countdownDuration;
+    this.timerText.setText(`Time Left: ${this.remainingTime}s`);
 
     this.timerEvent=this.time.addEvent({
         delay: 1000,
