@@ -15,8 +15,6 @@ class Character extends Phaser.Physics.Arcade.Sprite {
         this.keys = scene.input.keyboard.createCursorKeys();
         this.speed = 150;
 
-
-
         //console.log("Character created:", this.x, this.y);
        // console.log(this.position, this.x, this.y);
     }

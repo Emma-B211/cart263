@@ -97,9 +97,10 @@ this.load.image('chapter2','assets/images/chapter2.png');
         // this.currentRoom=new Room(this, startRoomKey);
         this.room13AnimSprite=this.add.sprite(400,300,'room13').setDepth(-1);
         this.room13AnimSprite.setVisible(false);
-
+// add timer for the end chase
         this.timerText = this.add.text(600,10,'',{font:'25px Input',fill:'#FF0000'}).setScrollFactor(0);
 this.remainingTime=30;
+// music ambience
 if (!this.ambience || !this.ambience.isPlaying){
 this.ambience= this.sound.add('ambience', {
     loop:true,
@@ -116,7 +117,7 @@ this.ambience.play();
 
         this.physics.add.collider(this.character, this.currentRoom.walls);
         this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
-
+// adding light after our lil cutie grabs the keycard
         this.chandelierLight = this.add.graphics({ x: 160, y: 0 });
         this.chandelierLight.fillCircle(400,186, Phaser.Math.Between(10,20));
         this.chandelierLight.setDepth(1);
@@ -124,7 +125,7 @@ this.ambience.play();
         this.items = this.add.group();
         this.overlappingItem = null;
         this.lockedChest = null;
-
+// attempt code to animate last room
 this.room13Frame = 0;
 this.room13Frames = ['room13', 'room13.2'];
 
@@ -304,7 +305,7 @@ this.time.addEvent({
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.character.update();
         this.updateRoom13Animation();
-
+// animation for chest
        // this.remainingTIme -= deltaTime;
         if(this.currentRoom.roomKey ==='room10'){
         if(!this.lockedChest){
@@ -335,7 +336,24 @@ this.overlappingItem=keycard;
                     });
                 }
             });
-        }// Flickering chandelier light in room10 after picking up keycard
+        }
+        //game over time
+        this.time.addEvent({
+            delay:1000,
+            loop:true,
+            callback:()=>{
+                if(this.timerStarted && this.remainingTime >0){
+                    this.remainingTime--;
+                    this.timerText.setText(`time left: ${this.remainingTime}s`);
+                    if(this.remainingTime <=0){
+                        this.gameOver();
+                    }
+                }
+            }
+        })
+        
+        
+        // Flickering chandelier light in room10 after picking up keycard
 if (this.currentRoom.roomKey === 'room10' && this.keyCardCollected) {
     this.chandelierLight.clear();
     this.chandelierLight.fillStyle(0xffffcc, Phaser.Math.FloatBetween(0.2, 0.6)); // Soft yellow flicker
@@ -423,6 +441,11 @@ if (this.currentRoom.roomKey === 'room1'){
     }
 
 }
+gameOver(){
+    this.timerStarted=false;
+    this.scene.start('GameOverScene');
+}
+// countdown at the end to leave to the exit
 startCountdownTimer(){
     this.timerStarted=true;
     this.remainingTime= this.countdownDuration;
@@ -454,7 +477,7 @@ timerExpired(){
     this.scenerestrat({startRoom:10});
     this.scene.start('Restart');
 }
-   
+   // spawns the inkglob
     spawnInkGlob() {
         console.log("Entering Room 4 - Ink chase begins!");
         const spawnX = 550;
