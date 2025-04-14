@@ -322,6 +322,8 @@ this.time.addEvent({
                         const keycard = this.physics.add.sprite(400,150,'keycard').setScale(0.3);
                         keycard.setData('message','this might unlock something important');
                         keycard.setData('name','keycard');
+                        this.timerStarted=true;
+                        this.remainingTime=this.countdownDuration;
                         this.items.add(keycard);
                         this.physics.add.overlap(this.character,keycard, () =>{
 this.overlappingItem=keycard;
