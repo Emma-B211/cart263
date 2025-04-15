@@ -13,10 +13,13 @@ class GameScene extends Phaser.Scene {
         this.hasOpenedChest = false;
         this.keyCardCollected = false;
         this.timerStarted = false;
+        this.countdownDuration = 60;  // NEW: set countdown duration to 60 seconds
         this.remainingTime = 60;
         this.timerEvent = null;
         this.timerText = null;
         this.interactText = null;
+        this.room13DoorOpened = false; // Use this variable consistently
+
 
 
 //this.openChestSprite = null;
@@ -96,10 +99,14 @@ this.load.image('chapter2','assets/images/chapter2.png');
         // this.currentRoom=new Room(this, startRoomKey);
         this.room13AnimSprite=this.add.sprite(400,300,'room13').setDepth(-1);
         this.room13AnimSprite.setVisible(false);
-// add timer for the end chase
-this.remainingTime=30;
-this.timerText = this.add.text(500, 10, '', { font: '25px', fontFamily:'Input', fill: '#FF0000' }).setScrollFactor(0);
-this.timerText.setVisible(false); // Initially invisible
+// Set up timer text
+this.remainingTime = this.countdownDuration;
+this.timerText = this.add.text(500, 10, '', {
+    font: '25px',
+    fontFamily: 'Input',
+    fill: '#FF0000'
+}).setScrollFactor(0);
+this.timerText.setVisible(false);
 
 
 // music ambience
@@ -132,7 +139,7 @@ this.ambience.play();
  this.room13AnimSprite = this.add.sprite(400, 300, 'room13').setDepth(-1);
  this.room13AnimSprite.setVisible(false); // Initially invisible
  this.room13Door = this.add.image(224, 39, 'door_end').setDepth(4).setScale(0.3).setVisible(false);
- this.room13AnimSprite=this.add.sprite(224,39,'door_open').setDepth(4).setScale(0.3).setVisible(false);
+// this.room13AnimSprite=this.add.sprite(224,39,'door_open').setDepth(4).setScale(0.3).setVisible(false);
  this.keycardMachine = this.physics.add.sprite(170, 45, 'keycard_reader').setDepth(5).setScale(0.4).setVisible(false);
  this.keycardMachine.body.allowGravity = false;
  this.keycardMachine.setImmovable(true);
@@ -209,16 +216,24 @@ this.time.addEvent({
         this.spawnItems();
 this.physics.world.enable(this.keycardMachine);
 this.keycardMachine.body.allowGravity = false;
+
     }
-    onKeycardInteract() {
-        if (this.keycardCollected && !this.room13Door.opened) {
-            // Play door opening animation
-            this.room13Door.setTexture('door_open'); // Change texture to open door
-            this.room13Door.opened = true;
-            this.room13Door.setDepth(5);
-            // Optionally, play sound effects or transitions here.
-        }
-    }
+      // Keycard interaction: if player has collected the keycard and overlaps the reader, open the door
+    //   onKeycardInteract() {
+    //     if (this.keyCardCollected && !this.room13DoorOpened) {
+    //         // Change the door texture to open
+    //         this.room13Door.setTexture('door_open');
+    //         this.room13DoorOpened = true;
+    //         this.showMessage("Door opened with keycard!");
+            
+    //         // Delay the transition by 1 second (1000 ms)
+    //         this.time.delayedCall(1000, () => {
+    //             this.scene.start('Chapter2Scene');
+    //         });
+    //     } else if (!this.keyCardCollected) {
+    //         this.showMessage("You need a keycard to use this.");
+    //     }    
+    // }
     createAnimations() {
 
         this.anims.create({
@@ -323,32 +338,67 @@ this.keycardMachine.body.allowGravity = false;
 
     update() {
         if (this.timerStarted) {
-            this.remainingTime -= 1 * this.game.loop.delta / 1000; // Decrement time based on frame rate
+            this.remainingTime -= this.game.loop.delta / 1000; // Decrement time based on frame rate
             this.timerText.setText('Time Remaining: ' + Math.max(0, Math.floor(this.remainingTime)) + 's');
-    
             if (this.remainingTime <= 0) {
                 this.timerStarted = false;
                 this.scene.start('GameOverScene');
             }
         }
-        if (this.currentRoom.roomKey === 'room13') {
-            // Manage room13 animations, door states, and interactions
-            if (this.keycardCollected && !this.room13Door.opened) {
-                this.room13Door.setTexture('door_open'); // Open door when keycard is collected
-                this.room13Door.opened = true;
-                this.room13Door.setDepth(5); // Bring door to front
-            }
-    
-            // Optional: Transition between room images for an animated effect
-            // Example: Change from static room13 image to more dynamic states
-            this.room13AnimSprite.setTexture('room13_transition'); // You can replace 'room13_transition' with your animation frame
-        }
     
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.character.update();
-       // this.updateRoom13Animation();
+    
+        // Room 13 door state debug section
+        if (this.currentRoom.roomKey === 'room13') {
+            // Print out current debug conditions
+            console.log("DEBUG Room13: keycardCollected =", this.keyCardCollected, " keycardCollected (flag) =", this.keycardCollected, " room13DoorOpened =", this.room13DoorOpened);
+            
+            // Check: if we have collected the keycard then door should be open (door_open),
+            // otherwise it should remain door_end.
+            if (this.keycardCollected) {
+                // Our other variable "this.room13DoorOpened" may be set via onKeycardInteract(),
+                // so if not already open, open the door.
+                if (!this.room13DoorOpened) {
+                    console.log("DEBUG: Keycard collected but door not yet opened. Opening door...");
+                    this.room13Door.setTexture('door_open');
+                    this.room13DoorOpened = true;
+                }
+            } else {
+                // Debug logging if keycard hasn't been collected.
+                console.log("DEBUG: Keycard NOT collected. Door should remain closed.");
+                // For safety, force door texture back to door_end if it is not supposed to be open.
+                if (this.room13DoorOpened) {
+                    console.warn("DEBUG Warning: Door appears to be open even though keycard was NOT collected. Forcing door_end texture.");
+                    this.room13Door.setTexture('door_end');
+                    this.room13DoorOpened = false;
+                } else {
+                    this.room13Door.setTexture('door_end');
+                }
+            }
+        }
+    
+
+        // if character is close to the keycard reader in room13, allow pressing SPACE to trigger door open
+        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        if (this.currentRoom.roomKey === 'room13') {
+            const dist = Phaser.Math.Distance.Between(
+                this.character.x, this.character.y,
+                this.keycardMachine.x, this.keycardMachine.y
+            );
+            if (dist < 50) {
+                // Optionally, set up interact text here if desired.
+                // When player presses SPACE, try to open door:
+                if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+                    if (this.keyCardCollected && !this.room13DoorOpened) {
+                        this.openRoom13Door();
+                    } else {
+                        this.showMessage("You need a keycard to unlock this.");
+                    }
+                }
+            }
+        }
 // animation for chest
-       // this.remainingTIme -= deltaTime;
         if(this.currentRoom.roomKey ==='room10'){
         if(!this.lockedChest){
             this.lockedChest= this.physics.add.sprite(400,186,this.hasOpenedChest ? 'open_chest' : 'locked_chest');
@@ -401,17 +451,6 @@ this.overlappingItem=keycard;
         }
       }
       this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-// this.interactText=this.add.text(0,0,'Press [SPACE] to interact',{
-//     fontSize: '16px',
-//     fill:'#ffffff',
-//     backgroundColor:'#000000',
-//     padding:{x:6,y:4}
-// });
-
-//this.interactText.setText("Press Space to interact").setVisible(true);
-// this.interactText.setVisible(false);
-// this,interactText.setDepth(10);
 
 if(this.currentRoom.roomKey === 'room13'){
     const dist = Phaser.Math.Distance.Between(
@@ -494,47 +533,54 @@ if (this.currentRoom.roomKey === 'room1'){
 
         
         this.lastRoomKey= this.currentRoom.roomKey;
+
+        // If in room13 and door is open, allow transition to Chapter2Scene
+    //     if (this.currentRoom.roomKey === 'room13' && this.room13DoorOpened) {
+    //         // For example, automatically transition when the player overlaps the door:
+    //         // (Or you may require a specific keypress/interact)
+    //         this.scene.start('Chapter2Scene');
+    //     }
+    // }
     }
-
 }
-setUpRoom13Objects(){
-    this.keycardMachine.setPosition(350, 450); // adjust position
-    this.keycardMachine.setVisible(true);
-
-    this.room13Door.setTexture('door_end');
-    this.room13Door.setPosition(400, 300); // adjust as needed
-    this.room13Door.setVisible(true);
-
-    // Enable interaction zone
-    this.physics.add.overlap(this.character, this.keycardMachine, () => {
-        if (this.keyCardCollected) {
-            this.openRoom13Door();
-        } else {
-            this.showMessage("You need a keycard to unlock this.");
-        }
-    }, null, this);
-
+onKeycardInteract() {
+    if (this.keyCardCollected && !this.room13DoorOpened) {
+        this.room13Door.setTexture('door_open');  // Open door visually
+        this.room13DoorOpened = true;
+        this.showMessage("Door opened with keycard!");
+        // Delay the transition to Chapter2Scene if desired:
+        this.time.delayedCall(1000, () => {
+            this.scene.start('Chapter2Scene');
+        });
+    } else if (!this.keyCardCollected) {
+        this.showMessage("You need a keycard to use this.");
+    }    
 }
+
 openRoom13Door() {
-    if (this.room13DoorOpen) return; // prevent repeat
-    this.room13DoorOpen = true;
+    if (this.room13DoorOpened) return;
+    this.room13DoorOpened = true;
     this.room13Door.setTexture('door_open');
     this.showMessage("The door is now unlocked.");
 }
-// updateRoom13Animation() {
-//     if (this.currentRoom.roomKey === 'room13' && this.KeyCardCollected) {
-//         this.room13AnimSprite.setVisible(true);
-//     } else {
-//         this.room13AnimSprite.setVisible(false);
-//     }
-// }
+
+showMessage(text) {
+    this.textbox.setVisible(true);
+    this.messageText.setText(text);
+    this.messageText.setVisible(true);
+
+    this.time.delayedCall(3000, () => {
+        this.textbox.setVisible(false);
+        this.messageText.setVisible(false);
+    });
+}
 onOverlap(character, doorway) {
     const nextRoomKey = doorway.getData('targetRoom'); 
     // example: 'room2'
     if (!nextRoomKey || nextRoomKey === this.currentRoom.roomKey) return;
 
     this.lastRoomKey = this.currentRoom.roomKey;
-
+    this.keyCardCollected = true;
     this.currentRoom.destroy();
     this.currentRoom = new Room(this, nextRoomKey);
     this.add.existing(this.currentRoom);
@@ -582,21 +628,6 @@ startCountdownTimer() {
         loop: true
     });
 }
-
-updateTimer() {
-    this.remainingTime -= 1;
-    this.timerText.setText('Time Remaining: ' + this.remainingTime + 's');
-    if (this.remainingTime <= 0) {
-        this.timerEvent.remove(); // Stop the event
-        this.timerStarted = false;
-        this.scene.start('GameOverScene'); // Go to GameOver scene when time runs out
-    }
-}
-
-gameOver(){
-    //this.timerStarted=false;
-    this.scene.start('GameOverScene');
-}
    // spawns the inkglob
     spawnInkGlob() {
         console.log("Entering Room 4 - Ink chase begins!");
@@ -643,15 +674,16 @@ gameOver(){
             console.log("Room transition - ink glob cleaned up.");
         }
     }
-//   onInkGlobCatch(){
-//     console.log("Caught by the ink glob! Game Over!");
-//     this.scene.restart();
-//   }
+
     exitLastRoom() {
         this.scene('Chapter2Scene'); //switches to chapter 3 page when the charcter exit the last room
         if (this.ambience && this.ambience.isPlaying){
             this.ambience.stop();
         }
+    }
+    gameOver(){
+        //this.timerStarted=false;
+        this.scene.start('GameOverScene');
     }
 }
 
