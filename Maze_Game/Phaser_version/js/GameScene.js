@@ -169,6 +169,17 @@ this.time.addEvent({
     },
     loop: true
 });
+this.time.addEvent({
+    delay:200, // adjust if needed
+    loop: true,
+    callback: ()=>{
+        if(this.currentRoom.roomKey === 'room13' && this.keyCardCollected){
+            this.room13AnimSprite.setVisible(true);
+        } else {
+            this.room13AnimSprite.setVisible(false);
+        }
+    }
+});
 
         this.textbox = this.add.image(30, 30, 'textbox').setScale(0.3).setScrollFactor(0).setOrigin(0, 0);
         this.textbox.setVisible(false);
@@ -244,13 +255,7 @@ this.time.addEvent({
 
 
     }
-    updateRoom13Animation() {
-        if (this.currentRoom.roomKey === 'room13' && this.keycardCollected) {
-            this.room13AnimSprite.setVisible(true);
-        } else {
-            this.room13AnimSprite.setVisible(false);
-        }
-    }
+
     spawnItems() {
         // Clear current item group
         this.items.clear(true, true);
@@ -353,9 +358,9 @@ this.overlappingItem=keycard;
             });
         }if (!this.timerStarted && this.keycardCollected) {
             this.timerStarted = true;
-            this.startCountdown();
+          //  this.startCountdown();
         }
-        
+      
 
         
         // Flickering chandelier light in room10 after picking up keycard
@@ -421,22 +426,67 @@ if (this.currentRoom.roomKey === 'room1'){
     }
 
 }
+updateRoom13Animation() {
+    if (this.currentRoom.roomKey === 'room13' && this.KeyCardCollected) {
+        this.room13AnimSprite.setVisible(true);
+    } else {
+        this.room13AnimSprite.setVisible(false);
+    }
+}
+onOverlap(character, doorway) {
+    const nextRoomKey = doorway.getData('targetRoom'); // example: 'room2'
+    if (!nextRoomKey || nextRoomKey === this.currentRoom.roomKey) return;
+
+    this.lastRoomKey = this.currentRoom.roomKey;
+
+    this.currentRoom.destroy();
+    this.currentRoom = new Room(this, nextRoomKey);
+    this.add.existing(this.currentRoom);
+
+    // Re-add character collider & overlap for new room
+    // this.physics.add.collider(this.character, this.currentRoom.walls);
+    // this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
+    if (!doorway.active || this.transitioning) return;
+
+    const targetRoomKey = doorway.target;
+
+    // If transitioning to chapter2scene (after room13 with keycard), delay the transition
+    if (this.currentRoom.roomKey === 'room13' && this.keyCardCollected && targetRoomKey === 'chapter2scene') {
+        this.transitioning = true; // prevent re-entry
+        // Wait ~1 second for animation to play before transitioning
+        this.time.delayedCall(1000, () => {
+            this.scene.start('chapter2scene');
+        });
+        return;
+    }
+
+    // Handle normal room transition
+    this.transitioning = true;
+    this.currentRoom.destroy();
+    this.currentRoom = new Room(this, targetRoomKey);
+    this.add.existing(this.currentRoom);
+
+    this.physics.add.collider(this.character, this.currentRoom.walls);
+    this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
+
+    this.transitioning = false;
+}
 // countdown at the end to leave to the exit
 startCountdownTimer() {
+    this.remainingTime = this.countdownDuration;
+    this.timerStarted = true;
     this.timerEvent = this.time.addEvent({
-        delay: 1000,  // Update every second
+        delay: 1000,
         callback: () => {
-            if (this.remainingTime > 0) {
-                this.remainingTime--;
-                this.timerText.setText(`Time: ${this.remainingTime}s`);
-            } else {
-                // If time runs out, handle game over logic here
-                this.gameOver();
+            this.remainingTime--;
+            this.timerText.setText('Time Remaining: ' + Math.max(0, this.remainingTime) + 's');
+            if (this.remainingTime <= 0) {
+                this.timerStarted = false;
+                this.scene.start('GameOverScene');
             }
         },
         loop: true
     });
-    this.updateTimer();
 }
 
 updateTimer() {

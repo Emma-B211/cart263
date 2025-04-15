@@ -20,7 +20,15 @@ update(){
 }
 onOverlap(character, doorway) {
     console.log(`Transitioning to ${doorway.targetRoom}...`);
-
+    if (
+        this.currentRoom.roomKey === 'room13' &&
+        this.keyCardCollected &&
+        this.character.x > 750 // Example: right side exit
+    ) {
+        this.scene.start('Chapter2Scene', {
+            fromRoom13: true
+        });
+    }
 // if(this.roomKey === 'room13' && doorway.TargetRoom === 'roomEnd'){
 //     if(!this.scene.hasCode){
 //         console.log("you need the code to proceed.");
