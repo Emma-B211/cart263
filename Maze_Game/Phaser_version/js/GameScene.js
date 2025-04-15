@@ -98,8 +98,10 @@ this.load.image('chapter2','assets/images/chapter2.png');
         this.room13AnimSprite=this.add.sprite(400,300,'room13').setDepth(-1);
         this.room13AnimSprite.setVisible(false);
 // add timer for the end chase
-        this.timerText = this.add.text(600,10,'',{font:'25px Input',fill:'#FF0000'}).setScrollFactor(0);
 this.remainingTime=30;
+this.timerText = this.add.text(600, 10, 'Time Remaining: ' + this.remainingTime + 's', { font: '25px Input', fill: '#FF0000' }).setScrollFactor(0);
+
+
 // music ambience
 if (!this.ambience || !this.ambience.isPlaying){
 this.ambience= this.sound.add('ambience', {
@@ -302,7 +304,16 @@ this.time.addEvent({
     }
 
     update() {
-
+        if (this.timerStarted) {
+            this.remainingTime -= 1 * this.game.loop.delta / 1000; // Decrement time based on the frame rate
+            this.timerText.setText('Time Remaining: ' + Math.max(0, Math.floor(this.remainingTime)) + 's');
+    
+            if (this.remainingTime <= 0) {
+                this.timerStarted = false;
+                // Trigger Game Over or some other logic
+                this.scene.start('GameOverScene');  // Assuming you have this scene set up
+            }
+        }
         console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
         this.character.update();
         this.updateRoom13Animation();
@@ -339,22 +350,12 @@ this.overlappingItem=keycard;
                     });
                 }
             });
+        }if (!this.timerStarted && this.keycardCollected) {
+            this.timerStarted = true;
+            this.startCountdown();
         }
-        //game over time
-        this.time.addEvent({
-            delay:1000,
-            loop:true,
-            callback:()=>{
-                if(this.timerStarted && this.remainingTime >0){
-                     this.remainingTime--;
-                    this.timerText.setText(`time left: ${this.remainingTime}s`);
-                    if(this.remainingTime <=0){
-                        this.gameOver();
-                    }
-                }
-            }
-        })
         
+
         
         // Flickering chandelier light in room10 after picking up keycard
 if (this.currentRoom.roomKey === 'room10' && this.keyCardCollected) {
@@ -372,32 +373,7 @@ if (this.currentRoom.roomKey === 'room10' && this.keyCardCollected) {
         this.lockedChest=null;
     }
         this.currentRoom.checkTransition(this.character);
-      //  added room13 animation
-//         if (this.currentRoom.roomKey==='room13' && this.keycardCollected){
-// this.room13AnimSprite.setVisible(true);
-// this.room13AnimSprite.play();
-//         } else {
-//             this.room13AnimSprite.setVisible(false);
-//             this.room13AnimSprite.stop();
-//         }
-             
-        // }
-      // if (this.currentRoom.roomKey !== this.lastRoomKey) {
-        //     this.spawnItems();
-        //     this.lastRoomKey = this.currentRoom.roomKey;
-        // }
-
-        if(this.currentRoom.roomKey === 'room13' && this.keycardCollected){
-            this.room13AnimSprite.setVisible(true);
-            if(this.character.x>210){
-                this.scene.start('Chapter2Scene');
-            } if(this.timerStarted){
-                this.timerEvent.remove();
-                this.timerText.setVisible(false);
-            }
-        } else{
-            this.room13AnimSprite.setVisible(false);
-        }
+      
         if (this.currentRoom.roomKey === 'room4' && !this.inkGlob) {
             this.spawnInkGlob();
         }
@@ -444,42 +420,40 @@ if (this.currentRoom.roomKey === 'room1'){
     }
 
 }
+// countdown at the end to leave to the exit
+startCountdownTimer() {
+    this.remainingTime = this.countdownDuration; // Reset the timer
+    this.timerStarted = true;
+    this.timerText.setText('Time Remaining: ' + this.remainingTime + 's'); // Show the initial timer
+
+    this.timerEvent = this.time.addEvent({
+        delay: 1000, // Every second
+        callback: this.updateTimer, // Method to update timer
+        callbackScope: this,
+        loop: true
+    });
+}
+
+updateTimer() {
+    this.remainingTime -= 1;
+    this.timerText.setText('Time Remaining: ' + this.remainingTime + 's');
+    if (this.remainingTime <= 0) {
+        this.timerEvent.remove(); // Stop the event
+        this.timerStarted = false;
+        this.scene.start('GameOverScene'); // Go to GameOver scene when time runs out
+    }
+}
+
+// updateTimerText(){
+//     const minutes= Math.floor(this.remainingTime / 30);
+//     const seconds=this.remainingTime % 30;
+
+//     this.timerText.setText(`Time Left: ${minutes}: ${seconds.toString().padStart(2,'0')}`);
+
+// }
 gameOver(){
     this.timerStarted=false;
     this.scene.start('GameOverScene');
-}
-// countdown at the end to leave to the exit
-startCountdownTimer(){
-   // this.timerStarted=true;
-    this.remainingTime= this.countdownDuration;
-    this.timerText.setText(`Time Left: ${this.remainingTime}s`);
-
-    this.timerEvent=this.time.addEvent({
-        delay: 1000,
-        callback: ()=>{
-            this.remainingTime-= 1;
-            this.updateTimerText();
-
-            if(this.remainingTime<= 0){
-                this.timerEvent.removed();
-                this.timerExpired();
-            }
-        },
-        callBackScope:this,
-        loop: true
-    });
-    this.updateTimerText();
-}
-updateTimerText(){
-    const minutes= Math.floor(this.remainingTime / 30);
-    const seconds=this.remainingTime % 30;
-
-    this.timerText.setText(`Time Left: ${minutes}: ${seconds.toString().padStart(2,'0')}`);
-
-}
-timerExpired(){
-    this.scenerestrat({startRoom:10});
-    this.scene.start('Restart');
 }
    // spawns the inkglob
     spawnInkGlob() {
