@@ -99,7 +99,8 @@ this.load.image('chapter2','assets/images/chapter2.png');
         this.room13AnimSprite.setVisible(false);
 // add timer for the end chase
 this.remainingTime=30;
-this.timerText = this.add.text(600, 10, 'Time Remaining: ' + this.remainingTime + 's', { font: '25px Input', fill: '#FF0000' }).setScrollFactor(0);
+this.timerText = this.add.text(500, 10, '', { font: '25px', fontFamily:'Input', fill: '#FF0000' }).setScrollFactor(0);
+this.timerText.setVisible(false); // Initially invisible
 
 
 // music ambience
@@ -285,7 +286,7 @@ this.time.addEvent({
         });
         if (item.getData('name') === 'keycard') {
             this.keyCardCollected = true;
-        
+            this.timerText.setVisible(true);
             // Start the countdown timer
             if (!this.timerStarted) {
                 this.startCountdownTimer();
@@ -422,16 +423,20 @@ if (this.currentRoom.roomKey === 'room1'){
 }
 // countdown at the end to leave to the exit
 startCountdownTimer() {
-    this.remainingTime = this.countdownDuration; // Reset the timer
-    this.timerStarted = true;
-    this.timerText.setText('Time Remaining: ' + this.remainingTime + 's'); // Show the initial timer
-
     this.timerEvent = this.time.addEvent({
-        delay: 1000, // Every second
-        callback: this.updateTimer, // Method to update timer
-        callbackScope: this,
+        delay: 1000,  // Update every second
+        callback: () => {
+            if (this.remainingTime > 0) {
+                this.remainingTime--;
+                this.timerText.setText(`Time: ${this.remainingTime}s`);
+            } else {
+                // If time runs out, handle game over logic here
+                this.gameOver();
+            }
+        },
         loop: true
     });
+    this.updateTimer();
 }
 
 updateTimer() {
@@ -444,15 +449,8 @@ updateTimer() {
     }
 }
 
-// updateTimerText(){
-//     const minutes= Math.floor(this.remainingTime / 30);
-//     const seconds=this.remainingTime % 30;
-
-//     this.timerText.setText(`Time Left: ${minutes}: ${seconds.toString().padStart(2,'0')}`);
-
-// }
 gameOver(){
-    this.timerStarted=false;
+    //this.timerStarted=false;
     this.scene.start('GameOverScene');
 }
    // spawns the inkglob
