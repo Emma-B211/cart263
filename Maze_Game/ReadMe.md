@@ -57,7 +57,7 @@ Together, we shared ideas and problems, often pairing up on debugging or extendi
 
 - **Art, World Design, Mechanics:** Bianca Gauthier  
 - **Game Logic, Events,  Systems:** Emma Beldick  
-- **Sound:** “Eerie Ambience”created by Emma Beldick using free copyrighted music on pixabay and audacity to edit.
+- **Sound:** “Eerie Ambience”created by Emma Beldick using non copyrighted music on pixabay and audacity to edit.
 
 
 ---
