@@ -10,7 +10,8 @@ This game is the first chapter in a larger concept where the protagonist is pull
 
 The visual direction and world design were led by Bianca, who hand-drew every room, hallway, object, and interface element in Procreate. To speed up development, Bianca also created a custom brush set to maintain consistent line weight and textures across assets. Room layouts, wall structures, and overall visual immersion were carefully planned to establish the eerie, sketchbook-like atmosphere inside the book.
 
-Bianca also handled much of the core game logic: implementing room transitions, character movement, collision with walls, and item pickups. Emma contributed major gameplay systems such as the timer, game-over conditions, the ink monster chase sequence, and interactive events like doors, chests, and keycard activation.
+Bianca also handled much of the core game logic: implementing room transitions, character movement, collision with walls, and item pickups.
+Emma contributed major gameplay systems such as the timer, game-over conditions, the ink monster chase sequence, and interactive events like doors, chests, keycard activation, and chapter2scene when leaving the maze which is works but it is happening way to fast.
 
 Together, we shared ideas and problems, often pairing up on debugging or extending mechanics as needed. Although we had to limit the scope, we’re proud of the immersive experience we created and are excited to continue developing it after this course.
 
