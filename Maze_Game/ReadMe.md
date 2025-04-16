@@ -1,7 +1,7 @@
 #  Chapter 1: Into the Book  
 A Phaser game by Bianca Gauthier & Emma Beldick
 
-[Maze_Game](https://emma-b211.github.io/cart263/Maze_Game/) (if can't access game, you may need to download the file if the link isn't working)
+[Maze_Game](https://emma-b211.github.io/cart263/Maze_Game/index.html) (if can't access game, you may need to download the file if the link isn't working)
 ---
 
 ##  Artist Statement
