@@ -19,11 +19,12 @@ class GameScene extends Phaser.Scene {
         this.timerText = null;
         this.interactText = null;
         this.room13DoorOpened = false; // Use this variable consistently
-
+        this.chapter2Started = false;
+        this.hasExitedRoom13 = false; // Variable to track if the player has exited room 13
+    }
 
 
 //this.openChestSprite = null;
-    }
 
     preload() {
 
@@ -125,7 +126,7 @@ this.ambience.play();
 
 
         this.physics.add.collider(this.character, this.currentRoom.walls);
-        this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
+       // this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
 // adding light after our lil cutie grabs the keycard
         this.chandelierLight = this.add.graphics({ x: 160, y: 0 });
         this.chandelierLight.fillCircle(400,186, Phaser.Math.Between(10,20));
@@ -136,13 +137,23 @@ this.ambience.play();
         this.lockedChest = null;
 
  // Set up room 13
- this.room13AnimSprite = this.add.sprite(400, 300, 'room13').setDepth(-1);
+ //this.room13AnimSprite = this.add.sprite(400, 300, 'room13').setDepth(-1);
  this.room13AnimSprite.setVisible(false); // Initially invisible
- this.room13Door = this.add.image(224, 39, 'door_end').setDepth(4).setScale(0.3).setVisible(false);
+ this.room13Door = this.physics.add.image(224, 39, 'door_end').setDepth(4).setScale(0.3).setVisible(false);
+ this.room13Door.body.allowGravity=false;
+ this.room13Door.setImmovable(true);
+ this.physics.add.overlap(this.character, this.room13Door, this.onDoorwayOverlap, null, this);
 // this.room13AnimSprite=this.add.sprite(224,39,'door_open').setDepth(4).setScale(0.3).setVisible(false);
  this.keycardMachine = this.physics.add.sprite(170, 45, 'keycard_reader').setDepth(5).setScale(0.4).setVisible(false);
  this.keycardMachine.body.allowGravity = false;
  this.keycardMachine.setImmovable(true);
+//  this.keycardMachineOverlap = this.physics.add.zone(170, 45, this.keycardMachine.width, this.keycardMachine.height);
+this.keycardMachineOverlap = this.add.zone(170, 45, this.keycardMachine.width, this.keycardMachine.height);
+ this.keycardMachineOverlap.setVisible(false); // Keep it invisible
+ this.physics.add.overlap(this.character, this.keycardMachineOverlap, this.onKeycardInteract, null, this);
+ this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+// Define the overlap check with the door in room13
+//this.physics.add.overlap(this.character, this.room13Door, this.onDoorwayOverlap, null, this);
 
  this.time.addEvent({
     delay: 100,
@@ -151,7 +162,7 @@ this.ambience.play();
             this.room13AnimSprite.setVisible(true);
             this.room13Door.setVisible(true);
             this.keycardMachine.setVisible(true);
-        } else {
+        }else {
             this.room13AnimSprite.setVisible(false);
             this.room13Door.setVisible(false);
             this.keycardMachine.setVisible(false);
@@ -331,7 +342,7 @@ this.keycardMachine.body.allowGravity = false;
             }
         }
     
-        console.log(`Character Position - X: ${this.character.x}, Y: ${this.character.y}`);
+       // console.log(Character Position - X: ${this.character.x}, Y: ${this.character.y});
         this.character.update();
     
         // Room 13 door state debug section
@@ -348,6 +359,8 @@ this.keycardMachine.body.allowGravity = false;
                     console.log("DEBUG: Keycard collected but door not yet opened. Opening door...");
                     this.room13Door.setTexture('door_open');
                     this.room13DoorOpened = true;
+                    this.scene.start('Chapter2Scene');
+
                 }
             } else {
                 // Debug logging if keycard hasn't been collected.
@@ -409,7 +422,7 @@ this.overlappingItem=keycard;
                     this.textbox.setVisible(true);
                     this.messageText.setText("the chest creaks open....");
                     this.messageText.setVisible(true);
-                    this.time.delayedCall(2000, () => {
+                    this.time.delayedCall(3000, () => {
                         this.textbox.setVisible(false);
                         this.messageText.setVisible(false);
                     });
@@ -435,6 +448,7 @@ this.overlappingItem=keycard;
             this.room13Door.setTexture('door_end');
         }
       }
+      this.physics.add.overlap(this.character, this.room13Door, this.checkRoom13Exit, null, this);
       this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
 if(this.currentRoom.roomKey === 'room13'){
@@ -457,14 +471,18 @@ if(this.keyCardCollected && !this.room13DoorOpen){
         this.interactText.setVisible(false);
     }
 }
-this.physics.add.overlap(this.character, this.room13Door, () => {
-    if (this.room13DoorOpened) {
-        this.scene.start('Chapter2Scene');
-    }
-});
+// if (this.currentRoom.roomKey === 'room13' && this.room13DoorOpened && !this.chapter2Started) {
+//     this.chapter2Started = true;
+//     this.scene.start('Chapter2Scene');
+// }
+// this.physics.add.overlap(this.character, this.room13Door, () => {
+//     if (this.room13DoorOpened) {
+//         this.scene.start('Chapter2Scene', { fromRoom13: true });
+//     }
+// });
   
         // Flickering chandelier light in room10 after picking up keycard
-if (this.currentRoom.roomKey === 'room10' && this.keyCardCollected) {
+        if(this.currentRoom.roomKey === 'room10' && this.keyCardCollected) {
     this.chandelierLight.clear();
     this.chandelierLight.fillStyle(0xffffcc, Phaser.Math.FloatBetween(0.2, 0.6)); // Soft yellow flicker
     this.chandelierLight.fillCircle(400, 100, Phaser.Math.Between(60, 90)); // Flicker radius
@@ -492,7 +510,6 @@ if (this.currentRoom.roomKey === 'room10' && this.keyCardCollected) {
         this.collectItem(this.overlappingItem);
         this.overlappingItem = null; // Reset overlapping item
     }
-
 
         if (this.currentRoom.roomKey !== this.lastRoomKey) {
             if (this.lastRoomKey === 'room4' && this.inkGlob) {
@@ -524,31 +541,30 @@ if (this.currentRoom.roomKey === 'room1'){
         
         this.lastRoomKey= this.currentRoom.roomKey;
 
-        // If in room13 and door is open, allow transition to Chapter2Scene
-    //     if (this.currentRoom.roomKey === 'room13' && this.room13DoorOpened) {
-    //         // For example, automatically transition when the player overlaps the door:
-    //         // (Or you may require a specific keypress/interact)
-    //         this.scene.start('Chapter2Scene');
-    //     }
-    // }
     }
 }
-onKeycardInteract() {
-    if (this.keyCardCollected && !this.room13DoorOpened) {
-        // Change the door texture to open
-        this.room13Door.setTexture('door_open');
+// checkRoom13Exit(character, door) {
+//     if (this.room13DoorOpened) {
+//         this.scene.start('chapter2scene');
+//     }
+// }
+onKeycardInteract(character, reader) {
+    if (Phaser.Input.Keyboard.JustDown(this.interactKey) && this.keyCardCollected && !this.room13DoorOpened) {
+        this.room13AnimSprite.play('room13_door_open'); // Play your custom door animation if you have it
         this.room13DoorOpened = true;
-        this.showMessage("Door opened with keycard!");
 
-        // Delay the transition by 1 second (adjust as needed)
-        this.time.delayedCall(100, () => {
-            this.scene.start('Chapter2Scene');
+        // Delay transition until animation finishes (~2s here, adjust to match actual anim time)
+        this.time.delayedCall(2000, () => {
+            if (!this.chapter2Started && this.currentRoom.roomKey === 'room13') {
+                this.startChapter2();
+            }
         });
-    } else if (!this.keyCardCollected) {
-        this.showMessage("You need a keycard to use this.");
     }
 }
-
+startChapter2() {
+    this.chapter2Started = true;
+    this.scene.start('Chapter2Scene');
+}
 openRoom13Door() {
     if (this.room13DoorOpened) return;
     this.room13DoorOpened = true;
@@ -558,6 +574,58 @@ openRoom13Door() {
     this.time.delayedCall(1000, () => {
         this.scene.start('Chapter2Scene');
     });
+}
+// Event for transitioning to Chapter 2 when passing through the doorway
+onDoorwayOverlap(character, doorway) {
+    if (
+        this.currentRoom.roomKey === 'room13' &&
+        this.room13DoorOpened &&           // Ensure door was opened
+        !this.chapter2Started              // Prevent multiple triggers
+    ) {
+        this.chapter2Started = true;
+
+        // Optional: add animation/fade out etc.
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
+
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.scene.start('Chapter2Scene');
+        });
+    }//}
+}
+// onOverlap(character, doorway) {
+//     const nextRoomKey = doorway.getData('targetRoom');
+//     if (!nextRoomKey || nextRoomKey === this.currentRoom.roomKey) return;
+
+//     // Special logic for room13
+//     if (this.currentRoom.roomKey === 'room13' && !this.room13DoorOpened) {
+//         this.showMessage("The door is locked. You need to use the keycard.");
+//         return;
+//     }
+
+//     this.lastRoomKey = this.currentRoom.roomKey;
+//     this.transitioning = true;
+
+//     // Clean up and switch to the next room
+//     this.currentRoom.destroy();
+//     this.currentRoom = new Room(this, nextRoomKey);
+//     this.add.existing(this.currentRoom);
+
+//     // Re-add collisions and overlaps
+//     this.physics.add.collider(this.character, this.currentRoom.walls);
+//     this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
+
+//     this.transitioning = false;
+//     this.updateRoomVisuals();
+//}
+exitRoom(player, doorway) {
+    // Check if the player is exiting through the last doorway in room13
+    if (this.currentRoom.roomKey === 'room13' && doorway === this.room13Door) {
+        // Trigger Chapter2Scene when the player exits the last doorway
+        if (!this.chapter2Started) {
+            this.chapter2Started = true;
+            this.scene.start('Chapter2Scene');  // Replace 'Chapter2Scene' with your scene name
+        }
+    }
 }
 
 showMessage(text) {
@@ -570,43 +638,6 @@ showMessage(text) {
         this.messageText.setVisible(false);
     });
 }
-onOverlap(character, doorway) {
-    const nextRoomKey = doorway.getData('targetRoom'); 
-    // If no valid target room, return
-    if (!nextRoomKey || nextRoomKey === this.currentRoom.roomKey) return;
-
-    this.lastRoomKey = this.currentRoom.roomKey;
-    // (Optional) If you want to mark that in this overlap the keycard has been collected:
-    // this.keyCardCollected = true;
-
-      // Special case: leaving room13 through the open door
-      if (this.currentRoom.roomKey === 'room13' && this.room13DoorOpened) {
-        const exitBounds = new Phaser.Geom.Rectangle(doorway.x - 20, doorway.y - 20, 40, 40);
-
-        if (Phaser.Geom.Rectangle.Contains(exitBounds, character.x, character.y)) {
-            this.scene.start('chapter2scene');
-            return;
-        }
-    }
-
-    // Handle regular room switching logic
-    if (nextRoomKey && nextRoomKey !== this.currentRoom.roomKey) {
-        this.switchRoom(nextRoomKey);
-    }
-    // Handle normal room transition:
-    this.transitioning = true;
-    this.currentRoom.destroy();
-    this.currentRoom = new Room(this, nextRoomKey);
-    this.add.existing(this.currentRoom);
-
-    // Re-add character collisions and overlaps for the new room
-    this.physics.add.collider(this.character, this.currentRoom.walls);
-    this.physics.add.overlap(this.character, this.currentRoom.doorways, this.onOverlap, null, this);
-
-    this.transitioning = false;
-    this.updateRoomVisuals();
-}
-
 // countdown at the end to leave to the exit
 startCountdownTimer() {
     this.remainingTime = this.countdownDuration;
