@@ -554,7 +554,7 @@ onKeycardInteract(character, reader) {
         this.room13DoorOpened = true;
 
         // Delay transition until animation finishes (~2s here, adjust to match actual anim time)
-        this.time.delayedCall(2000, () => {
+        this.time.delayedCall(7000, () => {
             if (!this.chapter2Started && this.currentRoom.roomKey === 'room13') {
                 this.startChapter2();
             }
@@ -563,7 +563,9 @@ onKeycardInteract(character, reader) {
 }
 startChapter2() {
     this.chapter2Started = true;
-    this.scene.start('Chapter2Scene');
+    this.time.delayedCall(7000,()=>{
+        this.scene.start('Chapter2Scene');
+    });
 }
 openRoom13Door() {
     if (this.room13DoorOpened) return;
@@ -571,9 +573,9 @@ openRoom13Door() {
     this.room13Door.setTexture('door_open');
     this.showMessage("The door is now unlocked.");
     // Optionally, delay the transition here too:
-    this.time.delayedCall(1000, () => {
-        this.scene.start('Chapter2Scene');
-    });
+    // this.time.delayedCall(7000, () => {
+    //     this.scene.start('Chapter2Scene');
+    // });
 }
 // Event for transitioning to Chapter 2 when passing through the doorway
 onDoorwayOverlap(character, doorway) {
@@ -588,7 +590,10 @@ onDoorwayOverlap(character, doorway) {
         this.cameras.main.fadeOut(1000, 0, 0, 0);
 
         this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.scene.start('Chapter2Scene');
+           this.time.delayedCall(7000, ()=>{
+             this.scene.start('Chapter2Scene');
+           });
+           
         });
     }//}
 }
