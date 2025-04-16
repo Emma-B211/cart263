@@ -24,7 +24,7 @@ Together, we shared ideas and problems, often pairing up on debugging or extendi
 - **Tools:** Procreate (visual art), VS Code, GitHub
 - **Team Roles:**
   - **Bianca Gauthier:** Visual artist, environment designer, wall/door/room logic, character & item system, Message pop_up, interactive feedback, debugging, intro scene.
-  - **Emma Beldick:** Ink Glob behaviour, event systems (light flicker, timer, game over), interactive feedback, door/chest animation logic, debugging, polish, 
+  - **Emma Beldick:** Ink Glob behaviour, event systems (light flicker, timer, game over), interactive feedback, door/chest animation logic, debugging, polish, adding lore.
 
 ###  Features
 - 13 custom-designed rooms with unique layouts
